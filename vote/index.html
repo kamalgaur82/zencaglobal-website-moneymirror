@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0C0B09">
+<title>Zenca · Vote</title>
+<style>
+  :root{
+    --ink:#0C0B09;
+    --ink-2:#151310;
+    --gold:#D6B26D;
+    --gold-deep:#A8843C;
+    --paper:#F2EFE9;
+    --mute:#8E877B;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{min-height:100%;background:var(--ink)}
+  body{font-family:var(--sans);color:var(--paper);padding:22px 20px calc(28px + env(safe-area-inset-bottom));
+       display:flex;flex-direction:column;min-height:100vh}
+
+  header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px}
+  .mark{font-size:14px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .anon{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+
+  main{flex:1;display:flex;flex-direction:column;justify-content:center}
+
+  .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.22;letter-spacing:-.01em}
+  .note{margin-top:12px;font-size:15px;line-height:1.5;color:var(--mute)}
+
+  .part{margin-top:26px}
+  .partq{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+
+  .opt{display:block;width:100%;text-align:left;background:var(--ink-2);color:var(--paper);
+       border:1px solid rgba(214,178,109,.34);padding:17px 18px;font-size:17px;line-height:1.35;
+       font-family:var(--sans);margin-bottom:10px;cursor:pointer;transition:background .12s ease,border-color .12s ease}
+  .opt:active{background:#1D1A15}
+  .opt.sel{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:600}
+  .opt:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .opt[disabled]{opacity:.45;cursor:default}
+
+  .submit{width:100%;margin-top:16px;padding:18px;background:var(--gold);color:var(--ink);border:0;
+          font-size:17px;font-weight:700;font-family:var(--sans);cursor:pointer}
+  .submit[disabled]{background:transparent;color:var(--mute);border:1px solid rgba(214,178,109,.3);cursor:default}
+
+  .rest{text-align:center;padding:40px 10px}
+  .rest .big{font-family:var(--serif);font-size:31px;line-height:1.28;margin-bottom:14px}
+  .rest .small{font-size:15px;line-height:1.6;color:var(--mute)}
+  .dot{width:9px;height:9px;background:var(--gold);border-radius:50%;margin:0 auto 26px;opacity:.5}
+
+  .done{border:1px solid rgba(214,178,109,.34);padding:18px;margin-top:22px}
+  .done .lab{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .done .val{font-family:var(--serif);font-size:21px}
+  .done .share{margin-top:10px;font-size:14px;color:var(--mute)}
+  .done .share b{color:var(--gold);font-weight:600}
+  .done + .done{margin-top:12px}
+
+  footer{margin-top:30px;font-size:12px;line-height:1.6;color:var(--mute)}
+  footer b{color:var(--gold-deep);font-weight:600}
+  .err{margin-top:14px;font-size:14px;color:var(--gold);border-left:3px solid var(--gold);padding-left:12px}
+  #diag{margin-top:10px;font-size:11px;line-height:1.5;color:#5F5A51;word-break:break-all}
+  #diag.bad{color:var(--gold)}
+  @media (prefers-reduced-motion: reduce){ .opt{transition:none} }
+</style>
+</head>
+<body>
+<header>
+  <span class="mark">Zenca</span>
+  <span class="anon">Anonymous</span>
+</header>
+<main id="view"></main>
+<footer id="foot">No login, no name, no email. Your answers are counted, never stored against you.
+  <div id="diag"></div>
+</footer>
+
+<script src="../assets/zenca-config.js?v=4"></script>
+<script src="../assets/zenca-sync.js?v=4"></script>
+<script>
+(function(){
+  const CFG = window.ZENCA_CONFIG;
+  const sync = window.ZencaSync(CFG.sync);
+  const view = document.getElementById("view");
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const partsOf = q => q.parts || [{ id:q.id, prompt:q.prompt, options:q.options }];
+  const qById = id => CFG.deck.find(s => s.type === "question" && s.id === id);
+
+  const store = {
+    get(k){ try { return localStorage.getItem("zenca:"+k); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem("zenca:"+k, v); } catch(e){} }
+  };
+  const segment = () => store.get("seg") || "unknown";
+  const voteKey = qid => "voted:" + (state.sid || "default") + ":" + qid;
+  const hasVoted = qid => qid && store.get(voteKey(qid)) !== null;
+  function myVote(qid){
+    const raw = store.get(voteKey(qid));
+    if (!raw) return null;
+    try { const v = JSON.parse(raw); return Array.isArray(v) ? v : null; }
+    catch (e) { return [{ label: raw, partId: null, opt: null }]; }   // older format
+  }
+
+  /* The QR carries the session in the fragment — never sent to any server,
+     and it ties this phone to the room the code was made for. */
+  const ROOM = (location.hash || "").replace(/^#/, "").trim();
+  let state = { phase:"idle", qid:null, sid: ROOM || null },
+      picks = {}, busy = false, err = "", counters = {};
+
+  sync.subscribeState(s => {
+    if (!s) return;
+    state = s; if (!state.sid && ROOM) state.sid = ROOM;
+    picks = {}; err = ""; render(); diag("state received");
+  });
+  sync.subscribeCounters(c => {
+    counters = c || {};
+    if (hasVoted(currentQid())) render();
+  });
+
+  function currentQid(){ return state.qid; }
+
+  let diagNote = "starting";
+  function diag(note, bad){
+    if (note) diagNote = note;
+    const el = document.getElementById("diag");
+    if (!el) return;
+    el.className = bad ? "bad" : "";
+    el.textContent = "mode " + sync.mode + " · room " + (ROOM || "none") +
+                     " · " + diagNote + " · phase " + (state.phase || "?");
+  }
+  function shareOf(partId, opt){
+    const sid = state.sid || "default";
+    let mine = 0, all = 0;
+    Object.keys(counters).forEach(k => {
+      const [ks, pid, oi] = k.split("|");
+      if (ks !== sid || pid !== partId) return;
+      all += counters[k];
+      if (oi === String(opt)) mine += counters[k];
+    });
+    return all ? Math.round(mine * 100 / all) : null;
+  }
+
+  function render(){
+    const q = state.qid ? qById(state.qid) : null;
+
+    if (!q || state.phase === "idle") return rest(
+      "Eyes up front.",
+      "The next question will appear here when it opens.");
+
+    if (state.phase === "closed" && !hasVoted(q.id)) return rest(
+      "Voting closed.",
+      "Results are on the screen. The next one opens shortly.");
+
+    if (hasVoted(q.id)) {
+      const mine = myVote(q.id) || [];
+      const closed = state.phase !== "open";
+      const rows = mine.map(v => {
+        const pct = (closed && v.partId !== null) ? shareOf(v.partId, v.opt) : null;
+        return `<div class="done">
+          <div class="lab">You chose</div>
+          <div class="val">${esc(v.label)}</div>
+          ${pct === null ? "" : `<div class="share"><b>${pct}%</b> of the room chose the same</div>`}
+        </div>`;
+      }).join("");
+      return rest("Answer counted.",
+        closed ? "Results are on the screen." : "Waiting for the room.", rows);
+    }
+
+    if (state.phase !== "open") return rest("Voting closed.", "Results are on the screen.");
+
+    const parts = partsOf(q), multi = parts.length > 1;
+    view.innerHTML = `
+      <div class="kicker">${esc(q.kicker || "Question")}</div>
+      <h1>${esc(q.prompt)}</h1>
+      ${q.note ? `<div class="note">${esc(q.note)}</div>` : ""}
+      ${parts.map((p,pi) => `
+        <div class="part">
+          ${multi ? `<div class="partq">${esc(p.prompt)}</div>` : ""}
+          ${p.options.map((o,oi) => `
+            <button class="opt" data-p="${pi}" data-o="${oi}">${esc(o)}</button>`).join("")}
+        </div>`).join("")}
+      ${multi ? `<button class="submit" id="go" disabled>Submit</button>` : ""}
+      ${err ? `<div class="err">${esc(err)}</div>` : ""}`;
+
+    view.querySelectorAll(".opt").forEach(b => {
+      b.onclick = () => {
+        const pi = +b.dataset.p, oi = +b.dataset.o;
+        picks[pi] = oi;
+        view.querySelectorAll('.opt[data-p="'+pi+'"]').forEach(x => x.classList.remove("sel"));
+        b.classList.add("sel");
+        if (multi) {
+          document.getElementById("go").disabled = Object.keys(picks).length !== parts.length;
+        } else {
+          submit(q, parts);
+        }
+      };
+    });
+    if (multi) document.getElementById("go").onclick = () => submit(q, parts);
+  }
+
+  function submit(q, parts){
+    if (busy) return;
+    busy = true;
+    const seg = segment();
+
+    // The warm-up sets the bucket every later vote is counted into.
+    parts.forEach((p,pi) => {
+      if (p.segmentMap && picks[pi] !== undefined) store.set("seg", p.segmentMap[picks[pi]]);
+    });
+    const segNow = segment();
+
+    const jobs = parts.map((p,pi) => {
+      if (picks[pi] === undefined) return Promise.resolve();
+      return sync.bump((state.sid || "default") + "|" + p.id + "|" + picks[pi] + "|" + segNow);
+    });
+
+    // Captured now, not in the callback: a state change mid-flight used to
+    // clear `picks` and save an empty label.
+    const chosen = parts.map((p,pi) => picks[pi] === undefined ? null
+                     : { label: p.options[picks[pi]], partId: p.id, opt: picks[pi] })
+                   .filter(Boolean);
+    const key = voteKey(q.id);
+
+    Promise.all(jobs).then(() => {
+      store.set(key, JSON.stringify(chosen));
+      busy = false; render();
+    }).catch(() => {
+      busy = false;
+      err = "That didn’t send. Tap your answer again.";
+      render();
+    });
+  }
+
+  function rest(big, small, extra){
+    view.innerHTML = `<div class="rest"><div class="dot"></div>
+      <div class="big">${esc(big)}</div>
+      <div class="small">${esc(small)}</div>${extra || ""}</div>`;
+  }
+
+  /* A phone that sleeps, or a socket that dies quietly, leaves this page frozen
+     on an old screen. Re-ask for the current state whenever we come back into
+     view, and on a slow heartbeat as a safety net. */
+  function recover(){ if (sync.refreshState) sync.refreshState(); }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) recover(); });
+  window.addEventListener("focus", recover);
+  window.addEventListener("online", recover);
+  setInterval(() => { if (!document.hidden) recover(); }, 15000);
+
+  if (ROOM && sync.room) sync.room(ROOM);
+  window.addEventListener("hashchange", () => location.reload());
+
+  sync.ready.then(() => {
+    diag("connected");
+    if (ROOM && sync.room) sync.room(ROOM);
+    if (!ROOM && sync.mode === "supabase") {
+      return rest("Scan the code on screen.",
+                  "This link needs the session code from the room you are in.");
+    }
+    render();
+  }).catch(() => {
+    rest("Can’t reach the room.", "Check your connection — the question will appear on its own once you’re back.");
+  });
+  render();
+  diag();
+  setTimeout(() => { if (diagNote === "starting") diag("still loading the client", true); }, 6000);
+})();
+</script>
+</body>
+</html>

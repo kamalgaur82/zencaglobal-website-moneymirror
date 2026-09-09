@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenca · Results</title>
+<style>
+  :root{
+    --ink:#0C0B09; --ink-2:#141210; --gold:#D6B26D; --gold-deep:#A8843C;
+    --paper:#F2EFE9; --mute:#8E877B; --line:rgba(214,178,109,.26);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:var(--sans);
+       padding:38px 34px 80px;max-width:1180px;margin:0 auto;line-height:1.5}
+
+  header{display:flex;justify-content:space-between;align-items:baseline;
+         border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px;flex-wrap:wrap;gap:14px}
+  .mark{font-size:14px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  h1{font-family:var(--serif);font-weight:500;font-size:34px;letter-spacing:-.01em;margin-top:6px}
+  .meta{font-size:13px;color:var(--mute)}
+
+  .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:30px}
+  select,button{background:var(--ink-2);color:var(--paper);border:1px solid var(--line);
+                padding:11px 14px;font-size:15px;font-family:var(--sans);cursor:pointer}
+  select{min-width:290px}
+  button:hover{border-color:var(--gold);color:var(--gold)}
+  button.primary{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:600}
+  button.primary:hover{color:var(--ink);opacity:.9}
+
+  .summary{display:flex;gap:44px;flex-wrap:wrap;border:1px solid var(--line);
+           background:var(--ink-2);padding:22px 26px;margin-bottom:34px}
+  .stat .n{font-family:var(--serif);font-size:32px;color:var(--gold);line-height:1.1}
+  .stat .l{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+
+  section{margin-bottom:38px}
+  h2{font-family:var(--serif);font-weight:500;font-size:23px;line-height:1.3;margin-bottom:4px}
+  .qid{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px}
+
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th{text-align:left;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+     font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th.num,td.num{text-align:right;width:104px}
+  td{padding:11px 12px;border-bottom:1px solid rgba(214,178,109,.12);vertical-align:middle}
+  tr.top td{color:var(--gold)}
+  .barcell{width:210px}
+  .track{height:10px;background:rgba(214,178,109,.12)}
+  .fill{height:100%;background:var(--gold-deep)}
+  tr.top .fill{background:var(--gold)}
+  tfoot td{color:var(--mute);font-size:13px;border:0;padding-top:10px}
+
+  .empty{border:1px solid var(--line);padding:34px;text-align:center;color:var(--mute)}
+  .note{font-size:13px;color:var(--mute);margin-top:10px}
+  @media print{
+    body{background:#fff;color:#111;max-width:none}
+    .controls{display:none}
+    th{color:#7a5c14}.fill{background:#7a5c14}tr.top td{color:#7a5c14}
+    .summary{border-color:#ccc}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="mark">Zenca</div>
+    <h1 id="title">Session results</h1>
+  </div>
+  <div class="meta" id="src">—</div>
+</header>
+
+<div class="controls">
+  <select id="pick"><option>Loading…</option></select>
+  <button id="reload">Refresh</button>
+  <button id="csv" class="primary">Download CSV</button>
+  <button id="print">Print / PDF</button>
+</div>
+
+<div id="out"></div>
+
+<script src="../assets/zenca-config.js?v=4"></script>
+<script src="../assets/zenca-sync.js?v=4"></script>
+<script>
+(function(){
+  const CFG = window.ZENCA_CONFIG;
+  const sync = window.ZencaSync(CFG.sync);
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const out = document.getElementById("out");
+  const pick = document.getElementById("pick");
+
+  let sessions = [], counters = {}, current = null;
+
+  document.getElementById("src").textContent =
+    sync.mode === "supabase" ? "Reading from Supabase" : "Reading local rehearsal data";
+
+  function load(){
+    out.innerHTML = '<div class="empty">Loading…</div>';
+    Promise.all([sync.listSessions(), sync.allCounters()]).then(([s, c]) => {
+      sessions = s || []; counters = c || {};
+
+      // Sessions that have votes but no stored manifest still deserve a row.
+      const known = new Set(sessions.map(x => x.sid));
+      Object.keys(counters).forEach(k => {
+        const sid = k.split("|")[0];
+        if (!known.has(sid)) { known.add(sid); sessions.push({ sid: sid, manifest: null }); }
+      });
+
+      if (!sessions.length) {
+        pick.innerHTML = '<option>No sessions yet</option>';
+        out.innerHTML = '<div class="empty">No sessions recorded yet. Run the presenter and cast a vote.</div>';
+        return;
+      }
+      pick.innerHTML = sessions.map(x =>
+        `<option value="${esc(x.sid)}">${esc(x.sid)}${x.manifest ? "" : "  (no question snapshot)"}</option>`).join("");
+      current = pick.value;
+      render();
+    });
+  }
+
+  function rowsFor(sid){
+    const sess = sessions.find(x => x.sid === sid);
+    const man = sess && sess.manifest;
+    const parts = [];
+
+    if (man && man.questions) {
+      man.questions.forEach(q => q.parts.forEach(p =>
+        parts.push({ qid: q.id, question: q.prompt, partId: p.id,
+                     partPrompt: p.prompt, options: p.options })));
+    } else {
+      // No snapshot stored: fall back to whatever ids appear in the data.
+      const ids = [];
+      Object.keys(counters).forEach(k => {
+        const bits = k.split("|");
+        if (bits[0] === sid && ids.indexOf(bits[1]) < 0) ids.push(bits[1]);
+      });
+      ids.forEach(id => parts.push({ qid:id, question:id, partId:id,
+                                     partPrompt:"", options:null }));
+    }
+
+    return parts.map(p => {
+      const tally = {};
+      Object.keys(counters).forEach(k => {
+        const [ks, pid, oi, seg] = k.split("|");
+        if (ks !== sid || pid !== p.partId) return;
+        tally[oi] = tally[oi] || { total:0, holder:0, nonholder:0, unknown:0 };
+        tally[oi].total += counters[k];
+        if (tally[oi][seg] !== undefined) tally[oi][seg] += counters[k];
+      });
+      const idxs = p.options ? p.options.map((_,i) => String(i))
+                             : Object.keys(tally).sort((a,b) => a-b);
+      const total = idxs.reduce((s,i) => s + (tally[i] ? tally[i].total : 0), 0);
+      const hTot = idxs.reduce((s,i) => s + (tally[i] ? tally[i].holder : 0), 0);
+      const nTot = idxs.reduce((s,i) => s + (tally[i] ? tally[i].nonholder : 0), 0);
+      const opts = idxs.map(i => {
+        const t = tally[i] || { total:0, holder:0, nonholder:0 };
+        return {
+          index: i,
+          label: p.options ? p.options[i] : ("option " + i),
+          n: t.total,
+          pct: total ? Math.round(t.total*1000/total)/10 : 0,
+          h: hTot ? Math.round(t.holder*1000/hTot)/10 : null,
+          nh: nTot ? Math.round(t.nonholder*1000/nTot)/10 : null
+        };
+      });
+      return { ...p, opts, total, hTot, nTot };
+    });
+  }
+
+  function render(){
+    const sid = current;
+    const data = rowsFor(sid);
+    const sess = sessions.find(x => x.sid === sid);
+    const answered = data.filter(d => d.total > 0);
+    const votes = data.reduce((s,d) => s + d.total, 0);
+    const heads = data.length ? data[0] : null;
+
+    document.getElementById("title").textContent = sid;
+
+    if (!votes) {
+      out.innerHTML = '<div class="empty">No votes recorded in this session.</div>';
+      return;
+    }
+
+    const summary = `
+      <div class="summary">
+        <div class="stat"><div class="n">${votes}</div><div class="l">answers cast</div></div>
+        <div class="stat"><div class="n">${answered.length}</div><div class="l">questions answered</div></div>
+        <div class="stat"><div class="n">${heads ? Math.max(...data.map(d=>d.total)) : 0}</div><div class="l">largest turnout</div></div>
+        <div class="stat"><div class="n">${sess && sess.manifest ? "yes" : "no"}</div><div class="l">question snapshot</div></div>
+      </div>`;
+
+    const blocks = data.map(d => {
+      if (!d.total) return "";
+      const best = Math.max(...d.opts.map(o => o.n));
+      const rows = d.opts.map(o => `
+        <tr class="${o.n === best && o.n > 0 ? "top" : ""}">
+          <td>${esc(o.label)}</td>
+          <td class="barcell"><div class="track"><div class="fill" style="width:${o.pct}%"></div></div></td>
+          <td class="num">${o.pct}%</td>
+          <td class="num">${o.n}</td>
+          <td class="num">${o.h === null ? "—" : o.h + "%"}</td>
+          <td class="num">${o.nh === null ? "—" : o.nh + "%"}</td>
+        </tr>`).join("");
+      return `<section>
+        <h2>${esc(d.question)}${d.partPrompt && d.partPrompt !== d.question ? " · " + esc(d.partPrompt) : ""}</h2>
+        <div class="qid">${esc(d.partId)} · ${d.total} answers</div>
+        <table>
+          <thead><tr><th>Answer</th><th></th><th class="num">Share</th><th class="num">Count</th>
+            <th class="num">Holders</th><th class="num">Holds none</th></tr></thead>
+          <tbody>${rows}</tbody>
+          <tfoot><tr><td colspan="6">Holder and non-holder columns are shares within each group
+            (${d.hTot} and ${d.nTot} answers). Small groups move a lot.</td></tr></tfoot>
+        </table>
+      </section>`;
+    }).join("");
+
+    out.innerHTML = summary + blocks;
+  }
+
+  function csv(){
+    const sid = current, data = rowsFor(sid), lines = [];
+    lines.push(["session","question_id","question","answer","count","share_pct","holders_pct","nonholders_pct"].join(","));
+    const q = v => '"' + String(v === null || v === undefined ? "" : v).replace(/"/g,'""') + '"';
+    data.forEach(d => d.opts.forEach(o => {
+      lines.push([q(sid), q(d.partId), q(d.question), q(o.label), o.n, o.pct,
+                  o.h === null ? "" : o.h, o.nh === null ? "" : o.nh].join(","));
+    }));
+    const blob = new Blob([lines.join("\n")], { type:"text/csv" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "zenca-" + sid + ".csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  pick.onchange = () => { current = pick.value; render(); };
+  document.getElementById("reload").onclick = load;
+  document.getElementById("csv").onclick = csv;
+  document.getElementById("print").onclick = () => window.print();
+
+  sync.ready.then(load).catch(load);
+})();
+</script>
+</body>
+</html>

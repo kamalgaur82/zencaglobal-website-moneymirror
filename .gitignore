@@ -1,0 +1,18 @@
+# This folder (vMoneyMirror2026) is the deploy repo root: it holds ONLY the built site.
+# Source/version folders live outside this folder and must never be committed.
+# Listed defensively in case anything is ever copied in.
+v1/
+v2/
+v3/
+versioning/
+vMoneyMirror2026_unused/
+README.md
+zenca-config-sync.txt
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.vscode/
+.idea/
