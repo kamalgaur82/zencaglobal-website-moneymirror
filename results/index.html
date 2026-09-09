@@ -57,10 +57,39 @@
     .controls{display:none}
     th{color:#7a5c14}.fill{background:#7a5c14}tr.top td{color:#7a5c14}
     .summary{border-color:#ccc}
+    #gate{display:none !important}
   }
+
+  /* --- sign-in gate ------------------------------------------------------- */
+  #gate{position:fixed;inset:0;background:var(--ink);display:none;align-items:center;
+        justify-content:center;z-index:100;padding:24px}
+  #gate.on{display:flex}
+  .gatebox{width:100%;max-width:420px;border:1px solid rgba(214,178,109,.34);
+           background:var(--ink-2);padding:34px}
+  .gatemark{font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
+            font-weight:600;margin-bottom:20px}
+  .gatebox h3{font-family:var(--serif);font-weight:500;font-size:27px;margin-bottom:12px}
+  .gatebox p{font-size:14px;line-height:1.6;color:var(--mute);margin-bottom:22px}
+  .gatebox input{width:100%;background:var(--ink);border:1px solid rgba(214,178,109,.34);
+                 color:var(--paper);padding:14px;font-size:15px;font-family:var(--sans);margin-bottom:12px}
+  .gatebox button{width:100%;background:var(--gold);color:var(--ink);border:0;padding:14px;
+                  font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer}
+  .gatebox button:hover{color:var(--ink);opacity:.92}
+  #gate-msg{margin-top:16px;font-size:14px;line-height:1.5;color:var(--gold)}
 </style>
 </head>
 <body>
+<div id="gate" class="on">
+  <div class="gatebox">
+    <div class="gatemark">Zenca</div>
+    <h3>Results sign-in</h3>
+    <p>These results are private. Sign in with your organiser email to view them —
+       a one-time link is sent to your inbox. Open it on this device.</p>
+    <input id="gate-email" type="email" placeholder="you@example.com" autocomplete="email">
+    <button id="gate-go">Send me a link</button>
+    <div id="gate-msg"></div>
+  </div>
+</div>
 <header>
   <div>
     <div class="mark">Zenca</div>
@@ -238,7 +267,28 @@
   document.getElementById("csv").onclick = csv;
   document.getElementById("print").onclick = () => window.print();
 
-  sync.ready.then(load).catch(load);
+  // --- sign-in gate: don't fetch or reveal results until authenticated -----
+  function gateOn(on){ document.getElementById("gate").classList.toggle("on", on); }
+  document.getElementById("gate-go").onclick = () => {
+    const email = document.getElementById("gate-email").value.trim();
+    const msg = document.getElementById("gate-msg");
+    if (!email) { msg.textContent = "Enter the email you use as organiser."; return; }
+    msg.textContent = "Sending…";
+    sync.signIn(email)
+      .then(() => { msg.textContent = "Check your inbox. Open the link on this device — it signs you in here."; })
+      .catch(e => { msg.textContent = "Could not send: " + e.message; });
+  };
+
+  sync.ready.then(() => {
+    if (!sync.needsAuth) { gateOn(false); load(); return; }   // local rehearsal: no gate
+    let loaded = false;
+    sync.onAuth(ok => {
+      gateOn(!ok);
+      if (ok && !loaded) { loaded = true; load(); }
+    });
+  }).catch(() => {
+    document.getElementById("gate-msg").textContent = "Could not reach the server. Refresh to try again.";
+  });
 })();
 </script>
 </body>
