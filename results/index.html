@@ -83,10 +83,10 @@
   <div class="gatebox">
     <div class="gatemark">Zenca</div>
     <h3>Results sign-in</h3>
-    <p>These results are private. Sign in with your organiser email to view them —
-       a one-time link is sent to your inbox. Open it on this device.</p>
+    <p>These results are private. Sign in with your organiser email and password to view them.</p>
     <input id="gate-email" type="email" placeholder="you@example.com" autocomplete="email">
-    <button id="gate-go">Send me a link</button>
+    <input id="gate-pass" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="gate-go">Sign in</button>
     <div id="gate-msg"></div>
   </div>
 </div>
@@ -108,7 +108,7 @@
 <div id="out"></div>
 
 <script src="../assets/zenca-config.js?v=4"></script>
-<script src="../assets/zenca-sync.js?v=4"></script>
+<script src="../assets/zenca-sync.js?v=5"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -269,15 +269,18 @@
 
   // --- sign-in gate: don't fetch or reveal results until authenticated -----
   function gateOn(on){ document.getElementById("gate").classList.toggle("on", on); }
-  document.getElementById("gate-go").onclick = () => {
+  function submitGate(){
     const email = document.getElementById("gate-email").value.trim();
+    const pass  = document.getElementById("gate-pass").value;
     const msg = document.getElementById("gate-msg");
-    if (!email) { msg.textContent = "Enter the email you use as organiser."; return; }
-    msg.textContent = "Sending…";
-    sync.signIn(email)
-      .then(() => { msg.textContent = "Check your inbox. Open the link on this device — it signs you in here."; })
-      .catch(e => { msg.textContent = "Could not send: " + e.message; });
-  };
+    if (!email || !pass) { msg.textContent = "Enter your organiser email and password."; return; }
+    msg.textContent = "Signing in…";
+    sync.signInPassword(email, pass)
+      .catch(e => { msg.textContent = "Sign-in failed: " + e.message; });
+  }
+  document.getElementById("gate-go").onclick = submitGate;
+  ["gate-email","gate-pass"].forEach(id =>
+    document.getElementById(id).addEventListener("keydown", e => { if (e.key === "Enter") submitGate(); }));
 
   sync.ready.then(() => {
     if (!sync.needsAuth) { gateOn(false); load(); return; }   // local rehearsal: no gate

@@ -216,7 +216,8 @@
     <p>Only a signed-in presenter can open a room or move a slide. Phones need
        nothing — they just scan.</p>
     <input id="gate-email" type="email" placeholder="you@example.com" autocomplete="email">
-    <button id="gate-go">Send me a link</button>
+    <input id="gate-pass" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="gate-go">Sign in</button>
     <div id="gate-msg"></div>
   </div>
 </div>
@@ -241,7 +242,7 @@
 </div>
 
 <script src="../assets/zenca-config.js?v=4"></script>
-<script src="../assets/zenca-sync.js?v=4"></script>
+<script src="../assets/zenca-sync.js?v=5"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -813,15 +814,18 @@
   function gateOn(on){
     document.getElementById("gate").classList.toggle("on", on);
   }
-  document.getElementById("gate-go").onclick = () => {
+  function submitGate(){
     const email = document.getElementById("gate-email").value.trim();
+    const pass  = document.getElementById("gate-pass").value;
     const msg = document.getElementById("gate-msg");
-    if (!email) { msg.textContent = "Enter the email you registered as presenter."; return; }
-    msg.textContent = "Sending…";
-    sync.signIn(email)
-      .then(() => { msg.textContent = "Check your inbox. Open the link on this machine — it signs you in here."; })
-      .catch(e => { msg.textContent = "Could not send: " + e.message; });
-  };
+    if (!email || !pass) { msg.textContent = "Enter your presenter email and password."; return; }
+    msg.textContent = "Signing in…";
+    sync.signInPassword(email, pass)
+      .catch(e => { msg.textContent = "Sign-in failed: " + e.message; });
+  }
+  document.getElementById("gate-go").onclick = submitGate;
+  ["gate-email","gate-pass"].forEach(id =>
+    document.getElementById(id).addEventListener("keydown", e => { if (e.key === "Enter") submitGate(); }));
 
   sync.ready.then(() => {
     if (!sync.needsAuth) { startDeck(); return; }

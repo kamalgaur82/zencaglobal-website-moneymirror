@@ -44,6 +44,7 @@
       signedIn: () => true,
       user: () => null,
       signIn() { return Promise.resolve(); },
+      signInPassword() { return Promise.resolve(); },
       signOut() { return Promise.resolve(); },
       onAuth(cb) { cb(true); },
       room() {},
@@ -156,6 +157,10 @@
       user: () => session && session.user ? session.user.email : null,
       signIn(email) {
         return client.auth.signInWithOtp({ email: email, options: { emailRedirectTo: location.href } })
+          .then(({ error }) => { if (error) throw error; });
+      },
+      signInPassword(email, password) {
+        return client.auth.signInWithPassword({ email: email, password: password })
           .then(({ error }) => { if (error) throw error; });
       },
       signOut() { return client.auth.signOut(); },
