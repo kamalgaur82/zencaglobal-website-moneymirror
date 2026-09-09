@@ -65,19 +65,19 @@ window.ZENCA_CONFIG = {
   deck: [
 
     { type: "title",
-      kicker: "Kamal Gaur",
-      title: ["Helping people understand money"],
-      sub: "Financial education for long-term financial agency" },
+      kicker: "Financial education for long-term financial agency",
+      title: ["Kamal Gaur"],
+      sub: "Helping people understand money" },
 
     { type: "quote",
-      lines: ["I got serious about money after 13 years of working.",
-              "Not because I was broke \u2014 because I couldn\u2019t say what would happen to me."],
+      lines: ["Fun fact: I got serious about money after 13 years of working.",
+              "because I did not have a plan and I had no idea if things would turn out fine."],
       sub: "The discomfort of not knowing where I was heading got too high to keep living with." },
 
     { type: "quote",
       lines: ["So I took ownership of my own financial education.",
               "That *one* decision changed my life."],
-      sub: "It got me to financial independence. Then life happened \u2014 and I wasn\u2019t worried. I was excited to finally have the time." },
+      sub: "Along the way, that path got me to financial independence. Then life happened \u2014 and I was well prepared." },
 
     { type: "cards",
       kicker: "What I actually do",
@@ -88,7 +88,7 @@ window.ZENCA_CONFIG = {
         { label: "Learner",  text: "Still figuring it out, in public" },
         { label: "Educator", text: "Hand the thinking back to you" }
       ],
-      footer: "Financial education for long-term financial agency" },
+      footer: "Helping people understand money" },
 
     { type: "statement",
       kicker: "What this is",

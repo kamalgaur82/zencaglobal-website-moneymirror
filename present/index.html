@@ -58,7 +58,9 @@
 
   /* --- quote ------------------------------------------------------------ */
   .quote{border-left:5px solid var(--gold);padding-left:56px;max-width:1260px}
-  .quote p{font-family:var(--serif);font-size:66px;line-height:1.28;font-weight:500}
+  .quote p{font-family:var(--serif);font-size:66px;line-height:1.28;font-weight:500;margin-bottom:56px}
+  .quote p:last-of-type{margin-bottom:0}
+  .quote .sub{margin-top:112px}
   .quote p + p{margin-top:18px}
   .quote .sub{margin-top:44px;font-size:26px}
 
@@ -689,7 +691,7 @@
       ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${hasCounter ? "" : esc(railLabel(s))}</span></div>` : ""}
       ${inner}
       ${showJoin ? `<div class="rejoin">Joining late, or dropped out? <b>${AUD.displayHtml}</b></div>` : ""}
-      <div class="slideno">Slide #${idx + 1} of ${frames.length}</div>
+      <div class="slideno">Slide #${idx + 1}</div>
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
 
     if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 332);
