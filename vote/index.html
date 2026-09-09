@@ -179,7 +179,6 @@
           ${p.options.map((o,oi) => `
             <button class="opt" data-p="${pi}" data-o="${oi}">${esc(o)}</button>`).join("")}
         </div>`).join("")}
-      ${multi ? `<button class="submit" id="go" disabled>Submit</button>` : ""}
       ${err ? `<div class="err">${esc(err)}</div>` : ""}`;
 
     view.querySelectorAll(".opt").forEach(b => {
@@ -188,14 +187,10 @@
         picks[pi] = oi;
         view.querySelectorAll('.opt[data-p="'+pi+'"]').forEach(x => x.classList.remove("sel"));
         b.classList.add("sel");
-        if (multi) {
-          document.getElementById("go").disabled = Object.keys(picks).length !== parts.length;
-        } else {
-          submit(q, parts);
-        }
+        // Auto-submit once every part is answered — no button, on single- and multi-part polls alike.
+        if (Object.keys(picks).length === parts.length) submit(q, parts);
       };
     });
-    if (multi) document.getElementById("go").onclick = () => submit(q, parts);
   }
 
   function submit(q, parts){

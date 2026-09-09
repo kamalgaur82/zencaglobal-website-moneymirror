@@ -36,7 +36,7 @@
   .slideno{position:absolute;right:72px;bottom:24px;font-size:16px;letter-spacing:.1em;
            color:var(--gold-deep);opacity:.75}
   .hl{color:var(--gold)}
-  .rejoin b{color:var(--gold);font-weight:500;display:block;word-break:break-all}
+  .rejoin b{color:var(--gold);font-weight:500;display:block;word-break:normal;overflow-wrap:break-word}
 
   .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;
         padding:108px 72px 116px}
@@ -114,7 +114,7 @@
          align-items:center;justify-content:center;flex:none}
   .qrbox img,.qrbox canvas{width:100%;height:100%;display:block}
   .qrfallback{font-family:var(--sans);font-size:26px;color:var(--ink);text-align:center;line-height:1.4}
-  .joinurl{font-family:var(--serif);font-size:62px;color:var(--gold);margin:26px 0 30px;word-break:break-word}
+  .joinurl{font-family:var(--serif);font-size:62px;color:var(--gold);margin:26px 0 30px;word-break:normal;overflow-wrap:break-word}
   .joinnote{font-size:26px;color:var(--mute);line-height:1.55;max-width:640px}
   .pill{display:inline-block;margin-top:34px;border:1px solid var(--gold);color:var(--gold);
         padding:14px 26px;font-size:22px;letter-spacing:.12em;text-transform:uppercase}
@@ -273,33 +273,54 @@
     const full = audienceBase() + "#" + sid;
     const h = location.hostname;
     const loopback = h === "localhost" || h === "127.0.0.1" || h === "::1";
-    return { full: full, display: full.replace(/^https?:\/\//, ""), image: "", loopback: loopback };
+    const display = full.replace(/^https?:\/\//, "");
+    // displayHtml adds a break opportunity right before the "#", so the URL wraps
+    // cleanly at the fragment (or stays on one line) instead of snapping mid-token.
+    return { full: full, display: display, displayHtml: esc(display).replace("#", "<wbr>#"),
+             image: "", loopback: loopback };
   }
   let AUD = { full: "", display: "", image: "", loopback: false };
 
   /* ---------- session ----------
      Counter keys are namespaced by session id, so each run of the talk keeps
      its own record. The id travels to phones inside the state payload. */
+  function todayCode(){
+    const d = new Date();
+    return String(d.getFullYear()).slice(2) + pad(d.getMonth()+1) + pad(d.getDate());
+  }
+  function randCode(n){
+    const abc = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+    let r = "";
+    for (let i = 0; i < n; i++) r += abc[Math.floor(Math.random()*abc.length)];
+    return r;
+  }
+  /* Next free per-day letter (260909-A, -B, …), looked up from stored sessions.
+     Falls back to a 2-char code if the lookup can't run (offline) or a day
+     somehow runs past Z. */
+  function nextSessionId(){
+    const day = todayCode();
+    return sync.listSessions().then(sessions => {
+      const used = {};
+      (sessions || []).forEach(x => {
+        const m = /^(\d{6})-([A-Z]+)$/.exec(x.sid || "");
+        if (m && m[1] === day) used[m[2]] = true;
+      });
+      for (let i = 0; i < 26; i++) {
+        const L = String.fromCharCode(65 + i);
+        if (!used[L]) return day + "-" + L;
+      }
+      return day + "-" + randCode(2);
+    }).catch(() => day + "-" + randCode(2));
+  }
+  /* On first load with no stored session, start at today's "A". Reloads (e.g.
+     after sign-in) reuse the stored id, so a refresh never spawns a new session.
+     "Start new session" is what advances the letter. */
   const SID = (function(){
     let s = null;
     try { s = localStorage.getItem("zenca:sid"); } catch(e){}
-    if (!s) { s = newSid(CFG.session && CFG.session.id); try { localStorage.setItem("zenca:sid", s); } catch(e){} }
+    if (!s) { s = todayCode() + "-A"; try { localStorage.setItem("zenca:sid", s); } catch(e){} }
     return s;
   })();
-  /* A readable label plus a random suffix: findable in your results, not
-     guessable by someone who wants to vote before the room opens. */
-  function newSid(label){
-    const base = (label || stamp()).replace(/[^a-zA-Z0-9-]/g, "-");
-    let r = "";
-    const abc = "abcdefghjkmnpqrstuvwxyz23456789";
-    for (let i = 0; i < 4; i++) r += abc[Math.floor(Math.random()*abc.length)];
-    return base + "-" + r;
-  }
-  function stamp(){
-    const d = new Date();
-    return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) +
-           "-" + pad(d.getHours()) + pad(d.getMinutes());
-  }
   let sid = SID;
   AUD = audLink();
 
@@ -507,7 +528,7 @@
         <div class="qrbox" id="qr-join"></div>
         <div>
           <h2>Scan, and answer honestly.</h2>
-          <div class="joinurl">${esc(AUD.display)}</div>
+          <div class="joinurl">${AUD.displayHtml}</div>
           <div class="joinnote">Nothing is stored about you. No login, no email, no name —
             just counts on a screen. Like a doctor’s room: the more honest the answers,
             the more useful the picture.</div>
@@ -661,8 +682,8 @@
     stage.innerHTML = `
       ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${hasCounter ? "" : esc(railLabel(s))}</span></div>` : ""}
       ${inner}
-      ${showJoin ? `<div class="rejoin">Joining late, or dropped out? <b>${esc(AUD.display)}</b></div>` : ""}
-      <div class="slideno">Slide #${f.si + 1}</div>
+      ${showJoin ? `<div class="rejoin">Joining late, or dropped out? <b>${AUD.displayHtml}</b></div>` : ""}
+      <div class="slideno">Slide #${idx + 1} of ${frames.length}</div>
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
 
     if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 332);
@@ -779,14 +800,12 @@
   }
   document.getElementById("p-resync").onclick = () => { publish(); updatePanel(); };
   document.getElementById("p-new").onclick = () => {
-    const label = prompt("Label this session. Past sessions are kept, not overwritten.\n" +
-                         "A short random suffix is added so the join link cannot be guessed.",
-                         (CFG.session && CFG.session.id) || stamp());
-    if (!label) return;
-    sid = newSid(label.trim());
-    AUD = audLink();
-    try { localStorage.setItem("zenca:sid", sid); } catch(e){}
-    manifestNote = ""; locked = {}; idx = 0; ensureManifest(); paint();
+    nextSessionId().then(newid => {
+      sid = newid;
+      AUD = audLink();
+      try { localStorage.setItem("zenca:sid", sid); } catch(e){}
+      manifestNote = ""; locked = {}; idx = 0; ensureManifest(); paint();
+    });
   };
   document.getElementById("p-reset").onclick = () => {
     if (confirm("Clear the votes in session \"" + sid + "\"? Other sessions are untouched.")) {
