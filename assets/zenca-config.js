@@ -66,8 +66,8 @@ window.ZENCA_CONFIG = {
 
     { type: "title",
       kicker: "Kamal Gaur",
-      title: ["Zenca"],
-      sub: "Long-term financial education for long-term financial agency." },
+      title: ["Helping people understand money"],
+      sub: "Financial education for long-term financial agency" },
 
     { type: "quote",
       lines: ["I got serious about money after 13 years of working.",
@@ -88,7 +88,7 @@ window.ZENCA_CONFIG = {
         { label: "Learner",  text: "Still figuring it out, in public" },
         { label: "Educator", text: "Hand the thinking back to you" }
       ],
-      footer: "Long-term financial education for long-term financial agency." },
+      footer: "Financial education for long-term financial agency" },
 
     { type: "statement",
       kicker: "What this is",
