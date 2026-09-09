@@ -4,12 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zenca · Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0C0B09; --ink-2:#141210; --gold:#D6B26D; --gold-deep:#A8843C;
-    --paper:#F2EFE9; --mute:#8E877B; --line:rgba(214,178,109,.26);
-    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    /* Zenca style guide §13/§14/§15 */
+    --ink:#000000; --ink-2:#111111; --gold:#C6A15B; --gold-deep:#A8841F;
+    --paper:#EAEAEA; --mute:#BDBDBD; --line:rgba(198,161,91,.26);
+    --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    --serif:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--ink);color:var(--paper);font-family:var(--sans);
@@ -42,10 +46,10 @@
   th{text-align:left;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
      font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line)}
   th.num,td.num{text-align:right;width:104px}
-  td{padding:11px 12px;border-bottom:1px solid rgba(214,178,109,.12);vertical-align:middle}
+  td{padding:11px 12px;border-bottom:1px solid rgba(198,161,91,.12);vertical-align:middle}
   tr.top td{color:var(--gold)}
   .barcell{width:210px}
-  .track{height:10px;background:rgba(214,178,109,.12)}
+  .track{height:10px;background:rgba(198,161,91,.12)}
   .fill{height:100%;background:var(--gold-deep)}
   tr.top .fill{background:var(--gold)}
   tfoot td{color:var(--mute);font-size:13px;border:0;padding-top:10px}
@@ -64,13 +68,13 @@
   #gate{position:fixed;inset:0;background:var(--ink);display:none;align-items:center;
         justify-content:center;z-index:100;padding:24px}
   #gate.on{display:flex}
-  .gatebox{width:100%;max-width:420px;border:1px solid rgba(214,178,109,.34);
+  .gatebox{width:100%;max-width:420px;border:1px solid rgba(198,161,91,.34);
            background:var(--ink-2);padding:34px}
   .gatemark{font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
             font-weight:600;margin-bottom:20px}
   .gatebox h3{font-family:var(--serif);font-weight:500;font-size:27px;margin-bottom:12px}
   .gatebox p{font-size:14px;line-height:1.6;color:var(--mute);margin-bottom:22px}
-  .gatebox input{width:100%;background:var(--ink);border:1px solid rgba(214,178,109,.34);
+  .gatebox input{width:100%;background:var(--ink);border:1px solid rgba(198,161,91,.34);
                  color:var(--paper);padding:14px;font-size:15px;font-family:var(--sans);margin-bottom:12px}
   .gatebox button{width:100%;background:var(--gold);color:var(--ink);border:0;padding:14px;
                   font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer}
