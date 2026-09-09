@@ -276,6 +276,7 @@
     if (!email || !pass) { msg.textContent = "Enter your organiser email and password."; return; }
     msg.textContent = "Signing in…";
     sync.signInPassword(email, pass)
+      .then(() => { location.reload(); })   // reload into the clean authenticated view; results load reliably on load
       .catch(e => { msg.textContent = "Sign-in failed: " + e.message; });
   }
   document.getElementById("gate-go").onclick = submitGate;
