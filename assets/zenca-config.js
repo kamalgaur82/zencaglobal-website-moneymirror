@@ -71,13 +71,13 @@ window.ZENCA_CONFIG = {
 
     { type: "quote",
       lines: ["Fun fact: I got serious about money after 13 years of working.",
-              "because I did not have a plan and I had no idea if things would turn out fine."],
+              "I just didn’t have a plan — and no idea whether things would turn out fine."],
       sub: "The discomfort of not knowing where I was heading got too high to keep living with." },
 
     { type: "quote",
       lines: ["So I took ownership of my own financial education.",
-              "That *one* decision changed my life."],
-      sub: "Along the way, that path got me to financial independence. Then life happened \u2014 and I was well prepared." },
+              "That *one* decision changed everything."],
+      sub: "It carried me to financial independence \u2014 so when life happened, I was ready." },
 
     { type: "cards",
       kicker: "What I actually do",
@@ -108,8 +108,8 @@ window.ZENCA_CONFIG = {
         { id: "age",  prompt: "Your age",
           options: ["18–24", "25–34", "35–44", "45+", "Prefer not to say"] },
         { id: "hold", prompt: "Do you hold any bitcoin?",
-          options: ["Yes", "No", "Prefer not to say"],
-          segmentMap: ["holder", "nonholder", "unknown"] }
+          options: ["Yes", "No"],
+          segmentMap: ["holder", "nonholder"] }
       ],
       commentary: { default: "That’s the room. Hold that picture — it changes how you read everything that follows." } },
 
@@ -164,11 +164,11 @@ window.ZENCA_CONFIG = {
       kicker: "The Zenca framework",
       headline: ["From information to agency"],
       steps: [
-        { label: "Education",     text: "Know" },
-        { label: "Understanding", text: "Connect" },
-        { label: "Judgment",      text: "Weigh" },
-        { label: "Decisions",     text: "Choose" },
-        { label: "Agency",        text: "Own" }
+        { label: "Education",     text: "Build the foundation" },
+        { label: "Understanding", text: "See the bigger picture" },
+        { label: "Judgment",      text: "Weigh what matters" },
+        { label: "Decisions",     text: "Aligned with your goals" },
+        { label: "Agency",        text: "Confidence and control" }
       ],
       footer: "Bitcoin knowledge is not the destination. Financial agency is." },
 
@@ -243,12 +243,12 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "Price shouts, value whispers",
-      headline: ["Price is one number. Value is four slower ones."],
+      headline: ["Bitcoin’s price is one number.", "Its value is four slower ones."],
       cards: [
-        { label: "Scarcity",  text: "Mathematical" },
-        { label: "Access",    text: "Global" },
-        { label: "Security",  text: "Network" },
-        { label: "Rules",     text: "Verifiable" }
+        { label: "Scarcity",  text: "Capped at 21 million, forever" },
+        { label: "Access",    text: "Anyone, anywhere, no permission" },
+        { label: "Security",  text: "Held up by a global network" },
+        { label: "Rules",     text: "Fixed, transparent, verifiable by all" }
       ],
       footer: "Value moves on slower clocks." },
 
@@ -263,7 +263,7 @@ window.ZENCA_CONFIG = {
       id: "mood",
       depth: "merged",
       kicker: "Price and mood",
-      prompt: "In the last month, has a price move changed your mood?",
+      prompt: "In the last month, has a price move changed your mood for the worse?",
       options: ["Yes, most days", "A few times", "No", "I don\u2019t look"],
       commentary: {
         default: "Prices move moods, moods move actions, and actions are what actually decide your returns.",
@@ -336,24 +336,24 @@ window.ZENCA_CONFIG = {
       id: "runway",
       depth: "full",
       kicker: "Staying in the game",
-      prompt: "With zero income, how long could you last — without selling bitcoin?",
-      note: "The second half of that sentence is the whole question.",
-      options: ["Under 3 months", "3–6 months", "6–12 months", "Over 12 months", "Never counted"],
+      prompt: "If your income stopped today, how long could everything you own cover your current lifestyle?",
+      note: "Count everything — savings, investments, the lot. At today’s prices.",
+      options: ["Under 6 months", "6–12 months", "1–3 years", "3–5 years", "More than 5 years"],
       commentary: {
-        default: "Runway is not a boring fiat habit. It is the thing that decides whether you ever become a forced seller.",
+        default: "Runway is time. The more of it you have, the fewer decisions get made for you — by a market, a boss, or a bad year.",
         rules: [
-          { opt: 0, min: 30, text: "Under three months for a large part of the room. One bad quarter and the market decides when you sell, not you." },
-          { opt: 4, min: 25, text: "‘Never counted’ is the most honest button on this slide — and the easiest one to fix this week." }
+          { opt: 0, min: 30, text: "Under six months for a large part of the room. One shock and the choices stop being yours." },
+          { opt: 4, min: 20, text: "More than five years is real freedom hiding in plain sight — most people here are closer to a choice than they think." }
         ] },
       teach: {
-        kicker: "What runway actually protects",
-        headline: "Cash is not the opposite of conviction. It is what lets conviction survive.",
+        kicker: "What runway really buys",
+        headline: "Runway is time. And time is what turns money into choices.",
         points: [
-          { label: "The forced sale is the risk", text: "Not volatility. Volatility only hurts people who must sell into it." },
-          { label: "Boring by design",  text: "Runway sits in something dull and liquid, precisely so it is there on the worst week." },
-          { label: "Count it in months", text: "Not in rupees. Months of your actual spending is the only unit that answers the question." }
+          { label: "Measured in time, not rupees", text: "Months and years of your real spending — the only unit that answers the question." },
+          { label: "It removes the forced hand", text: "The longer your runway, the fewer decisions a market or a bad year gets to make for you." },
+          { label: "The first taste of freedom", text: "Enough runway, and work becomes a choice — which is exactly what the last questions are about." }
         ],
-        footer: "The strongest hands are the ones that never had to be strong." } },
+        footer: "The longer you can last, the freer every other decision becomes." } },
 
     { type: "question",
       id: "insurance",
@@ -438,11 +438,11 @@ window.ZENCA_CONFIG = {
       kicker: "Information",
       headline: ["Financial information has a half-life."],
       links: [
-        { label: "Source", text: "High edge" },
-        { label: "Pros",   text: "Fast reaction" },
-        { label: "Media",  text: "Narrative" },
-        { label: "Social", text: "Validation" },
-        { label: "You",    text: "New to me" }
+        { label: "Source",        text: "Where the edge is real" },
+        { label: "Professionals", text: "Act on it first" },
+        { label: "Media",         text: "Turn it into a story" },
+        { label: "Social",        text: "Repeat it for validation" },
+        { label: "You",           text: "It reaches you last, as “news”" }
       ],
       footer: "New to you is not the same as new to the market." },
 
@@ -551,7 +551,7 @@ window.ZENCA_CONFIG = {
       id: "enough",
       depth: "rapid",
       kicker: "If money stopped being the reason",
-      prompt: "When is it enough?",
+      prompt: "When is it enough — enough to stop working?",
       options: ["At my number", "My number, plus a buffer", "No amount would make me stop", "I have never worked out my number"],
       commentary: {
         default: "A number you cannot name cannot be reached. A number with no ceiling is just work with extra steps.",
@@ -593,16 +593,16 @@ window.ZENCA_CONFIG = {
     { type: "cards",
       kicker: "Things to play with",
       headline: ["Tools, not answers."],
-      sub: "Change the inputs until it is your situation, not a worked example. Then argue with the output.",
+      sub: "Change the inputs until it is your situation, not a worked example. Then see what it tells you.",
       cards: [
         { label: "Inflation Reframed", text: "What your unit of account is doing" },
         { label: "Price of Advice",    text: "What a fee costs across a lifetime" }
       ],
-      footer: "All free, on zenca.global. Bring me the output you disagree with." },
+      footer: "Both free on zenca.global." },
 
     { type: "quote",
-      lines: ["When generation becomes infinite,", "curation becomes the product."],
-      sub: "That is Zenca. Much of this is on the Substack already, and there is a great deal more to come." },
+      lines: ["When information becomes infinite,", "curation becomes the product."],
+      sub: "Welcome to Zenca — much of this is on the Substack already, with a great deal more to come." },
 
     { type: "closing",
       headline: ["The goal is not", "to believe harder.", "It is to see clearer."],
