@@ -277,7 +277,7 @@
   /* ---------- helpers ---------- */
   const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   // *word* renders in gold
-  const mk = s => esc(s).replace(/\*(.+?)\*/g, '<span class="hl">$1</span>');
+  const mk = s => esc(s).replace(/\*(.+?)\*/g, '<span class="hl">$1</span>').replace(/_(.+?)_/g, '<em>$1</em>');
   const partsOf = q => q.parts || [{ id:q.id, prompt:q.prompt, options:q.options, answer:q.answer }];
   const pad = n => String(n).padStart(2,"0");
 
@@ -473,7 +473,7 @@
 
   R.statement = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="sub">${mk(s.sub)}</div>` : ""}
       ${s.figure ? `<div class="figrow">${
         (s.figure.items || [s.figure.left, s.figure.mid, s.figure.right])
@@ -484,7 +484,7 @@
 
   R.cards = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="sub">${esc(s.sub)}</div>` : ""}
       <div class="cards">${s.cards.map(c => `
         <div class="card"><div class="lab">${esc(c.label)}</div><div class="txt">${esc(c.text)}</div></div>`).join("")}
@@ -494,7 +494,7 @@
 
   R.steps = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="steps">${s.steps.map((st,i) => `
         <div class="step"><div class="n">${pad(i+1)}</div>
           <div class="lab">${esc(st.label)}</div><div class="txt">${esc(st.text)}</div></div>`).join("")}
@@ -504,7 +504,7 @@
 
   R.compare = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="compare">
         <div class="panel"><div class="lab">${esc(s.left.label)}</div><div class="txt">${esc(s.left.text)}</div></div>
         <div class="vs${s.flow ? " flow" : ""}">${s.flow ? "" : "&mdash;"}</div>
@@ -515,7 +515,7 @@
 
   R.layers = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="layers">${s.rows.map(r => `
         <div class="layer"><div class="lab">${esc(r.label)}</div>
           <div class="mid">${esc(r.mid)}</div><div class="rt">${esc(r.right)}</div></div>`).join("")}
@@ -525,7 +525,7 @@
 
   R.cycles = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="flow">${s.stages.map((n,i) => `
         <div class="node ${i===2?"hot":""}"><div class="lab">${esc(n.label)}</div>
           <div class="txt">${esc(n.text)}</div></div>`).join("")}
@@ -535,7 +535,7 @@
 
   R.chain = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="flow">${s.links.map((n,i) => `
         <div class="node ${i===0?"hot":""}"><div class="lab">${esc(n.label)}</div>
           <div class="txt">${esc(n.text)}</div></div>`).join("")}
@@ -545,7 +545,7 @@
 
   R.list = s => `
     <div class="body">
-      <h2>${s.headline.map(esc).join("<br>")}</h2>
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="qlist">${s.items.map((t,i) => `
         <div class="qitem"><div class="n">${pad(i+1)}</div><div class="t">${esc(t)}</div></div>`).join("")}
       </div>
@@ -575,7 +575,6 @@
       <h1>${s.headline.map((l,i) => `<div class="cline${i ? " gold" : ""}">${esc(l)}</div>`).join("")}</h1>
       <div class="closerow">
         <div>
-          <div class="sub">${esc(s.sub)}</div>
           <div class="footline">${esc(s.note)}</div>
         </div>
         <div>
@@ -624,7 +623,7 @@
       <div class="body">
         <h2>${esc(q.prompt)}</h2>
         <div class="bars">${body}</div>
-        <div class="commentary">${esc(commentaryFor(q))}</div>
+        <div class="commentary">${commentaryFor(q).split("\n").map(mk).join("<br>")}</div>
       </div>
       <div class="counter closed"><div class="n">${totalFor(parts[0].id)}</div><div class="l">votes counted</div></div>`;
   }
@@ -633,7 +632,7 @@
     const t = q.teach;
     return `
       <div class="body">
-        <h2>${esc(t.headline)}</h2>
+        <h2>${(Array.isArray(t.headline) ? t.headline : [t.headline]).map(mk).join("<br>")}</h2>
         <div class="layers">${t.points.map(p => `
           <div class="layer"><div class="lab">${esc(p.label)}</div>
             <div class="mid" style="grid-column:2 / span 2">${esc(p.text)}</div></div>`).join("")}

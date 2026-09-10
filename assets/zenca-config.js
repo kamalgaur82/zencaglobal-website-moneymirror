@@ -160,7 +160,7 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "The human layer",
-      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your behaviour."],
+      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
       sub: "A better asset does not automatically create a better investor.",
       cards: [
         { label: "Fear",       text: "Sell the fall" },
@@ -227,7 +227,7 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "Why it’s so much bigger than it sounds",
-        headline: "1% is not charged once. It is charged on the compounding.",
+        headline: ["*1%* is not charged once.", "It is charged on the *compounding*."],
         points: [
           { label: "The fee compounds too", text: "Every rupee taken this year is a rupee that never compounds for the next 29." },
           { label: "Where it hides in India", text: "Regular mutual fund plans carry a distributor commission. Direct plans of the same fund don’t." },
@@ -248,8 +248,8 @@ window.ZENCA_CONFIG = {
         ] } },
 
     { type: "quote",
-      lines: ["Price is simply the latest agreement.", "It is not the same thing as value."],
-      sub: "Markets move on behaviour long before fundamentals move." },
+      lines: ["*Price* is simply the latest agreement.", "It is not the same thing as *value*."],
+      sub: "Markets move on behavior long before fundamentals move." },
 
     { type: "cards",
       kicker: "Price shouts, value whispers",
@@ -353,11 +353,11 @@ window.ZENCA_CONFIG = {
         default: "Runway is time. The more of it you have, the fewer decisions get made for you — by a market, a boss, or a bad year.",
         rules: [
           { opt: 0, min: 30, text: "Under six months for a large part of the room. One shock and the choices stop being yours." },
-          { opt: 4, min: 20, text: "More than five years is real freedom hiding in plain sight — most people here are closer to a choice than they think." }
+          { opt: 4, min: 20, text: "More than five years without income is a genuine choice most people don’t realise they already hold — this is what financial independence starts to look like." }
         ] },
       teach: {
         kicker: "What runway really buys",
-        headline: "Runway is time. And time is what turns money into choices.",
+        headline: ["Runway is *time*.", "And time is what turns money into *choices*."],
         points: [
           { label: "Measured in time, not rupees", text: "Months and years of your real spending — the only unit that answers the question." },
           { label: "It removes the forced hand", text: "The longer your runway, the fewer decisions a market or a bad year gets to make for you." },
@@ -397,15 +397,15 @@ window.ZENCA_CONFIG = {
         default: "There is no correct answer on this slide. There are only trade-offs — and they’re different at each end.",
         rules: [
           { opt: 4, min: 20, text: "A meaningful group is all-in. That is a position with a very specific requirement: you must never be forced to sell." },
-          { opt: 0, min: 20, text: "A real share of this hall holds none. Worth noticing — the money questions in this room are not crypto questions." }
+          { opt: 0, min: 20, text: "A real share of this hall holds none. Worth noticing — the money questions in this room are not Bitcoin questions." }
         ] },
       teach: {
         kicker: "What each end optimises for",
-        headline: "Concentration is not wrong. Unexamined concentration is.",
+        headline: ["Concentration is not wrong.", "*Unexamined* concentration is."],
         points: [
-          { label: "Heavy allocation buys", text: "Maximum exposure to an asymmetric bet you actually believe in." },
-          { label: "Heavy allocation costs", text: "Every emergency becomes a forced sale, at whatever price the market offers that week." },
-          { label: "Light allocation buys",  text: "Optionality and sleep — at the price of a smaller share of the upside." }
+          { label: "A large share buys", text: "Maximum exposure — if you turn out to be right." },
+          { label: "A large share costs", text: "Every emergency becomes a forced sale, at whatever price that week offers." },
+          { label: "A small share buys",  text: "Optionality and sleep, for a smaller slice of the upside." }
         ],
         footer: "Ask what your allocation requires of you, not what it might return." } },
 
@@ -423,12 +423,12 @@ window.ZENCA_CONFIG = {
 
     { type: "quote",
       lines: ["Most financial mistakes are not caused by greed.",
-              "They are caused by the desire to compress time."],
+              "They are caused by the desire to *compress time*."],
       sub: "Speed quietly turns reasonable goals into unreasonable risk." },
 
     { type: "compare",
       kicker: "The leverage trap",
-      headline: ["Time is not the enemy of wealth. Time is the mechanism."],
+      headline: ["Time is not the enemy of wealth.", "Time is the *_mechanism_*."],
       left:  { label: "Leverage",    text: "Tries to pull the future toward you" },
       right: { label: "Compounding", text: "Lets you travel toward it" },
       footer: "One of these has a liquidation price." },
@@ -470,7 +470,7 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "The test that costs nothing",
-        headline: "If you can’t say why you own it, you can’t say when to sell it.",
+        headline: ["If you can’t say *why* you own it,", "you can’t say *when* to sell it."],
         points: [
           { label: "Write one line per holding", text: "The reason you bought it, and what would make you exit." },
           { label: "Date the line",  text: "A reason from 2021 may have expired without telling you." },
@@ -538,7 +538,7 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "What to actually do",
-        headline: "Nominees move bank accounts. They do not move keys.",
+        headline: ["A nominee can claim your bank accounts.", "No one can claim your keys."],
         points: [
           { label: "Nomination is not inheritance", text: "A nominee receives custody, not ownership. A will decides ownership." },
           { label: "List the accounts, not the passwords", text: "Someone should know what exists and where, even if they can’t open it yet." },
@@ -553,7 +553,7 @@ window.ZENCA_CONFIG = {
       prompt: "If you never had to work for money again, what would you do?",
       options: ["Stop working entirely", "Keep working, on my own terms", "Keep doing what I do now", "I have never let myself think about it"],
       commentary: {
-        default: "This is the question the whole thing is for. Independence is not the destination \u2014 it is what hands you the question.",
+        default: "Everything else \u2014 saving, investing, independence \u2014 is in service of this one question.\nIndependence isn\u2019t the finish line; it\u2019s what finally lets you ask it.",
         rules: [
           { opt: 3, min: 30, text: "Never having thought about it is the most common answer and the most revealing. We optimise hard toward a finish line we have never described." }
         ] } },
@@ -565,7 +565,7 @@ window.ZENCA_CONFIG = {
       prompt: "When is it enough — enough to stop working?",
       options: ["At my number", "My number, plus a buffer", "No amount would make me stop", "I have never worked out my number"],
       commentary: {
-        default: "A number you cannot name cannot be reached. A number with no ceiling is just work with extra steps.",
+        default: "A number you can’t name, you can never reach.\nA number with no ceiling means you never stop — the investing is just working forever, because ‘enough’ keeps moving.",
         rules: [
           { opt: 2, min: 30, text: "Worth sitting with. If no amount would make you stop, the plan is to work forever \u2014 which is fine, as long as it is a choice and not a default." }
         ] } },
@@ -574,16 +574,16 @@ window.ZENCA_CONFIG = {
       kicker: "The full stack",
       headline: ["Understanding Bitcoin is a sequence, not a pitch."],
       steps: [
-        { label: "Money",     text: "What is the unit?" },
-        { label: "Behaviour", text: "How do I react?" },
-        { label: "Markets",   text: "What is price?" },
-        { label: "Bitcoin",   text: "What are the rules?" },
-        { label: "Custody",   text: "Who controls it?" }
+        { label: "Money",    text: "What is the unit?" },
+        { label: "Markets",  text: "What is price?" },
+        { label: "Behavior", text: "How do I react?" },
+        { label: "Bitcoin",  text: "What are the rules?" },
+        { label: "Custody",  text: "Who controls it?" }
       ],
       footer: "Skip a layer and the missing understanding usually returns as fear." },
 
     { type: "quote",
-      lines: ["You don’t need better predictions.", "You need better frameworks."],
+      lines: ["You don’t need better predictions.", "You need better *frameworks*."],
       sub: "Predictions tell you what might happen. Frameworks tell you what to do when you are wrong." },
 
     { type: "list",
@@ -612,20 +612,19 @@ window.ZENCA_CONFIG = {
     { type: "cards",
       kicker: "Things to play with",
       headline: ["Tools, not answers."],
-      sub: "Change the inputs until it is your situation, not a worked example. Then see what it tells you.",
+      sub: "Change the inputs until it is your situation, not a worked example. Then see what it tells you. Both free on zenca.global.",
       cards: [
         { label: "Inflation Reframed", text: "What your unit of account is doing" },
         { label: "Price of Advice",    text: "What a fee costs across a lifetime" }
       ],
-      footer: "Both free on zenca.global." },
+      footer: "Understand money. Understand yourself. Then decide what Bitcoin means in your life." },
 
     { type: "quote",
-      lines: ["When information becomes infinite,", "curation becomes the product."],
+      lines: ["When information becomes infinite,", "*_curation_* becomes the product."],
       sub: "Welcome to Zenca — much of this is on the Substack already, with a great deal more to come." },
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      sub: "Understand money. Understand yourself. Then decide what Bitcoin means in your life.",
       note: "Every subscription is a vote for thinking more clearly about money." }
   ]
 };
