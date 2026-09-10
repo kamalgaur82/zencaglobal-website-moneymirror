@@ -108,6 +108,9 @@
   const ROOM = (location.hash || "").replace(/^#/, "").trim();
   let state = { phase:"idle", qid:null, sid: ROOM || null },
       picks = {}, busy = false, err = "", counters = {};
+  // Declared before the subscriptions below: an already-stored state fires the
+  // state callback synchronously, which calls diag() — diagNote must exist by then.
+  let diagNote = "starting";
 
   sync.subscribeState(s => {
     if (!s) return;
@@ -121,7 +124,17 @@
 
   function currentQid(){ return state.qid; }
 
-  let diagNote = "starting";
+  /* Tell the presenter this phone opened the link — a "scans in" tally shown on
+     the join slide. One bump per device per session; the localStorage guard
+     means a refresh or a second visit never counts twice. Reserved key
+     room|__scan is not a question, so it never touches votes or results. */
+  function markScan(room){
+    if (!sync.bump || !room) return;
+    const k = "scanned:" + room;
+    if (store.get(k) === "1") return;
+    sync.bump(room + "|__scan|0|all").then(() => { store.set(k, "1"); }).catch(() => {});
+  }
+
   function diag(note, bad){
     if (note) diagNote = note;
     const el = document.getElementById("diag");
@@ -249,6 +262,7 @@
   sync.ready.then(() => {
     diag("connected");
     if (ROOM && sync.room) sync.room(ROOM);
+    if (ROOM) markScan(ROOM);
     if (!ROOM && sync.mode === "supabase") {
       return rest("Scan the code on screen.",
                   "This link needs the session code from the room you are in.");

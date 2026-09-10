@@ -162,7 +162,7 @@
       const ids = [];
       Object.keys(counters).forEach(k => {
         const bits = k.split("|");
-        if (bits[0] === sid && ids.indexOf(bits[1]) < 0) ids.push(bits[1]);
+        if (bits[0] === sid && bits[1] !== "__scan" && ids.indexOf(bits[1]) < 0) ids.push(bits[1]);
       });
       ids.forEach(id => parts.push({ qid:id, question:id, partId:id,
                                      partPrompt:"", options:null }));
