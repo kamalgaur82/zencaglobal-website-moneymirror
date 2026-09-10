@@ -170,6 +170,21 @@
   .row .a b{color:var(--gold);font-weight:500}
   .legend{display:flex;gap:36px;margin-top:36px;font-size:23px;color:var(--mute);align-items:center}
   .swatch{display:inline-block;width:22px;height:12px;margin-right:12px}
+  /* stage scorecard (report + split pages) */
+  .rlist{margin-top:46px}
+  .rrow{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:baseline;
+        padding:26px 0;border-bottom:1px solid rgba(198,161,91,.22)}
+  .rrow .rq{font-size:29px;line-height:1.3;color:var(--mute)}
+  .rrow .ra{font-family:var(--serif);font-size:42px;line-height:1.12;color:var(--paper);text-align:right}
+  .rrow .ra b{color:var(--gold);font-weight:500}
+  .ra-none{color:var(--gold-deep)}
+  .splitrow{padding:24px 0;border-bottom:1px solid rgba(198,161,91,.22)}
+  .splitrow .rq{font-size:27px;line-height:1.3;color:var(--paper);margin-bottom:16px}
+  .sgroups{display:flex;gap:64px;flex-wrap:wrap}
+  .sg{font-family:var(--serif);font-size:32px;line-height:1.2}
+  .sg.h{color:var(--gold)}
+  .sg.n{color:var(--paper)}
+  .sg .sgp{font-weight:500;margin-right:6px}
   .splitgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px 56px;margin-top:26px}
   .sblock{border-bottom:1px solid rgba(198,161,91,.2);padding-bottom:14px}
   .sblock .sq{font-size:19px;line-height:1.3;color:var(--mute);margin-bottom:10px}
@@ -627,56 +642,61 @@
       </div>`;
   }
 
-  /* ---------- report cards ---------- */
-  function renderReport(){
-    const qs = CFG.deck.filter(s => s.type === "question" && s.id !== "warmup");
-    const rows = qs.map(q => {
+  /* ---------- results scorecard: one page per framework stage ---------- */
+  function qOf(id){ return CFG.deck.find(s => s.type === "question" && s.id === id); }
+
+  function renderReport(groupIdx){
+    const stage = CFG.resultStages[groupIdx];
+    const rows = stage.ids.map(id => {
+      const q = qOf(id); if (!q) return "";
       const p = partsOf(q)[0], dist = distribution(p), total = totalFor(p.id);
-      if (!total) return `<div class="row"><div class="q">${esc(q.prompt)}</div><div class="a">No votes</div></div>`;
+      if (!total) return `<div class="rrow"><div class="rq">${esc(q.prompt)}</div><div class="ra ra-none">No votes yet</div></div>`;
       const best = Math.max(...dist.map(d => d.n));
       const tied = dist.filter(d => d.n === best && d.n > 0);
-      const label = tied.map(d => esc(d.label.toLowerCase())).join(" &nbsp;/&nbsp; ");
-      return `<div class="row"><div class="q">${esc(q.prompt)}</div>
-        <div class="a"><b>${tied[0].pct}%</b> ${label}</div></div>`;
+      const label = tied.map(d => esc(d.label)).join(" / ");
+      return `<div class="rrow"><div class="rq">${esc(q.prompt)}</div>
+        <div class="ra"><b>${tied[0].pct}%</b> ${label}</div></div>`;
     }).join("");
     return `
       <div class="body">
-        <h2>The honest snapshot.</h2>
-        <div class="grid">${rows}</div>
+        <div class="kicker">The honest snapshot · ${groupIdx + 1} of ${CFG.resultStages.length}</div>
+        <h2>${esc(stage.name)}</h2>
+        <div class="rlist">${rows}</div>
       </div>`;
   }
 
-  function renderSplit(){
-    const ids = CFG.splitReport;
-    const blocks = ids.map(id => {
-      const q = CFG.deck.find(s => s.type === "question" && s.id === id);
-      if (!q) return "";
+  function renderSplit(groupIdx){
+    const stage = CFG.resultStages[groupIdx];
+    const rows = stage.ids.map(id => {
+      const q = qOf(id); if (!q) return "";
       const p = partsOf(q)[0], c = countsFor(p.id);
       let hT = 0, nT = 0;
       Object.keys(c).forEach(k => { hT += c[k].holder; nT += c[k].nonholder; });
-      const dist = p.options.map((label,i) => {
+      if (hT + nT === 0) return `<div class="splitrow"><div class="rq">${esc(q.prompt)}</div><div class="ra ra-none">No votes yet</div></div>`;
+      const stat = p.options.map((label,i) => {
         const row = c[i] || { holder:0, nonholder:0 };
-        return { label, h: hT ? Math.round(row.holder*100/hT) : 0, n: nT ? Math.round(row.nonholder*100/nT) : 0 };
+        return { label, hn: row.holder, nn: row.nonholder,
+                 h: hT ? Math.round(row.holder*100/hT) : 0, n: nT ? Math.round(row.nonholder*100/nT) : 0 };
       });
-      const peak = Math.max(...dist.map(d => d.h + d.n));
-      const top = dist.find(d => (d.h + d.n) === peak) || dist[0];
-      return `<div class="sblock">
-          <div class="sq">${esc(q.prompt)}</div>
-          <div class="srow">
-            <div class="sh">${top.h}%</div>
-            <div class="sa">${esc(top.label)}</div>
-            <div class="sn">${top.n}%</div>
-          </div>
-        </div>`;
+      const hTop = stat.reduce((a,b) => b.hn > a.hn ? b : a, stat[0]);
+      const nTop = stat.reduce((a,b) => b.nn > a.nn ? b : a, stat[0]);
+      return `<div class="splitrow">
+        <div class="rq">${esc(q.prompt)}</div>
+        <div class="sgroups">
+          <div class="sg h"><span class="sgp">${hTop.h}%</span> ${esc(hTop.label)}</div>
+          <div class="sg n"><span class="sgp">${nTop.n}%</span> ${esc(nTop.label)}</div>
+        </div>
+      </div>`;
     }).join("");
     return `
       <div class="body">
-        <h2>Same room. Same habits?</h2>
-        <div class="splitgrid">${blocks}</div>
+        <div class="kicker">Holders vs. holds-none · ${groupIdx + 1} of ${CFG.resultStages.length}</div>
+        <h2>${esc(stage.name)}</h2>
+        <div class="rlist">${rows}</div>
         <div class="legend">
           <span><span class="swatch" style="background:var(--gold)"></span>Holds bitcoin</span>
           <span><span class="swatch" style="background:var(--paper)"></span>Holds none</span>
-          <span>Small groups move a lot. Read the pattern, not the decimal.</span>
+          <span>Small groups move a lot — read the pattern.</span>
         </div>
       </div>`;
   }
@@ -687,8 +707,8 @@
     let inner;
     if (s.type === "question") {
       inner = f.beat === 0 ? renderVote(s) : (f.beat === 1 ? renderResults(s) : renderTeach(s));
-    } else if (s.type === "report") { inner = renderReport(); }
-    else if (s.type === "split")   { inner = renderSplit(); }
+    } else if (s.type === "report") { inner = renderReport(s.group); }
+    else if (s.type === "split")   { inner = renderSplit(s.group); }
     else { inner = R[s.type] ? R[s.type](s) : `<div class="body"><h2>${esc(s.type)}</h2></div>`; }
 
     const showRail = !["title","closing"].includes(s.type);

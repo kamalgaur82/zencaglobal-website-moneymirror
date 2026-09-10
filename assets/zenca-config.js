@@ -49,8 +49,17 @@ window.ZENCA_CONFIG = {
      piles instead of one. */
   segments: { holder: "Holds bitcoin", nonholder: "Holds none", unknown: "Didn’t say" },
 
-  /* --- Which questions appear on the split report card -------------------- */
-  splitReport: ["networth", "runway", "risk", "optimise", "freedom", "access"],
+  /* --- Result scorecard --------------------------------------------------
+     The 18 questions grouped by the five framework stages (slide 15). Each
+     group becomes one "honest snapshot" page and one holders/non-holders
+     page at the end of the talk. Warm-up is included (its age part). */
+  resultStages: [
+    { name: "Education",     ids: ["warmup", "networth", "fee", "feeonly"] },
+    { name: "Understanding", ids: ["manages", "mood"] },
+    { name: "Judgment",      ids: ["risk", "optimise", "allocation", "singlestock", "why"] },
+    { name: "Decisions",     ids: ["runway", "insurance", "pwmgr", "twofa", "access"] },
+    { name: "Agency",        ids: ["freedom", "enough"] }
+  ],
 
   /* --- Questions you can drop live if running late ------------------------
      Marked on the presenter’s panic panel (press P). Skipping is seamless:
@@ -577,10 +586,6 @@ window.ZENCA_CONFIG = {
       lines: ["You don’t need better predictions.", "You need better frameworks."],
       sub: "Predictions tell you what might happen. Frameworks tell you what to do when you are wrong." },
 
-    { type: "report" },
-
-    { type: "split" },
-
     { type: "list",
       kicker: "A practical test",
       headline: ["Five questions before your next decision."],
@@ -591,6 +596,18 @@ window.ZENCA_CONFIG = {
         "Is this information new, or merely new to me?",
         "Does this increase my agency, or my dependence?"
       ] },
+
+    { type: "report", group: 0 },
+    { type: "report", group: 1 },
+    { type: "report", group: 2 },
+    { type: "report", group: 3 },
+    { type: "report", group: 4 },
+
+    { type: "split", group: 0 },
+    { type: "split", group: 1 },
+    { type: "split", group: 2 },
+    { type: "split", group: 3 },
+    { type: "split", group: 4 },
 
     { type: "cards",
       kicker: "Things to play with",
