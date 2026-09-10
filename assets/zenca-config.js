@@ -66,8 +66,9 @@ window.ZENCA_CONFIG = {
 
     { type: "title",
       kicker: "Financial education for long-term financial agency",
-      title: ["Kamal Gaur"],
-      sub: "Helping people understand money" },
+      title: ["The Money Mirror"],
+      presenter: "Kamal Gaur",
+      role: "Helping people understand money" },
 
     { type: "quote",
       lines: ["Fun fact: I got serious about money after 13 years of working.",
@@ -471,8 +472,9 @@ window.ZENCA_CONFIG = {
     { type: "compare",
       kicker: "Beliefs",
       headline: ["Math is math. Until money threatens the ego."],
-      left:  { label: "Evidence", text: "Update → better model" },
-      right: { label: "Identity", text: "Defend → old model" },
+      left:  { label: "Identity", text: "Defend the old model" },
+      right: { label: "Evidence", text: "Update to a better model" },
+      flow: true,
       footer: "Conviction should be strong enough to act, and weak enough to update." },
 
     { type: "question",
@@ -605,7 +607,7 @@ window.ZENCA_CONFIG = {
       sub: "Welcome to Zenca — much of this is on the Substack already, with a great deal more to come." },
 
     { type: "closing",
-      headline: ["The goal is not", "to believe harder.", "It is to see clearer."],
+      headline: ["The goal is not to believe harder.", "It is to see clearer."],
       sub: "Understand money. Understand yourself. Then decide what Bitcoin means in your life.",
       note: "Every subscription is a vote for thinking more clearly about money." }
   ]
