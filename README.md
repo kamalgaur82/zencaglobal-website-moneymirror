@@ -1,4 +1,4 @@
-# The Money Mirror
+# Money Mirror
 
 A live, anonymous audience-voting web app for a conference talk. Nothing about a
 voter is stored — just honest counts on a screen. Backed by Supabase.

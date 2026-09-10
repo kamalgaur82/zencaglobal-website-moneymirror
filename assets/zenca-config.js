@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ZENCA — The Money Mirror (v3: the full arc, with the story)
+   ZENCA — Money Mirror (v3: the full arc, with the story)
    Single source of truth: sync config, deck slides, questions, commentary.
    Edit this file. Do not edit presenter.html / audience.html for content.
    ========================================================================== */
@@ -25,7 +25,7 @@ window.ZENCA_CONFIG = {
      overwrites another. Leave id blank to auto-name from the date and time
      (e.g. 2026-09-06-1830). Set it explicitly to name a session yourself:
      id: "bitmela-2026". Start a fresh one any time from the presenter panel. */
-  session: { id: "", label: "The Money Mirror — v3" },
+  session: { id: "", label: "Money Mirror — v3" },
 
   /* --- Audience entry point --------------------------------------------- */
   audience: {
@@ -75,7 +75,7 @@ window.ZENCA_CONFIG = {
 
     { type: "title",
       kicker: "Financial education for long-term financial agency",
-      title: ["The Money Mirror"],
+      title: ["Money Mirror"],
       presenter: "Kamal Gaur",
       role: "Helping people understand money" },
 
@@ -102,7 +102,7 @@ window.ZENCA_CONFIG = {
 
     { type: "statement",
       kicker: "What this is",
-      headline: ["The Money Mirror"],
+      headline: ["Money Mirror"],
       sub: "A live quiz we turn on the room. You answer from your phone; the answers appear on the screen. You see where you stand \u2014 and where everyone around you stands.",
       footer: "No login. No names. Only the counts are ever saved." },
 
