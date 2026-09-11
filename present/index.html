@@ -285,7 +285,7 @@
 </div>
 
 <script src="../assets/zenca-config.js?v=7"></script>
-<script src="../assets/zenca-sync.js?v=5"></script>
+<script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -378,7 +378,7 @@
     }
   });
 
-  let idx = 0, blank = false, counters = {}, locked = {};
+  let idx = 0, blank = false, counters = {}, locked = {}, waiting = 0;
   const nav = { last: 0 };
 
   /* ---------- question manifest ----------
@@ -588,7 +588,7 @@
         </div>
       </div>
     </div>
-    <div class="counter" id="scans"><div class="n">0</div><div class="l">scans in</div></div>`;
+    <div class="counter" id="scans"><div class="n">0</div><div class="l">phones in</div></div>`;
 
   R.closing = s => `
     <div class="body closing">
@@ -788,20 +788,16 @@
     updatePanel();
   }
 
-  /* How many phones have opened this session's link — the "scans in" tally on
-     the join slide. Reserved key sid|__scan, bumped once per device by the vote
-     page; never a real question, so votes and results ignore it. */
-  function scanCount(){
-    let n = 0;
-    Object.keys(counters).forEach(k => {
-      const p = k.split("|");
-      if (p[0] === sid && p[1] === "__scan") n += counters[k];
-    });
-    return n;
-  }
+  /* How many phones are connected to this session right now — the live "phones
+     in" tally on the join slide, from Realtime presence. Unlike a vote, this
+     works during the idle wait (the server rejects vote bumps until a question
+     is open) and drops on its own when a phone leaves. */
   function refreshScans(){
     const node = document.querySelector("#scans .n");
-    if (node) node.textContent = scanCount();
+    if (node) node.textContent = waiting;
+  }
+  function watchWaiting(){
+    if (sync.watchPresence) sync.watchPresence(sid, n => { waiting = n; refreshScans(); });
   }
 
   /* ---------- broadcast ---------- */
@@ -878,7 +874,7 @@
       sid = newid;
       AUD = audLink();
       try { localStorage.setItem("zenca:sid", sid); } catch(e){}
-      manifestNote = ""; locked = {}; idx = 0; ensureManifest(); paint();
+      manifestNote = ""; locked = {}; idx = 0; ensureManifest(); watchWaiting(); paint();
     });
   };
   document.getElementById("p-reset").onclick = () => {
@@ -908,7 +904,7 @@
   qrLib.onerror = () => {};
   document.head.appendChild(qrLib);
 
-  function startDeck(){ ensureManifest(); fit(); paint(); }
+  function startDeck(){ ensureManifest(); watchWaiting(); fit(); paint(); }
 
   function gateOn(on){
     document.getElementById("gate").classList.toggle("on", on);

@@ -81,7 +81,7 @@
 </footer>
 
 <script src="../assets/zenca-config.js?v=4"></script>
-<script src="../assets/zenca-sync.js?v=4"></script>
+<script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -126,15 +126,11 @@
 
   function currentQid(){ return state.qid; }
 
-  /* Tell the presenter this phone opened the link — a "scans in" tally shown on
-     the join slide. One bump per device per session; the localStorage guard
-     means a refresh or a second visit never counts twice. Reserved key
-     room|__scan is not a question, so it never touches votes or results. */
-  function markScan(room){
-    if (!sync.bump || !room) return;
-    const k = "scanned:" + room;
-    if (store.get(k) === "1") return;
-    sync.bump(room + "|__scan|0|all").then(() => { store.set(k, "1"); }).catch(() => {});
+  /* Announce this phone to the room so the presenter can show how many are
+     waiting. Realtime presence — not a vote (the server rejects vote bumps
+     until a question is open). It clears on its own when the phone leaves. */
+  function joinPresence(room){
+    if (sync.trackPresence && room) sync.trackPresence(room);
   }
 
   function diag(note, bad){
@@ -264,7 +260,7 @@
   sync.ready.then(() => {
     diag("connected");
     if (ROOM && sync.room) sync.room(ROOM);
-    if (ROOM) markScan(ROOM);
+    if (ROOM) joinPresence(ROOM);
     if (!ROOM && sync.mode === "supabase") {
       return rest("Scan the code on screen.",
                   "This link needs the session code from the room you are in.");

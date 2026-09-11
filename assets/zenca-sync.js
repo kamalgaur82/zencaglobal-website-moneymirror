@@ -25,10 +25,24 @@
     function read(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
     function write(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 
+    /* Presence (rehearsal): vote tabs heartbeat over the BroadcastChannel, the
+       presenter tab counts the ids it has heard from in the last 5 seconds. */
+    let presCb = null, presSid = null, presTrack = false, presTimer = null;
+    const presId = (function () { try { return crypto.randomUUID(); } catch (e) { return "u" + Math.random().toString(36).slice(2); } })();
+    const presSeen = {};
+    function presTick() {
+      const now = Date.now();
+      Object.keys(presSeen).forEach(id => { if (now - presSeen[id] > 5000) delete presSeen[id]; });
+      if (presTrack && chan) chan.postMessage({ kind: "presence", sid: presSid, id: presId, t: now });
+      if (presCb) presCb(Object.keys(presSeen).length);
+    }
+    function presStart() { if (!presTimer) { presTimer = setInterval(presTick, 2000); presTick(); } }
+
     function receive(msg) {
       if (!msg) return;
       if (msg.kind === "state") { state = msg.payload; stateSubs.forEach(f => f(state)); }
       if (msg.kind === "counters") { counters = msg.payload; countSubs.forEach(f => f(counters)); }
+      if (msg.kind === "presence" && msg.sid === presSid && msg.id !== presId) { presSeen[msg.id] = Date.now(); }
     }
     if (chan) chan.onmessage = e => receive(e.data);
     window.addEventListener("storage", e => {
@@ -48,6 +62,8 @@
       signOut() { return Promise.resolve(); },
       onAuth(cb) { cb(true); },
       room() {},
+      trackPresence(s) { presSid = s; presTrack = true; presStart(); },
+      watchPresence(s, cb) { presSid = s; presCb = cb; presStart(); },
       publishState(s) { state = s; write(STATE_KEY, s); if (chan) chan.postMessage({ kind: "state", payload: s }); },
       subscribeState(cb) { stateSubs.push(cb); if (state) cb(state); },
       getState() { return state; },
@@ -148,6 +164,31 @@
         .subscribe();
     }
 
+    /* Live "who's here now" via Realtime presence — independent of zenca_bump,
+       which the server only allows while a question is open. Phones track
+       themselves on a per-session presence channel; the presenter watches the
+       count. Works during the idle wait, and drops when a phone leaves. */
+    let presChan = null, presSid = null, presCb = null, presTrack = false;
+    function presUid() { try { return crypto.randomUUID(); } catch (e) { return "u" + Math.random().toString(36).slice(2); } }
+    function ensurePresence(newSid) {
+      if (!client || !newSid) return null;
+      if (presChan && presSid === newSid) return presChan;
+      if (presChan) { client.removeChannel(presChan); presChan = null; }
+      presSid = newSid;
+      presChan = client.channel("presence-" + newSid, { config: { presence: { key: presUid() } } });
+      presChan.on("presence", { event: "sync" }, () => {
+        if (!presCb) return;
+        const st = presChan.presenceState();
+        let n = 0;
+        Object.keys(st).forEach(k => { const m = st[k] || []; if (m.some(x => x && x.role === "audience")) n++; });
+        presCb(n);
+      });
+      presChan.subscribe(status => {
+        if (status === "SUBSCRIBED" && presTrack) { presChan.track({ role: "audience" }).catch(function () {}); }
+      });
+      return presChan;
+    }
+
     return {
       mode: "supabase",
       ready,
@@ -166,6 +207,8 @@
       signOut() { return client.auth.signOut(); },
       onAuth(cb) { authSubs.push(cb); if (session !== null) cb(!!session); },
       room,
+      trackPresence(newSid) { presTrack = true; const ch = ensurePresence(newSid); if (ch && ch.state === "joined") { ch.track({ role: "audience" }).catch(function () {}); } },
+      watchPresence(newSid, cb) { presCb = cb; ensurePresence(newSid); },
       publishState(s) {
         state = s; stateSubs.forEach(f => f(state));
         if (client && s && s.sid) {
