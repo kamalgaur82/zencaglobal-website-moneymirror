@@ -180,30 +180,6 @@ window.ZENCA_CONFIG = {
         ],
         footer: "This session is the input. What you do with it is the output." } },
 
-    { type: "cards",
-      kicker: "The human layer",
-      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
-      sub: "A better asset does not automatically create a better investor.",
-      cards: [
-        { label: "Fear",       text: "Sell the fall" },
-        { label: "FOMO",       text: "Buy the rise" },
-        { label: "Ego",        text: "Defend old beliefs" },
-        { label: "Impatience", text: "Add leverage" }
-      ],
-      footer: "The protocol has rules. The human needs frameworks." },
-
-    { type: "steps",
-      kicker: "The Zenca framework",
-      headline: ["From information to agency"],
-      steps: [
-        { label: "Education",     text: "Build the foundation" },
-        { label: "Understanding", text: "See the bigger picture" },
-        { label: "Judgment",      text: "Weigh what matters" },
-        { label: "Decisions",     text: "Aligned with your goals" },
-        { label: "Agency",        text: "Confidence and control" }
-      ],
-      footer: "Bitcoin knowledge is not the destination. Financial agency is." },
-
     { type: "question",
       id: "inflation",
       depth: "merged",
@@ -246,6 +222,30 @@ window.ZENCA_CONFIG = {
       left:  { label: "More output", text: "More real stuff to go around" },
       right: { label: "More money",  text: "More claims on the same stuff" },
       footer: "These are not the same thing." },
+
+    { type: "cards",
+      kicker: "The human layer",
+      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
+      sub: "A better asset does not automatically create a better investor.",
+      cards: [
+        { label: "Fear",       text: "Sell the fall" },
+        { label: "FOMO",       text: "Buy the rise" },
+        { label: "Ego",        text: "Defend old beliefs" },
+        { label: "Impatience", text: "Add leverage" }
+      ],
+      footer: "The protocol has rules. The human needs frameworks." },
+
+    { type: "steps",
+      kicker: "The Zenca framework",
+      headline: ["From information to agency"],
+      steps: [
+        { label: "Education",     text: "Build the foundation" },
+        { label: "Understanding", text: "See the bigger picture" },
+        { label: "Judgment",      text: "Weigh what matters" },
+        { label: "Decisions",     text: "Aligned with your goals" },
+        { label: "Agency",        text: "Confidence and control" }
+      ],
+      footer: "Bitcoin knowledge is not the destination. Financial agency is." },
 
     { type: "question",
       id: "fee",
