@@ -273,6 +273,9 @@
     <button id="p-new">Start new session</button>
     <button id="p-reset">Clear this session</button>
   </div>
+  <div class="btns">
+    <button id="p-exit">Exit &amp; sign out → landing</button>
+  </div>
   <div class="keys">→ / PageDown next · ← / PageUp back · B blank · F fullscreen · R resend · P this panel<br>
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
@@ -878,6 +881,12 @@
     if (confirm("Clear the votes in session \"" + sid + "\"? Other sessions are untouched.")) {
       sync.resetSession(sid); locked = {}; paint();
     }
+  };
+  /* Full exit: sign out (so the gate returns next time) and go to the landing
+     page. Votes already recorded for the session are untouched. */
+  document.getElementById("p-exit").onclick = () => {
+    if (!confirm("Exit presenter mode and sign out? You’ll return to the landing page and need to sign in again next time. Recorded votes are kept.")) return;
+    Promise.resolve(sync.signOut ? sync.signOut() : null).catch(()=>{}).then(() => { location.href = "../"; });
   };
 
   /* ---------- fit to projector ---------- */
