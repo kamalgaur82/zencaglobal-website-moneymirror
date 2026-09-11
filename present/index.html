@@ -230,6 +230,9 @@
   .gatebox button{width:100%;background:var(--gold);color:var(--ink);border:0;padding:14px;
                   font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer}
   #gate-msg{margin-top:16px;font-size:14px;line-height:1.5;color:var(--gold)}
+  .gateback{display:inline-block;margin-top:20px;font-size:14px;color:var(--gold-deep);
+            text-decoration:none;letter-spacing:.02em}
+  .gateback:hover{color:var(--gold)}
   #panel h4{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
   #panel dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
   #panel dt{color:var(--mute)}
@@ -255,6 +258,7 @@
     <input id="gate-pass" type="password" placeholder="Password" autocomplete="current-password">
     <button id="gate-go">Sign in</button>
     <div id="gate-msg"></div>
+    <a class="gateback" href="../">← Back to Money Mirror home</a>
   </div>
 </div>
 <div id="panel">
