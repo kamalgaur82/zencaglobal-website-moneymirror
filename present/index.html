@@ -20,6 +20,14 @@
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
     --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
   }
+  /* Daytime / high-ambient-light fallback — press D. Off-brand on purpose:
+     a projector adds light, so a light slide stays readable in daylight while
+     black washes to grey. Inverts to dark ink on warm paper. */
+  body.daylight{
+    --ink:#F1ECE1; --ink-2:#FBF7EF; --paper:#1A1712;
+    --gold:#8A6A14; --gold-deep:#8A6A14; --gold-faint:rgba(138,106,20,.14); --mute:#5F584C;
+  }
+  body.daylight .qrbox, body.daylight .rejoin-qr, body.daylight .closeqr{ background:#F1ECE1; }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;background:var(--ink);overflow:hidden}
   body{font-family:var(--sans);color:var(--paper);-webkit-font-smoothing:antialiased}
@@ -280,7 +288,7 @@
   <div class="btns">
     <button id="p-exit">Exit &amp; sign out → landing</button>
   </div>
-  <div class="keys">→ / PageDown next · ← / PageUp back · B blank · F fullscreen · R resend · P this panel<br>
+  <div class="keys">→ / PageDown next · ← / PageUp back · B blank · F fullscreen · R resend · D daylight · P this panel<br>
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
@@ -842,7 +850,17 @@
     else if (k.toLowerCase() === "f") { toggleFullscreen(); }
     else if (k.toLowerCase() === "r") { publish(); flashPanel(); }
     else if (k.toLowerCase() === "p") { document.getElementById("panel").classList.toggle("on"); updatePanel(); }
+    else if (k.toLowerCase() === "d") { toggleDaylight(); }
   });
+
+  /* Daylight mode: light background for bright rooms. Persisted, so it survives
+     the reload after sign-in. */
+  function toggleDaylight(){
+    const on = !document.body.classList.contains("daylight");
+    document.body.classList.toggle("daylight", on);
+    try { localStorage.setItem("zenca:daylight", on ? "1" : ""); } catch(e){}
+  }
+  try { if (localStorage.getItem("zenca:daylight") === "1") document.body.classList.add("daylight"); } catch(e){}
 
   function toggleFullscreen(){
     if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(()=>{}); }
