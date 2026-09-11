@@ -462,7 +462,7 @@ window.ZENCA_CONFIG = {
       id: "allocation",
       depth: "full",
       kicker: "Your position",
-      prompt: "What share of your net worth is in bitcoin or crypto?",
+      prompt: "What share of your net worth is in bitcoin?",
       options: ["None", "Under 10%", "10–50%", "50–90%", "Nearly all of it"],
       commentary: {
         default: "There is no correct answer on this slide. There are only trade-offs — and they’re different at each end.",
@@ -476,7 +476,7 @@ window.ZENCA_CONFIG = {
         points: [
           { label: "A large share buys", text: "Maximum exposure — if you turn out to be right." },
           { label: "A large share costs", text: "Every emergency becomes a forced sale, at whatever price that week offers." },
-          { label: "A small share buys",  text: "Optionality and sleep, for a smaller slice of the upside." }
+          { label: "A right-sized share buys", text: "Optionality and sleep — real upside, without betting the house." }
         ],
         footer: "Ask what your allocation requires of you, not what it might return." } },
 
