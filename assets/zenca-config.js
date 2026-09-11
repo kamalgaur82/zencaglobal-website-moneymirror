@@ -57,7 +57,7 @@ window.ZENCA_CONFIG = {
     { name: "Education",     ids: ["warmup", "networth", "fee", "feeonly"] },
     { name: "Understanding", ids: ["manages", "mood"] },
     { name: "Judgment",      ids: ["risk", "optimise", "allocation", "singlestock", "why"] },
-    { name: "Decisions",     ids: ["runway", "insurance", "pwmgr", "twofa", "access"] },
+    { name: "Decisions",     ids: ["runway", "insurance", "twofa", "pwmgr", "access"] },
     { name: "Agency",        ids: ["freedom", "enough"] }
   ],
 
@@ -124,6 +124,19 @@ window.ZENCA_CONFIG = {
       commentary: { default: "That’s the room. Hold that picture — it changes how you read everything that follows." } },
 
     { type: "question",
+      id: "manages",
+      depth: "merged",
+      kicker: "Where we start",
+      prompt: "Who actually manages your money?",
+      options: ["I do", "My spouse or partner", "My parents", "An advisor", "Honestly, no one"],
+      commentary: {
+        default: "Most of us say we manage our own money. The next question asks the harder one — whether we can actually measure it.",
+        rules: [
+          { opt: 0, min: 55, text: "A room of self-managers. But managing and monitoring are not the same job — the next question tests the monitoring." },
+          { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
+        ] } },
+
+    { type: "question",
       id: "networth",
       depth: "full",
       kicker: "Where we start",
@@ -144,19 +157,6 @@ window.ZENCA_CONFIG = {
           { label: "Quarterly, not daily", text: "Daily tracking measures mood. Quarterly measures direction." }
         ],
         footer: "You cannot compound what you cannot see." } },
-
-    { type: "question",
-      id: "manages",
-      depth: "merged",
-      kicker: "Where we start",
-      prompt: "Who actually manages your money?",
-      options: ["I do", "My spouse or partner", "My parents", "An advisor", "Honestly, no one"],
-      commentary: {
-        default: "Hold this next to the last slide: most of us say we manage our own money, and most of us can’t state what we have.",
-        rules: [
-          { opt: 0, min: 55, text: "A room of self-managers — next to a room that mostly can’t state its net worth. Managing and monitoring are not the same job." },
-          { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
-        ] } },
 
     { type: "cards",
       kicker: "The human layer",
@@ -487,18 +487,6 @@ window.ZENCA_CONFIG = {
       footer: "Conviction should be strong enough to act, and weak enough to update." },
 
     { type: "question",
-      id: "pwmgr",
-      depth: "rapid",
-      kicker: "The keys to everything",
-      prompt: "Do you use a password manager?",
-      options: ["Yes, for everything", "For some things", "The browser remembers them", "No"],
-      commentary: {
-        default: "Every financial account you own sits behind this one habit.",
-        rules: [
-          { opt: 2, min: 25, text: "Browser-saved passwords feel like a manager and aren’t one — same convenience, none of the isolation." }
-        ] } },
-
-    { type: "question",
       id: "twofa",
       depth: "merged",
       kicker: "The keys to everything",
@@ -510,6 +498,18 @@ window.ZENCA_CONFIG = {
         rules: [
           { opt: 1, min: 30, text: "SMS-only is the answer worth changing tonight. A SIM swap doesn’t need your password, and it doesn’t need your permission." },
           { opt: 3, min: 20, text: "‘Not sure’ is worth checking before you leave this hall. It takes ninety seconds per account." }
+        ] } },
+
+    { type: "question",
+      id: "pwmgr",
+      depth: "rapid",
+      kicker: "The keys to everything",
+      prompt: "Do you use a password manager?",
+      options: ["Yes, for everything", "For some things", "The browser remembers them", "No"],
+      commentary: {
+        default: "Every financial account you own sits behind this one habit.",
+        rules: [
+          { opt: 2, min: 25, text: "Browser-saved passwords feel like a manager and aren’t one — same convenience, none of the isolation." }
         ] } },
 
     { type: "list",

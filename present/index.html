@@ -35,9 +35,9 @@
   .foot{position:absolute;bottom:52px;left:88px;right:88px;display:flex;justify-content:space-between;
         align-items:baseline;font-size:17px;color:var(--mute)}
   .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);opacity:.55;transition:width .35s ease}
-  .rejoin{position:absolute;right:72px;bottom:58px;display:flex;align-items:center;gap:16px;
+  .rejoin{position:absolute;right:40px;bottom:24px;display:flex;align-items:flex-end;gap:16px;
           justify-content:flex-end;font-size:18px;line-height:1.3;color:var(--gold-deep);letter-spacing:.03em}
-  .rejoin-txt{text-align:right;max-width:230px}
+  .rejoin-txt{text-align:right;white-space:nowrap}
   .rejoin-txt b{color:var(--gold);font-weight:500}
   .rejoin-qr{width:104px;height:104px;background:var(--paper);padding:8px;flex:none}
   .rejoin-qr img,.rejoin-qr canvas,.rejoin-qr table{width:100%!important;height:100%!important;display:block;border:0}
@@ -179,20 +179,23 @@
   .legend{display:flex;gap:36px;margin-top:36px;font-size:23px;color:var(--mute);align-items:center}
   .swatch{display:inline-block;width:22px;height:12px;margin-right:12px}
   /* stage scorecard (report + split pages) */
-  .rlist{margin-top:46px}
-  .rrow{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:baseline;
-        padding:26px 0;border-bottom:1px solid rgba(198,161,91,.22)}
-  .rrow .rq{font-size:29px;line-height:1.3;color:var(--mute)}
-  .rrow .ra{font-family:var(--serif);font-size:42px;line-height:1.12;color:var(--paper);text-align:right}
+  .rlist{margin-top:40px}
+  .rrow{display:grid;grid-template-columns:1fr 420px;gap:44px;align-items:baseline;
+        padding:18px 0;border-bottom:1px solid rgba(198,161,91,.22)}
+  .rrow .rq{font-size:27px;line-height:1.28;color:var(--mute)}
+  .rrow .ra{font-family:var(--serif);font-size:36px;line-height:1.12;color:var(--paper);text-align:right}
   .rrow .ra b{color:var(--gold);font-weight:500}
   .ra-none{color:var(--gold-deep)}
-  .splitrow{padding:24px 0;border-bottom:1px solid rgba(198,161,91,.22)}
-  .splitrow .rq{font-size:27px;line-height:1.3;color:var(--paper);margin-bottom:16px}
-  .sgroups{display:flex;gap:64px;flex-wrap:wrap}
-  .sg{font-family:var(--serif);font-size:32px;line-height:1.2}
+  /* Q on the left (wraps), holders and holds-none in two fixed columns so the
+     numbers line up down the page and each row stays on one band. */
+  .splitrow{display:grid;grid-template-columns:1fr 300px 300px;gap:40px;align-items:baseline;
+            padding:16px 0;border-bottom:1px solid rgba(198,161,91,.22)}
+  .splitrow .rq{font-size:25px;line-height:1.28;color:var(--paper)}
+  .sg{font-family:var(--serif);font-size:30px;line-height:1.2}
   .sg.h{color:var(--gold)}
   .sg.n{color:var(--paper)}
-  .sg .sgp{font-weight:500;margin-right:6px}
+  .sg.none{grid-column:2 / span 2;color:var(--gold-deep)}
+  .sg .sgp{font-weight:500;margin-right:8px}
   .splitgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px 56px;margin-top:26px}
   .sblock{border-bottom:1px solid rgba(198,161,91,.2);padding-bottom:14px}
   .sblock .sq{font-size:19px;line-height:1.3;color:var(--mute);margin-bottom:10px}
@@ -274,7 +277,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../assets/zenca-config.js?v=4"></script>
+<script src="../assets/zenca-config.js?v=6"></script>
 <script src="../assets/zenca-sync.js?v=5"></script>
 <script>
 (function(){
@@ -682,7 +685,7 @@
       const p = partsOf(q)[0], c = countsFor(p.id);
       let hT = 0, nT = 0;
       Object.keys(c).forEach(k => { hT += c[k].holder; nT += c[k].nonholder; });
-      if (hT + nT === 0) return `<div class="splitrow"><div class="rq">${esc(q.prompt)}</div><div class="ra ra-none">No votes yet</div></div>`;
+      if (hT + nT === 0) return `<div class="splitrow"><div class="rq">${esc(q.prompt)}</div><div class="sg none">No votes yet</div></div>`;
       const stat = p.options.map((label,i) => {
         const row = c[i] || { holder:0, nonholder:0 };
         return { label, hn: row.holder, nn: row.nonholder,
@@ -692,10 +695,8 @@
       const nTop = stat.reduce((a,b) => b.nn > a.nn ? b : a, stat[0]);
       return `<div class="splitrow">
         <div class="rq">${esc(q.prompt)}</div>
-        <div class="sgroups">
-          <div class="sg h"><span class="sgp">${hTop.h}%</span> ${esc(hTop.label)}</div>
-          <div class="sg n"><span class="sgp">${nTop.n}%</span> ${esc(nTop.label)}</div>
-        </div>
+        <div class="sg h"><span class="sgp">${hTop.h}%</span> ${esc(hTop.label)}</div>
+        <div class="sg n"><span class="sgp">${nTop.n}%</span> ${esc(nTop.label)}</div>
       </div>`;
     }).join("");
     return `
@@ -728,7 +729,7 @@
       ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${hasCounter ? "" : esc(railLabel(s))}</span></div>` : ""}
       ${inner}
       ${showJoin ? `<div class="rejoin">
-        <div class="rejoin-txt">Joining late, or dropped out?<br><b>Scan to jump back in.</b></div>
+        <div class="rejoin-txt">Joining late,<br>or dropped out?<br><b>Scan to jump back in.</b></div>
         <div class="rejoin-qr" id="qr-rejoin"></div>
       </div>` : ""}
       <div class="slideno">Slide #${idx + 1}</div>
