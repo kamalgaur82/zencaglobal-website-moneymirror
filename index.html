@@ -27,7 +27,10 @@
   h1{font-family:var(--serif);font-weight:500;font-size:72px;line-height:1.05;letter-spacing:-.015em;margin:28px 0 12px}
   .lede{font-family:var(--serif);font-size:26px;line-height:1.4;color:var(--gold-deep);max-width:640px;margin:0}
   .rule{width:132px;height:3px;background:var(--gold);opacity:.6;margin:44px 0}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .group + .group{margin-top:40px}
+  .grouplab{font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep);
+            font-weight:600;margin:0 0 16px}
   a.card{display:flex;flex-direction:column;text-decoration:none;color:var(--paper);
          border:1px solid rgba(198,161,91,.34);border-top:3px solid var(--gold);
          background:var(--ink-2);padding:34px 28px 38px;min-height:190px;transition:border-color .2s ease,transform .2s ease}
@@ -54,23 +57,38 @@
     <h1>Money&nbsp;Mirror</h1>
     <p class="lede">A live, anonymous audience poll. Nothing about you is stored — just honest counts on a screen.</p>
     <div class="rule"></div>
-    <div class="cards">
-      <a class="card" href="./present/">
-        <div class="lab">Present</div>
-        <div class="txt">Run the talk. Sign in, open a room, move the slides.</div>
-        <div class="go">Open presenter →</div>
-      </a>
-      <!-- Livestream: replace href="#" with the YouTube live URL when ready -->
-      <a class="card" href="#" target="_blank" rel="noopener noreferrer">
-        <div class="lab">Livestream</div>
-        <div class="txt">Watching remotely? Join the live session on YouTube.</div>
-        <div class="go">Open livestream →</div>
-      </a>
-      <a class="card" href="./results/">
-        <div class="lab">Results</div>
-        <div class="txt">Browse the counts from a session after the talk.</div>
-        <div class="go">Open results →</div>
-      </a>
+
+    <div class="group">
+      <div class="grouplab">For the presenter</div>
+      <div class="cards">
+        <a class="card" href="./present/">
+          <div class="lab">Present</div>
+          <div class="txt">Run the talk. Sign in, open a room, move the slides.</div>
+          <div class="go">Open presenter →</div>
+        </a>
+        <a class="card" href="./results/">
+          <div class="lab">Results</div>
+          <div class="txt">Browse the counts from a session after the talk.</div>
+          <div class="go">Open results →</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="grouplab">For the audience</div>
+      <div class="cards">
+        <a class="card" href="https://maps.app.goo.gl/P5uGUoCNhdKkTzHs5" target="_blank" rel="noopener noreferrer">
+          <div class="lab">Bengaluru venue</div>
+          <div class="txt">Bitspace · HSR, Bengaluru. Tap for the map and directions.</div>
+          <div class="go">Open in Google Maps →</div>
+        </a>
+        <!-- Livestream: replace href="#" with the YouTube live URL when ready -->
+        <a class="card" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="lab">Livestream</div>
+          <div class="txt">Watching remotely? Join the live session on YouTube.</div>
+          <div class="go">Open livestream →</div>
+        </a>
+      </div>
     </div>
     <div class="foot">mirror.zenca.global</div>
   </div>
