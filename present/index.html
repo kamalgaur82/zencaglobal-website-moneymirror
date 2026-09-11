@@ -377,6 +377,9 @@
       frames.push({ slide, si, beat:0 });
     }
   });
+  /* The rejoin QR only makes sense once the join slide has introduced the code —
+     so it appears from the slide after "join" onward, never before it. */
+  const joinFrameIdx = frames.findIndex(f => f.slide.type === "join");
 
   let idx = 0, blank = false, counters = {}, locked = {}, waiting = 0;
   const nav = { last: 0 };
@@ -731,7 +734,7 @@
 
     const showRail = !["title","closing"].includes(s.type);
     const hasCounter = (s.type === "question" && f.beat <= 1);
-    const showJoin   = !["title","join","closing"].includes(s.type);
+    const showJoin   = !["title","join","closing"].includes(s.type) && idx > joinFrameIdx;
     stage.innerHTML = `
       ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${hasCounter ? "" : esc(railLabel(s))}</span></div>` : ""}
       ${inner}
