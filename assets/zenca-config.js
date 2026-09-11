@@ -54,8 +54,8 @@ window.ZENCA_CONFIG = {
      group becomes one "honest snapshot" page and one holders/non-holders
      page at the end of the talk. Warm-up is included (its age part). */
   resultStages: [
-    { name: "Education",     ids: ["warmup", "networth", "fee", "feeonly"] },
-    { name: "Understanding", ids: ["manages", "mood"] },
+    { name: "Education",     ids: ["warmup", "networth", "inflation", "fee", "feeonly"] },
+    { name: "Understanding", ids: ["manages", "source", "savings", "mood", "debt"] },
     { name: "Judgment",      ids: ["risk", "optimise", "allocation", "singlestock", "why"] },
     { name: "Decisions",     ids: ["runway", "insurance", "twofa", "pwmgr", "access"] },
     { name: "Agency",        ids: ["freedom", "enough"] }
@@ -64,7 +64,7 @@ window.ZENCA_CONFIG = {
   /* --- Questions you can drop live if running late ------------------------
      Marked on the presenter’s panic panel (press P). Skipping is seamless:
      phones simply never light up for them. */
-  sacrificial: ["insurance", "pwmgr", "mood", "singlestock", "enough"],
+  sacrificial: ["debt", "insurance", "pwmgr", "mood", "singlestock", "enough"],
 
   /* ======================================================================
      THE DECK
@@ -158,6 +158,28 @@ window.ZENCA_CONFIG = {
           { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
         ] } },
 
+    { type: "question",
+      id: "source",
+      depth: "full",
+      kicker: "Where it comes from",
+      prompt: "Where does most of what you know about money come from?",
+      options: ["Family or friends", "Social media or influencers", "A professional advisor", "My own reading", "Honestly, nowhere in particular"],
+      commentary: {
+        default: "Every money decision you make is only as good as the information behind it — and most of us were never handed good information.",
+        rules: [
+          { opt: 1, min: 25, text: "Social media optimises for what holds attention, not what grows wealth. The loudest voice is rarely the one with skin in your game." },
+          { opt: 4, min: 20, text: "‘Nowhere in particular’ is the honest majority. Money is the one high-stakes subject almost nobody is formally taught." }
+        ] },
+      teach: {
+        kicker: "The real gap",
+        headline: ["Most money mistakes are not discipline problems.", "They are *information* problems."],
+        points: [
+          { label: "Inherited habits", text: "We copy how the people around us handled money — good and bad." },
+          { label: "Incentivised noise", text: "Much of what reaches you is sold to you, not taught to you." },
+          { label: "The fix", text: "Better inputs, from sources with no commission on your choices." }
+        ],
+        footer: "This session is the input. What you do with it is the output." } },
+
     { type: "cards",
       kicker: "The human layer",
       headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
@@ -181,6 +203,19 @@ window.ZENCA_CONFIG = {
         { label: "Agency",        text: "Confidence and control" }
       ],
       footer: "Bitcoin knowledge is not the destination. Financial agency is." },
+
+    { type: "question",
+      id: "inflation",
+      depth: "merged",
+      kicker: "Money",
+      prompt: "Your groceries cost more than last year. What’s actually happening?",
+      options: ["Groceries are getting more expensive", "Your rupee is worth less", "Both — same thing", "I’ve never separated the two"],
+      commentary: {
+        default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees chasing the same goods.",
+        rules: [
+          { opt: 0, min: 35, text: "The instinct is to blame the goods. But the shop didn’t change — the measuring stick did." },
+          { opt: 1, min: 35, text: "This room sees it: the object isn’t getting dearer so much as the money is getting weaker." }
+        ] } },
 
     { type: "statement",
       kicker: "Money",
@@ -245,6 +280,42 @@ window.ZENCA_CONFIG = {
         default: "Fee-only advice removes one incentive: the person telling you what to buy no longer earns more when you buy more.",
         rules: [
           { opt: 2, min: 40, text: "Most of the room didn’t know the category exists. That’s not an accident — nobody funds advertising for a model that pays no commission." }
+        ] } },
+
+    { type: "question",
+      id: "savings",
+      depth: "full",
+      kicker: "What you keep",
+      prompt: "Of everything you earn, how much do you save or invest each month?",
+      options: ["Nothing right now", "Under 10%", "10–30%", "Over 30%", "I don’t track it"],
+      commentary: {
+        default: "This one number — your savings rate — shapes your future more than any fund you will ever pick.",
+        rules: [
+          { opt: 0, min: 25, text: "‘Nothing right now’ is more common than any room admits out loud. The fix is a rate, not a windfall — even 5% changes the trajectory." },
+          { opt: 4, min: 25, text: "‘I don’t track it’ usually means it is whatever is left over. Paying yourself first turns a leftover into a decision." }
+        ] },
+      teach: {
+        kicker: "Why the rate beats the return",
+        headline: ["Early on, how much you *save* matters more", "than what you *earn* on it."],
+        points: [
+          { label: "The rate compounds first", text: "A 20% saver at 6% overtakes a 5% saver at 12% for many years." },
+          { label: "The one lever you control", text: "You can’t pick next year’s return. You can pick your rate." },
+          { label: "Automate it", text: "A standing instruction on payday beats willpower every month." }
+        ],
+        footer: "Returns get the attention. The rate does the work." } },
+
+    { type: "question",
+      id: "debt",
+      depth: "rapid",
+      kicker: "The quiet leak",
+      prompt: "Do you carry any high-interest debt?",
+      note: "Not home or vehicle loans — card balances you don’t clear, personal loans, or BNPL.",
+      options: ["None", "A little", "A meaningful amount", "Not sure"],
+      commentary: {
+        default: "High-interest debt is compounding in reverse — the same engine as investing, pointed the wrong way.",
+        rules: [
+          { opt: 2, min: 20, text: "A meaningful balance at card rates outruns almost any return you could earn. Clearing it is the highest guaranteed return you will find." },
+          { opt: 3, min: 25, text: "‘Not sure’ is worth a look tonight — unpaid card balances quietly cost more than most portfolios make." }
         ] } },
 
     { type: "quote",
