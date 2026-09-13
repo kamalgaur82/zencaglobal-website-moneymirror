@@ -27,14 +27,15 @@
   h1{font-family:var(--serif);font-weight:500;font-size:72px;line-height:1.05;letter-spacing:-.015em;margin:28px 0 12px}
   .lede{font-family:var(--serif);font-size:26px;line-height:1.4;color:var(--gold-deep);max-width:860px;margin:0}
   .rule{width:132px;height:3px;background:var(--gold);opacity:.6;margin:44px 0}
-  /* One grid holds all four cards, so every card is the same height. The two
-     group labels sit in the row above, each spanning its pair. On narrow
-     screens it collapses to a single column, labels inline in reading order. */
-  .deck{display:grid;grid-template-columns:repeat(4,1fr);column-gap:22px;row-gap:14px;align-items:stretch}
+  /* One grid holds all five cards, so every card is the same height. The two
+     group labels sit in the row above (presenter spans its 2, audience its 3).
+     On narrow screens it collapses to a single column, labels inline in reading
+     order. */
+  .deck{display:grid;grid-template-columns:repeat(5,1fr);column-gap:22px;row-gap:14px;align-items:stretch}
   .grouplab{font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep);
             font-weight:600;margin:0;grid-row:1;align-self:end}
   .grouplab.gA{grid-column:1 / 3}
-  .grouplab.gB{grid-column:3 / 5}
+  .grouplab.gB{grid-column:3 / 6}
   .deck a.card{grid-row:2}
   a.card{display:flex;flex-direction:column;text-decoration:none;color:var(--paper);
          border:1px solid rgba(198,161,91,.34);border-top:3px solid var(--gold);
@@ -80,6 +81,11 @@
       </a>
 
       <div class="grouplab gB">For the audience</div>
+      <a class="card" href="https://luma.com/6i6miiwk" target="_blank" rel="noopener noreferrer">
+        <div class="lab">RSVP</div>
+        <div class="txt">Free — reserve your seat on Luma.</div>
+        <div class="go">RSVP on Luma →</div>
+      </a>
       <a class="card" href="https://maps.app.goo.gl/fnicF7mXQJfHbEdR9" target="_blank" rel="noopener noreferrer">
         <div class="lab">Bangalore venue</div>
         <div class="txt">Bitspace, 4th&nbsp;Floor (365&nbsp;Spaces) · HSR Layout — map &amp; directions.</div>
