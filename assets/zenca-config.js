@@ -101,12 +101,6 @@ window.ZENCA_CONFIG = {
       ],
       footer: "Helping people understand money" },
 
-    { type: "statement",
-      kicker: "What this is",
-      headline: ["Money Mirror"],
-      sub: "A live quiz we turn on the room. You answer from your phone; the answers appear on the screen. You see where you stand \u2014 and where everyone around you stands.",
-      footer: "No login. No names. Only the counts are ever saved." },
-
     { type: "steps",
       kicker: "The Zenca framework",
       headline: ["From information to agency"],
@@ -118,6 +112,12 @@ window.ZENCA_CONFIG = {
         { label: "Agency",        text: "Confidence and control" }
       ],
       footer: "Bitcoin knowledge is not the destination. Financial agency is." },
+
+    { type: "statement",
+      kicker: "What this is",
+      headline: ["Money Mirror"],
+      sub: "A live quiz we turn on the room. You answer from your phone; the answers appear on the screen. You see where you stand \u2014 and where everyone around you stands.",
+      footer: "No login. No names. Only the counts are ever saved." },
 
     { type: "join" },
 
@@ -185,7 +185,7 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "The real gap",
-        headline: ["Most money mistakes are not discipline problems.", "They are *information* problems."],
+        headline: ["Most money mistakes are not discipline problems. They are *information* problems."],
         points: [
           { label: "Inherited habits", text: "We copy how the people around us handled money — good and bad." },
           { label: "Incentivised noise", text: "Much of what reaches you is sold to you, not taught to you." },
@@ -198,7 +198,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "Money",
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
-      options: ["Groceries got more expensive", "Your rupee is worth less", "I’ve never thought about which"],
+      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "I’ve never thought about which"],
       commentary: {
         default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
@@ -315,7 +315,7 @@ window.ZENCA_CONFIG = {
     { type: "compare",
       kicker: "The leverage trap",
       headline: ["Time is not the enemy of wealth.", "Time is the *_mechanism_*."],
-      left:  { label: "Leverage",    text: "Tries to pull the future toward you" },
+      left:  { label: "Debt / Leverage", text: "Tries to pull the future toward you" },
       right: { label: "Compounding", text: "Lets you travel toward it" },
       footer: "One of these has a liquidation price." },
 
@@ -334,13 +334,6 @@ window.ZENCA_CONFIG = {
       ],
       footer: "Value moves on slower clocks." },
 
-    { type: "compare",
-      kicker: "Psychological inversion",
-      headline: ["Same direction. Opposite instinct."],
-      left:  { label: "A store, −30%", text: "Sale. Buy." },
-      right: { label: "A market, −30%", text: "Danger. Sell." },
-      footer: "The discount you welcome and the discount you flee are the same arithmetic." },
-
     { type: "question",
       id: "mood",
       depth: "merged",
@@ -354,11 +347,12 @@ window.ZENCA_CONFIG = {
           { opt: 3, min: 25, text: "\u201cI don\u2019t look\u201d is a strategy, not an admission. It is the cheapest emotional risk control available." }
         ] } },
 
-    { type: "statement",
-      kicker: "Uncertainty",
-      headline: ["You cannot demand all three."],
-      figure: { left: "High returns", mid: "Short time", right: "Low risk" },
-      footer: "Certainty is the thing that has to give." },
+    { type: "compare",
+      kicker: "Psychological inversion",
+      headline: ["Same direction. Opposite instinct."],
+      left:  { label: "A store, −30%", text: "Sale. Buy." },
+      right: { label: "A market, −30%", text: "Danger. Sell." },
+      footer: "The discount you welcome and the discount you flee are the same arithmetic." },
 
     { type: "question",
       id: "risk",
@@ -382,6 +376,12 @@ window.ZENCA_CONFIG = {
           { label: "Why it matters", text: "Avoiding volatility usually means avoiding returns. Avoiding impairment is what keeps you in the game." }
         ],
         footer: "You can survive a great deal of volatility. You cannot survive impairment." } },
+
+    { type: "statement",
+      kicker: "Uncertainty",
+      headline: ["You cannot demand all three."],
+      figure: { left: "High returns", mid: "Short time", right: "Low risk" },
+      footer: "Certainty is the thing that has to give." },
 
     { type: "question",
       id: "optimise",
@@ -577,7 +577,7 @@ window.ZENCA_CONFIG = {
       options: ["App-based 2FA", "SMS codes only", "Password only", "Not sure"],
       answer: 0,
       commentary: {
-        default: "SMS is the weakest of these — and the one most people believe is fine.",
+        default: "Password-only is the weakest — no second factor at all. But SMS is the deceptive one: it feels like protection, yet a SIM swap sails right past it.",
         rules: [
           { opt: 1, min: 30, text: "SMS-only is the answer worth changing tonight. A SIM swap doesn’t need your password, and it doesn’t need your permission." },
           { opt: 3, min: 20, text: "‘Not sure’ is worth checking before you leave this hall. It takes ninety seconds per account." }
