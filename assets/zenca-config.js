@@ -50,9 +50,10 @@ window.ZENCA_CONFIG = {
   segments: { holder: "Holds bitcoin", nonholder: "Holds none", unknown: "Didn’t say" },
 
   /* --- Result scorecard --------------------------------------------------
-     The 18 questions grouped by the five framework stages (slide 15). Each
-     group becomes one "honest snapshot" page and one holders/non-holders
-     page at the end of the talk. Warm-up is included (its age part). */
+     The 21 questions grouped by the five framework stages. Each group becomes
+     one "honest snapshot" page and one holders/non-holders page at the end of
+     the talk. The warm-up is demographics — a categorization, not one of the
+     21 — though its age split still appears in the Education snapshot. */
   resultStages: [
     { name: "Education",     ids: ["warmup", "networth", "inflation", "fee", "feeonly"] },
     { name: "Understanding", ids: ["manages", "source", "savings", "mood", "debt"] },
@@ -187,7 +188,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
       options: ["Groceries got more expensive", "Your rupee is worth less", "I’ve never thought about which"],
       commentary: {
-        default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees chasing the same goods.",
+        default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
           { opt: 0, min: 35, text: "The instinct is to blame the goods. But the shop didn’t change — the measuring stick did." },
           { opt: 1, min: 35, text: "This room sees it: the object isn’t getting dearer so much as the money is getting weaker." }
@@ -196,7 +197,7 @@ window.ZENCA_CONFIG = {
     { type: "statement",
       kicker: "Money",
       headline: ["Inflation is not just prices going up.", "It is your unit of account buying less."],
-      figure: { left: "₹100", mid: "buys less", right: "stuff" },
+      figure: { left: "₹100 / $100", mid: "buys less", right: "stuff" },
       footer: "Change the lens from the object to the measuring stick." },
 
     { type: "statement",
@@ -222,18 +223,6 @@ window.ZENCA_CONFIG = {
       left:  { label: "More output", text: "More real stuff to go around" },
       right: { label: "More money",  text: "More claims on the same stuff" },
       footer: "These are not the same thing." },
-
-    { type: "cards",
-      kicker: "The human layer",
-      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
-      sub: "A better asset does not automatically create a better investor.",
-      cards: [
-        { label: "Fear",       text: "Sell the fall" },
-        { label: "FOMO",       text: "Buy the rise" },
-        { label: "Ego",        text: "Defend old beliefs" },
-        { label: "Impatience", text: "Add leverage" }
-      ],
-      footer: "The protocol has rules. The human needs frameworks." },
 
     { type: "steps",
       kicker: "The Zenca framework",
@@ -264,7 +253,7 @@ window.ZENCA_CONFIG = {
         kicker: "Why it’s so much bigger than it sounds",
         headline: ["*1%* is not charged once.", "It is charged on the *compounding*."],
         points: [
-          { label: "The fee compounds too", text: "Every rupee taken this year is a rupee that never compounds for the next 29." },
+          { label: "The fee compounds too", text: "Every rupee or dollar taken this year never compounds for the next 29." },
           { label: "Where it hides in India", text: "Regular mutual fund plans carry a distributor commission. Direct plans of the same fund don’t." },
           { label: "The switch is free", text: "Same fund, same manager, same portfolio. Different expense ratio." }
         ],
@@ -295,14 +284,14 @@ window.ZENCA_CONFIG = {
           { opt: 4, min: 25, text: "‘I don’t track it’ usually means it is whatever is left over. Paying yourself first turns a leftover into a decision." }
         ] },
       teach: {
-        kicker: "Why the rate beats the return",
-        headline: ["Early on, how much you *save* matters more", "than what you *earn* on it."],
+        kicker: "Why your savings rate beats the return",
+        headline: ["Early on, the *share* of income you save", "matters more than the *return* you earn."],
         points: [
-          { label: "The rate compounds first", text: "A 20% saver at 6% overtakes a 5% saver at 12% for many years." },
-          { label: "The one lever you control", text: "You can’t pick next year’s return. You can pick your rate." },
-          { label: "Automate it", text: "A standing instruction on payday beats willpower every month." }
+          { label: "Start earlier, always", text: "Earlier beats later beats never. Time in the market does far more than timing it — it’s the one edge you can’t buy back." },
+          { label: "Save a bigger share", text: "A higher savings rate beats a lower one beats none. It’s a percentage, not an amount — so a modest income can still win." },
+          { label: "The example", text: "Save 20% of income earning 6% a year, and you overtake someone saving 5% earning 12% a year — and stay ahead for years." }
         ],
-        footer: "Returns get the attention. The rate does the work." } },
+        footer: "You can’t pick next year’s return. You can pick when you start and the share you save — and those do the work." } },
 
     { type: "question",
       id: "debt",
@@ -317,6 +306,18 @@ window.ZENCA_CONFIG = {
           { opt: 2, min: 20, text: "A meaningful balance at card rates outruns almost any return you could earn. Clearing it is the highest guaranteed return you will find." },
           { opt: 3, min: 25, text: "‘Not sure’ is worth a look tonight — unpaid card balances quietly cost more than most portfolios make." }
         ] } },
+
+    { type: "quote",
+      lines: ["Most financial mistakes are not caused by greed.",
+              "They are caused by the desire to *compress time*."],
+      sub: "Speed quietly turns reasonable goals into unreasonable risk." },
+
+    { type: "compare",
+      kicker: "The leverage trap",
+      headline: ["Time is not the enemy of wealth.", "Time is the *_mechanism_*."],
+      left:  { label: "Leverage",    text: "Tries to pull the future toward you" },
+      right: { label: "Compounding", text: "Lets you travel toward it" },
+      footer: "One of these has a liquidation price." },
 
     { type: "quote",
       lines: ["*Price* is simply the latest agreement.", "It is not the same thing as *value*."],
@@ -430,7 +431,7 @@ window.ZENCA_CONFIG = {
         kicker: "What runway really buys",
         headline: ["Runway is *time*.", "And time is what turns money into *choices*."],
         points: [
-          { label: "Measured in time, not rupees", text: "Months and years of your real spending — the only unit that answers the question." },
+          { label: "Measured in time, not rupees or dollars", text: "Months and years of your real spending — the only unit that answers the question." },
           { label: "It removes the forced hand", text: "The longer your runway, the fewer decisions a market or a bad year gets to make for you." },
           { label: "The first taste of freedom", text: "Enough runway, and work becomes a choice — which is exactly what the last questions are about." }
         ],
@@ -491,18 +492,6 @@ window.ZENCA_CONFIG = {
         rules: [
           { opt: 0, min: 35, text: "More than once is the honest answer for most people who have been at this a while. The hope is the product being sold." }
         ] } },
-
-    { type: "quote",
-      lines: ["Most financial mistakes are not caused by greed.",
-              "They are caused by the desire to *compress time*."],
-      sub: "Speed quietly turns reasonable goals into unreasonable risk." },
-
-    { type: "compare",
-      kicker: "The leverage trap",
-      headline: ["Time is not the enemy of wealth.", "Time is the *_mechanism_*."],
-      left:  { label: "Leverage",    text: "Tries to pull the future toward you" },
-      right: { label: "Compounding", text: "Lets you travel toward it" },
-      footer: "One of these has a liquidation price." },
 
     { type: "cycles",
       kicker: "Cycles",
@@ -582,6 +571,18 @@ window.ZENCA_CONFIG = {
         rules: [
           { opt: 2, min: 25, text: "Browser-saved passwords feel like a manager and aren’t one — same convenience, none of the isolation." }
         ] } },
+
+    { type: "cards",
+      kicker: "The human layer",
+      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
+      sub: "A better asset does not automatically create a better investor.",
+      cards: [
+        { label: "Fear",       text: "Sell the fall" },
+        { label: "FOMO",       text: "Buy the rise" },
+        { label: "Ego",        text: "Defend old beliefs" },
+        { label: "Impatience", text: "Add leverage" }
+      ],
+      footer: "The protocol has rules. The human needs frameworks." },
 
     { type: "list",
       kicker: "Self-sovereignty",
@@ -685,8 +686,8 @@ window.ZENCA_CONFIG = {
       headline: ["Tools, not answers."],
       sub: "Change the inputs until it is your situation, not a worked example. Then see what it tells you. Both free on zenca.global.",
       cards: [
-        { label: "Inflation Reframed", text: "What your unit of account is doing" },
-        { label: "Price of Advice",    text: "What a fee costs across a lifetime" }
+        { label: "FIRE Reframed",    text: "The number that makes work optional" },
+        { label: "Price of Advice",  text: "What a fee costs across a lifetime" }
       ],
       footer: "Understand money. Understand yourself. Then decide what Bitcoin means in your life." },
 

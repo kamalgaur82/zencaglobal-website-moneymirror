@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
+<!-- The join link is scanned repeatedly; never serve a stale copy of this page,
+     so every scan gets the current client and registers presence. -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Zenca · Vote</title>
 <link rel="icon" type="image/png" href="../assets/zenca-favicon.png?v=1">
 <link rel="apple-touch-icon" href="../assets/zenca-favicon.png?v=1">
@@ -80,7 +85,7 @@
   <div id="diag"></div>
 </footer>
 
-<script src="../assets/zenca-config.js?v=11"></script>
+<script src="../assets/zenca-config.js?v=12"></script>
 <script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -248,7 +253,10 @@
   /* A phone that sleeps, or a socket that dies quietly, leaves this page frozen
      on an old screen. Re-ask for the current state whenever we come back into
      view, and on a slow heartbeat as a safety net. */
-  function recover(){ if (sync.refreshState) sync.refreshState(); }
+  function recover(){
+    if (sync.refreshState) sync.refreshState();
+    if (ROOM) joinPresence(ROOM);   // re-announce this phone so the "phones in" count self-heals
+  }
   document.addEventListener("visibilitychange", () => { if (!document.hidden) recover(); });
   window.addEventListener("focus", recover);
   window.addEventListener("online", recover);
