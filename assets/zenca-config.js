@@ -449,16 +449,6 @@ window.ZENCA_CONFIG = {
           { opt: 1, min: 35, text: "Employer cover ends the day the job does — usually the same day you can least afford to replace it." }
         ] } },
 
-    { type: "cards",
-      kicker: "Asymmetry",
-      headline: ["A good bet can fail. A bad bet can win."],
-      cards: [
-        { label: "Small downside", text: "Survivable" },
-        { label: "Large upside",   text: "Meaningful" },
-        { label: "No guarantee",   text: "Still uncertain" }
-      ],
-      footer: "The goal is not to be certain. It is to structure uncertainty." },
-
     { type: "question",
       id: "allocation",
       depth: "full",
@@ -480,6 +470,16 @@ window.ZENCA_CONFIG = {
           { label: "A right-sized share buys", text: "Optionality and sleep — real upside, without betting the house." }
         ],
         footer: "Ask what your allocation requires of you, not what it might return." } },
+
+    { type: "cards",
+      kicker: "Asymmetry",
+      headline: ["A good bet can fail. A bad bet can win."],
+      cards: [
+        { label: "Small downside", text: "Survivable" },
+        { label: "Large upside",   text: "Meaningful" },
+        { label: "No guarantee",   text: "Still uncertain" }
+      ],
+      footer: "The goal is not to be certain. It is to structure uncertainty." },
 
     { type: "question",
       id: "singlestock",
