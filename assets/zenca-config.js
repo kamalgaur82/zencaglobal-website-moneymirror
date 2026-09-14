@@ -184,8 +184,8 @@ window.ZENCA_CONFIG = {
       id: "inflation",
       depth: "merged",
       kicker: "Money",
-      prompt: "Your groceries cost more than last year. What’s actually happening?",
-      options: ["Groceries are getting more expensive", "Your rupee is worth less", "Both — same thing", "I’ve never separated the two"],
+      prompt: "Your grocery bill is bigger than last year. What actually changed?",
+      options: ["Groceries got more expensive", "Your rupee is worth less", "I’ve never thought about which"],
       commentary: {
         default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees chasing the same goods.",
         rules: [
