@@ -292,7 +292,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../assets/zenca-config.js?v=17"></script>
+<script src="../assets/zenca-config.js?v=18"></script>
 <script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -665,6 +665,7 @@
     return `
       <div class="body">
         <h2>${(Array.isArray(t.headline) ? t.headline : [t.headline]).map(mk).join("<br>")}</h2>
+        ${t.sub ? `<div class="sub">${mk(t.sub)}</div>` : ""}
         <div class="layers">${t.points.map(p => `
           <div class="layer"><div class="lab">${esc(p.label)}</div>
             <div class="mid" style="grid-column:2 / span 2">${esc(p.text)}</div></div>`).join("")}

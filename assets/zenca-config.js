@@ -399,7 +399,8 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "Optimising for arrival",
-        headline: ["We chase the biggest return in the least time \u2014 and ignore the one that compounds: the odds of arriving.", "Relax time, and almost every other decision gets easier."],
+        headline: ["We chase the biggest return in the least time \u2014 and ignore the one that compounds: the odds of arriving."],
+        sub: "Relax time, and almost every other decision gets easier.",
         points: [
           { label: "Two goals \u2014 one compounds", text: "Max return asks how fast you get there. Probability asks how likely you are to get there at all \u2014 and survival is what compounds." },
           { label: "A date forces risk", text: "Fix the deadline and the only lever left is how much you gamble to meet it." },
