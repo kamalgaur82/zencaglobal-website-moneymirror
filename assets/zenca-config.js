@@ -140,7 +140,7 @@ window.ZENCA_CONFIG = {
         kicker: "What good looks like",
         headline: "One number, one page, once a quarter.",
         points: [
-          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, crypto, EPF." },
+          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, crypto, retirement (EPF, 401(k), pension)." },
           { label: "Minus everything you owe", text: "Loans, cards, anything with interest running on it." },
           { label: "Quarterly, not daily", text: "Daily tracking measures mood. Quarterly measures direction." }
         ],
@@ -197,7 +197,7 @@ window.ZENCA_CONFIG = {
     { type: "statement",
       kicker: "Money",
       headline: ["Inflation is not just prices going up.", "It is your unit of account buying less."],
-      figure: { left: "₹100 / $100", mid: "buys less", right: "stuff" },
+      figure: { left: "₹10,000 / $100", mid: "buys less", right: "stuff" },
       footer: "Change the lens from the object to the measuring stick." },
 
     { type: "statement",
@@ -686,7 +686,7 @@ window.ZENCA_CONFIG = {
       headline: ["Tools, not answers."],
       sub: "Change the inputs until it is your situation, not a worked example. Then see what it tells you. Both free on zenca.global.",
       cards: [
-        { label: "FIRE Reframed",    text: "The number that makes work optional" },
+        { label: "FIRE Reframed",    text: "The honest arithmetic under your FIRE number" },
         { label: "Price of Advice",  text: "What a fee costs across a lifetime" }
       ],
       footer: "Understand money. Understand yourself. Then decide what Bitcoin means in your life." },
