@@ -107,6 +107,18 @@ window.ZENCA_CONFIG = {
       sub: "A live quiz we turn on the room. You answer from your phone; the answers appear on the screen. You see where you stand \u2014 and where everyone around you stands.",
       footer: "No login. No names. Only the counts are ever saved." },
 
+    { type: "steps",
+      kicker: "The Zenca framework",
+      headline: ["From information to agency"],
+      steps: [
+        { label: "Education",     text: "Build the foundation" },
+        { label: "Understanding", text: "See the bigger picture" },
+        { label: "Judgment",      text: "Weigh what matters" },
+        { label: "Decisions",     text: "Aligned with your goals" },
+        { label: "Agency",        text: "Confidence and control" }
+      ],
+      footer: "Bitcoin knowledge is not the destination. Financial agency is." },
+
     { type: "join" },
 
     { type: "question",
@@ -223,18 +235,6 @@ window.ZENCA_CONFIG = {
       left:  { label: "More output", text: "More real stuff to go around" },
       right: { label: "More money",  text: "More claims on the same stuff" },
       footer: "These are not the same thing." },
-
-    { type: "steps",
-      kicker: "The Zenca framework",
-      headline: ["From information to agency"],
-      steps: [
-        { label: "Education",     text: "Build the foundation" },
-        { label: "Understanding", text: "See the bigger picture" },
-        { label: "Judgment",      text: "Weigh what matters" },
-        { label: "Decisions",     text: "Aligned with your goals" },
-        { label: "Agency",        text: "Confidence and control" }
-      ],
-      footer: "Bitcoin knowledge is not the destination. Financial agency is." },
 
     { type: "question",
       id: "fee",
@@ -546,6 +546,29 @@ window.ZENCA_CONFIG = {
       flow: true,
       footer: "Conviction should be strong enough to act, and weak enough to update." },
 
+    { type: "cards",
+      kicker: "The human layer",
+      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
+      sub: "A better asset does not automatically create a better investor.",
+      cards: [
+        { label: "Fear",       text: "Sell the fall" },
+        { label: "FOMO",       text: "Buy the rise" },
+        { label: "Ego",        text: "Defend old beliefs" },
+        { label: "Impatience", text: "Add leverage" }
+      ],
+      footer: "The protocol has rules. The human needs frameworks." },
+
+    { type: "list",
+      kicker: "Self-sovereignty",
+      headline: ["Before you learn Bitcoin, learn yourself."],
+      items: [
+        "What do you fear losing?",
+        "How much volatility can you actually tolerate?",
+        "What would make you sell?",
+        "Can you hold your own keys responsibly?",
+        "Who can recover them if you cannot?"
+      ] },
+
     { type: "question",
       id: "twofa",
       depth: "merged",
@@ -571,29 +594,6 @@ window.ZENCA_CONFIG = {
         rules: [
           { opt: 2, min: 25, text: "Browser-saved passwords feel like a manager and aren’t one — same convenience, none of the isolation." }
         ] } },
-
-    { type: "cards",
-      kicker: "The human layer",
-      headline: ["Bitcoin can solve a monetary problem.", "It cannot solve your *behavior*."],
-      sub: "A better asset does not automatically create a better investor.",
-      cards: [
-        { label: "Fear",       text: "Sell the fall" },
-        { label: "FOMO",       text: "Buy the rise" },
-        { label: "Ego",        text: "Defend old beliefs" },
-        { label: "Impatience", text: "Add leverage" }
-      ],
-      footer: "The protocol has rules. The human needs frameworks." },
-
-    { type: "list",
-      kicker: "Self-sovereignty",
-      headline: ["Before you learn Bitcoin, learn yourself."],
-      items: [
-        "What do you fear losing?",
-        "How much volatility can you actually tolerate?",
-        "What would make you sell?",
-        "Can you hold your own keys responsibly?",
-        "Who can recover them if you cannot?"
-      ] },
 
     { type: "question",
       id: "access",
