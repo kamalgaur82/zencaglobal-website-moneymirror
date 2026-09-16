@@ -111,6 +111,7 @@
   <button id="reload">Refresh</button>
   <button id="csv" class="primary">Download CSV</button>
   <button id="print">Print / PDF</button>
+  <button id="signout">Sign out</button>
 </div>
 
 <div id="out"></div>
@@ -274,6 +275,11 @@
   document.getElementById("reload").onclick = load;
   document.getElementById("csv").onclick = csv;
   document.getElementById("print").onclick = () => window.print();
+  // Sign out, then return to the Money Mirror home. Navigate even if the
+  // sign-out call fails, so the button always gets you out of the results view.
+  document.getElementById("signout").onclick = () => {
+    Promise.resolve(sync.signOut()).catch(() => {}).then(() => { location.href = "../"; });
+  };
 
   // --- sign-in gate: don't fetch or reveal results until authenticated -----
   function gateOn(on){ document.getElementById("gate").classList.toggle("on", on); }
