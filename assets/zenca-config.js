@@ -143,7 +143,7 @@ window.ZENCA_CONFIG = {
       prompt: "Do you know your net worth to within 10%?",
       options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
       commentary: {
-        default: "Every decision after this one depends on this number. Most of us are managing a portfolio we can’t measure.",
+        default: "Every decision after this one depends on this number — and it’s the one most people have never actually pinned down.",
         rules: [
           { opt: 2, min: 30, text: "Nearly a third of this room can’t measure the thing they’re trying to grow. That isn’t carelessness — nobody was ever taught to keep score." },
           { opt: 0, min: 50, text: "Unusually high. This is a self-selected room: people who track a volatile asset tend to track everything else too." }
@@ -165,7 +165,7 @@ window.ZENCA_CONFIG = {
       prompt: "Who actually manages your money?",
       options: ["I do", "My spouse or partner", "My parents", "An advisor", "Honestly, no one"],
       commentary: {
-        default: "Hold this next to the last slide: most of us say we manage our own money, and most of us can’t state what we have.",
+        default: "Two skills we tend to confuse: managing your money, and being able to state what you actually have.",
         rules: [
           { opt: 0, min: 55, text: "A room of self-managers — next to a room that mostly can’t state its net worth. Managing and monitoring are not the same job." },
           { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
@@ -198,7 +198,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "Money",
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
-      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "I’ve never thought about which"],
+      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "Honestly, I’ve never thought about it this way"],
       commentary: {
         default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
@@ -360,7 +360,6 @@ window.ZENCA_CONFIG = {
       kicker: "What are you actually risking",
       prompt: "What does \u201crisk\u201d mean to you?",
       options: ["Prices falling", "How much it swings day to day", "Losing money permanently", "Not reaching my goal in time"],
-      answer: 2,
       commentary: {
         default: "Volatility and risk got welded together somewhere, and a great many bad decisions follow from the confusion.",
         rules: [
@@ -390,7 +389,6 @@ window.ZENCA_CONFIG = {
       prompt: "What are you actually optimising for?",
       note: "Only one. The one you would defend if the others suffered.",
       options: ["The highest return", "Hitting a number by a date", "The lowest risk", "The highest chance of getting there"],
-      answer: 3,
       commentary: {
         default: "Return, time and safety are the three we can name. Probability of success is the one that actually compounds.",
         rules: [
@@ -426,7 +424,7 @@ window.ZENCA_CONFIG = {
         points: [
           { label: "Measured in time, not rupees or dollars", text: "Months and years of your real spending — the only unit that answers the question." },
           { label: "It removes the forced hand", text: "The longer your runway, the fewer decisions a market or a bad year gets to make for you." },
-          { label: "The first taste of freedom", text: "Enough runway, and work becomes a choice — which is exactly what the last questions are about." }
+          { label: "The first taste of freedom", text: "Enough runway, and work becomes a choice." }
         ],
         footer: "The longer you can last, the freer every other decision becomes." } },
 
@@ -514,6 +512,7 @@ window.ZENCA_CONFIG = {
       depth: "full",
       kicker: "Your portfolio",
       prompt: "Think of your largest holding. Why do you own it?",
+      note: "Your single biggest investment — one holding, not the home you live in.",
       options: ["I researched it myself", "Someone I know suggested it", "An advisor or influencer said so", "Honestly, I don’t fully remember"],
       commentary: {
         default: "Most portfolios aren’t decisions. They’re sediment — layers of old tips nobody has revisited.",
@@ -533,7 +532,7 @@ window.ZENCA_CONFIG = {
 
     { type: "compare",
       kicker: "Beliefs",
-      headline: ["Math is math. Until money threatens the ego."],
+      headline: ["The math doesn’t change. Until our understanding threatens our ego."],
       left:  { label: "Identity", text: "Defend the old model" },
       right: { label: "Evidence", text: "Update to a better model" },
       flow: true,
@@ -616,7 +615,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "If money stopped being the reason",
       prompt: "If you never had to work for money again, what would you do?",
-      options: ["Stop working entirely", "Keep working, on my own terms", "Keep doing what I do now", "I have never let myself think about it"],
+      options: ["Stop working for money entirely", "Keep working — but only on what I choose", "Carry on much as I do now", "I have never let myself think about it"],
       commentary: {
         default: "Everything else \u2014 saving, investing, independence \u2014 is in service of this one question.\nIndependence isn\u2019t the finish line; it\u2019s what finally lets you ask it.",
         rules: [
@@ -653,7 +652,7 @@ window.ZENCA_CONFIG = {
 
     { type: "list",
       kicker: "A practical test",
-      headline: ["Five questions before your next decision."],
+      headline: ["Five questions before your next money decision."],
       items: [
         "Am I reacting to price, or to a change in value?",
         "Am I optimising for return, or for survival?",
