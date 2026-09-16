@@ -85,11 +85,11 @@ window.ZENCA_CONFIG = {
       headline: ["Kamal Gaur, founder of Zenca."],
       sub: "21 years in analytics and strategy — across financial services and technology.",
       cards: [
-        { label: "These days", text: "Bitcoin policy, writing, AI prototypes." },
+        { label: "These days", text: "Bitcoin policy, writing, and building prototypes using AI — including this quiz." },
         { label: "On my own clock", text: "Travel most months — often mid-week. Fitness and focus." },
         { label: "Why Zenca", text: "How clearly you think about money shapes your whole life." }
       ],
-      footer: "Thank you for the time — glad you’re here." },
+      footer: "My aim is simple: to help you think more clearly about money — for yourself." },
 
     { type: "quote",
       lines: ["Fun fact: I got serious about money after 13 years of working.",
