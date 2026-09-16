@@ -289,7 +289,7 @@ window.ZENCA_CONFIG = {
         points: [
           { label: "Start earlier, always", text: "Earlier beats later beats never. Time in the market does far more than timing it — it’s the one edge you can’t buy back." },
           { label: "Save a bigger share", text: "A higher savings rate beats a lower one beats none. It’s a percentage, not an amount — so a modest income can still win." },
-          { label: "The example", text: "Save 20% of income earning 6% a year, and you overtake someone saving 5% earning 12% a year — and stay ahead for years." }
+          { label: "The example", text: "On the same income: save 20% earning 6% a year, and you overtake someone saving 5% earning 12% a year — and stay ahead for years." }
         ],
         footer: "You can’t pick next year’s return. You can pick when you start and the share you save — and those do the work." } },
 
@@ -380,7 +380,7 @@ window.ZENCA_CONFIG = {
     { type: "statement",
       kicker: "Uncertainty",
       headline: ["You cannot demand all three."],
-      figure: { left: "High returns", mid: "Short time", right: "Low risk" },
+      figure: { left: "High returns", mid: "Short time", right: "Low risk", sep: "+" },
       footer: "Certainty is the thing that has to give." },
 
     { type: "question",

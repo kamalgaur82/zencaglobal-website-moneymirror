@@ -103,6 +103,7 @@
   .fig{border:1px solid rgba(198,161,91,.34);padding:40px 46px;font-family:var(--serif);
        font-size:44px;color:var(--paper);background:var(--ink-2)}
   .fig.lead{color:var(--gold);border-color:var(--gold)}
+  .figsep{align-self:center;flex:none;font-family:var(--serif);font-size:52px;line-height:1;color:var(--gold)}
   .arrow,.vs.flow{position:relative;width:70px;height:28px;flex:none;align-self:center;font-size:0}
   .arrow::before,.vs.flow::before{content:"";position:absolute;top:50%;left:0;width:48px;height:6px;
     background:var(--gold);transform:translateY(-50%)}
@@ -292,7 +293,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../assets/zenca-config.js?v=19"></script>
+<script src="../assets/zenca-config.js?v=20"></script>
 <script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -506,7 +507,7 @@
       ${s.sub ? `<div class="sub">${mk(s.sub)}</div>` : ""}
       ${s.figure ? `<div class="figrow">${
         (s.figure.items || [s.figure.left, s.figure.mid, s.figure.right])
-          .map((t,i) => `${i ? '<div class="arrow"></div>' : ""}<div class="fig ${i?"":"lead"}">${esc(t)}</div>`)
+          .map((t,i) => `${i ? (s.figure.sep ? `<div class="figsep">${esc(s.figure.sep)}</div>` : '<div class="arrow"></div>') : ""}<div class="fig ${i?"":"lead"}">${esc(t)}</div>`)
           .join("")}</div>` : ""}
       <div class="footline">${esc(s.footer)}</div>
     </div>`;
