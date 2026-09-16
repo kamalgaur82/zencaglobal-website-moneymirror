@@ -152,7 +152,7 @@ window.ZENCA_CONFIG = {
         kicker: "What good looks like",
         headline: "One number, one page, once a quarter.",
         points: [
-          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, crypto, retirement (EPF, 401(k), pension)." },
+          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, Bitcoin/crypto, retirement (EPF, 401(k), pension)." },
           { label: "Minus everything you owe", text: "Loans, cards, anything with interest running on it." },
           { label: "Quarterly, not daily", text: "Daily tracking measures mood. Quarterly measures direction." }
         ],
@@ -234,7 +234,7 @@ window.ZENCA_CONFIG = {
       headline: ["Making more things makes everyone richer.", "Making more money just splits the same things differently."],
       left:  { label: "More output", text: "More real stuff to go around" },
       right: { label: "More money",  text: "More claims on the same stuff" },
-      footer: "These are not the same thing." },
+      footer: "It’s the gap between real and nominal GDP — the things versus the money." },
 
     { type: "question",
       id: "fee",
