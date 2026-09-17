@@ -189,7 +189,7 @@ window.ZENCA_CONFIG = {
       prompt: "Do you know your net worth to within 10%?",
       options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
       commentary: {
-        default: "Every decision after this one depends on this number — and it’s the one most people have never actually pinned down.",
+        default: "Almost every decision that follows leans on this number — and it’s the one most people have never actually pinned down.",
         rules: [
           { opt: 2, min: 30, text: "Nearly a third of this room can’t measure the thing they’re trying to grow. That isn’t carelessness — nobody was ever taught to keep score." },
           { opt: 0, min: 50, text: "Unusually high. This is a self-selected room: people who track a volatile asset tend to track everything else too." }
@@ -209,11 +209,11 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "Money",
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
-      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "Honestly, I’ve never thought about it this way"],
+      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "The economy just grew"],
       commentary: {
-        default: "Most of us blame the shopkeeper. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
+        default: "The instinct is to look at the shop, not the currency. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
-          { opt: 0, min: 35, text: "The instinct is to blame the goods. But the shop didn’t change — the measuring stick did." },
+          { opt: 0, min: 35, text: "The instinct is to look at the price tag, not the money. But the shop didn’t change — the measuring stick did." },
           { opt: 1, min: 35, text: "This room sees it: the object isn’t getting dearer so much as the money is getting weaker." }
         ] } },
 
@@ -228,7 +228,7 @@ window.ZENCA_CONFIG = {
       headline: ["A room. Five chocolates. More money."],
       figure: { items: ["5 chocolates", "more bidding power",
                         "people pay more for a chocolate", "each monetary unit buys less chocolate"] },
-      footer: "More claims on the same scarce goods." },
+      footer: "More claims on the same scarce goods — which is also why a Bangalore flat outprices a Mysore one on the same brick and labour." },
 
     { type: "layers",
       kicker: "Three layers",
@@ -318,17 +318,17 @@ window.ZENCA_CONFIG = {
           { opt: 3, min: 25, text: "‘Not sure’ is worth a look tonight — unpaid card balances quietly cost more than most portfolios make." }
         ] } },
 
-    { type: "quote",
-      lines: ["Most financial mistakes are not caused by greed.",
-              "They are caused by the desire to *compress time*."],
-      sub: "Speed quietly turns reasonable goals into unreasonable risk." },
-
     { type: "compare",
       kicker: "The leverage trap",
-      headline: ["Time is not the enemy of wealth.", "Time is the *_mechanism_*."],
-      left:  { label: "Debt / Leverage", text: "Tries to pull the future toward you" },
+      headline: ["Same engine. Opposite directions."],
+      left:  { label: "Debt / Leverage", text: "Pulls the future toward you" },
       right: { label: "Compounding", text: "Lets you travel toward it" },
       footer: "One of these has a liquidation price." },
+
+    { type: "quote",
+      lines: ["Time is not the enemy of wealth — it is the *mechanism*.",
+              "Most mistakes come not from greed, but from the urge to *compress time*."],
+      sub: "Speed quietly turns reasonable goals into unreasonable risk." },
 
     { type: "quote",
       lines: ["*Price* is simply the latest agreement.", "It is not the same thing as *value*."],
@@ -370,7 +370,7 @@ window.ZENCA_CONFIG = {
       depth: "full",
       kicker: "What are you actually risking",
       prompt: "What does \u201crisk\u201d mean to you?",
-      options: ["Prices falling", "How much it swings day to day", "Losing money permanently", "Not reaching my goal in time"],
+      options: ["Prices falling", "How much it swings day to day", "Losing money permanently", "Not reaching my goal in time", "Missing out on bigger gains"],
       commentary: {
         default: "Volatility and risk got welded together somewhere, and a great many bad decisions follow from the confusion.",
         rules: [
@@ -390,7 +390,7 @@ window.ZENCA_CONFIG = {
     { type: "statement",
       kicker: "Uncertainty",
       headline: ["You cannot demand all three."],
-      figure: { left: "High returns", mid: "Short time", right: "Low risk", sep: "+" },
+      figure: { left: "High returns", mid: "Short time", right: "Low volatility", sep: "+" },
       footer: "Certainty is the thing that has to give." },
 
     { type: "question",
@@ -399,9 +399,9 @@ window.ZENCA_CONFIG = {
       kicker: "What are you optimising for",
       prompt: "What are you actually optimising for?",
       note: "Only one. The one you would defend if the others suffered.",
-      options: ["The highest return", "Hitting a number by a date", "The lowest risk", "The highest chance of getting there"],
+      options: ["The highest return", "Hitting a number by a date", "The lowest volatility", "The highest chance of getting there"],
       commentary: {
-        default: "Return, time and safety are the three we can name. Probability of success is the one that actually compounds.",
+        default: "Return, time and volatility are the three we can name. Probability of success is the one that actually compounds.",
         rules: [
           { opt: 1, min: 30, text: "A number by a date is the most dangerous target in personal finance. The deadline does the choosing, and it always chooses more risk." },
           { opt: 0, min: 35, text: "Maximum return is the answer that feels ambitious and quietly lowers the odds of arriving at all." }
@@ -411,7 +411,7 @@ window.ZENCA_CONFIG = {
         headline: ["We chase the biggest, fastest return \u2014 and ignore what compounds: the odds of arriving."],
         sub: "Relax time, and almost every other decision gets easier.",
         points: [
-          { label: "Two goals \u2014 one compounds", text: "Max return asks how fast you get there. Probability asks how likely you are to get there at all \u2014 and survival is what compounds." },
+          { label: "Speed, or the odds of arriving", text: "Max return asks how fast you get there. Probability asks how likely you are to get there at all \u2014 and survival is what compounds." },
           { label: "A date forces risk", text: "Fix the deadline and the only lever left is how much you gamble; relax it and your odds climb, with nothing cleverer." }
         ],
         footer: "The highest chance of getting there is not the modest goal. It is the winning one." } },
@@ -567,9 +567,9 @@ window.ZENCA_CONFIG = {
       items: [
         "What do you fear losing?",
         "How much volatility can you actually tolerate?",
+        "What’s your time horizon?",
         "What would make you sell?",
-        "Can you hold your own keys responsibly?",
-        "Who can recover them if you cannot?"
+        "Can you hold your own keys — and who’d recover them if you couldn’t?"
       ] },
 
     { type: "question",
@@ -626,11 +626,12 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "If money stopped being the reason",
       prompt: "If you never had to work for money again, what would you do?",
-      options: ["Stop working for money entirely", "Keep working — but only on what I choose", "Carry on much as I do now", "I have never let myself think about it"],
+      note: "The first thing that comes to mind.",
+      options: ["Rest, travel, and enjoy life", "Give my time to family and people I love", "Build or create something that matters", "Change nothing about my life, including work", "I’ve never let myself think about it"],
       commentary: {
         default: "Everything else \u2014 saving, investing, independence \u2014 is in service of this one question.\nIndependence isn\u2019t the finish line; it\u2019s what finally lets you ask it.",
         rules: [
-          { opt: 3, min: 30, text: "Never having thought about it is the most common answer and the most revealing. We optimise hard toward a finish line we have never described." }
+          { opt: 4, min: 30, text: "Never having thought about it is the most common answer and the most revealing. We optimise hard toward a finish line we have never described." }
         ] } },
 
     { type: "question",
