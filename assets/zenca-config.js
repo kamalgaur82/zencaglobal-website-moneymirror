@@ -701,6 +701,7 @@ window.ZENCA_CONFIG = {
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "Every subscription is a vote for thinking more clearly about money." }
+      note: "Every subscription is a vote for thinking more clearly about money.",
+      contact: "Think I can help you understand money better? The contact form at zenca.global is open." }
   ]
 };
