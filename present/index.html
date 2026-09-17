@@ -190,6 +190,7 @@
   .swatch{display:inline-block;width:22px;height:12px;margin-right:12px}
   /* stage scorecard (report + split pages) */
   .rlist{margin-top:40px}
+  .rq .rqn{color:var(--gold);font-weight:600;margin-right:12px;white-space:nowrap}
   .rrow{display:grid;grid-template-columns:1fr 420px;gap:44px;align-items:baseline;
         padding:18px 0;border-bottom:1px solid rgba(198,161,91,.22)}
   .rrow .rq{font-size:27px;line-height:1.28;color:var(--mute)}
@@ -679,17 +680,30 @@
 
   /* ---------- results scorecard: one page per framework stage ---------- */
   function qOf(id){ return CFG.deck.find(s => s.type === "question" && s.id === id); }
+  /* Q-number for the scorecard, matching the audience quiz order: the
+     demographics warm-up is labelled, the counted questions are Q1..Q21
+     in deck order (stages group by theme, so their numbers aren't contiguous). */
+  function qNum(id){
+    let n = 0;
+    for (const s of CFG.deck){
+      if (s.type !== "question") continue;
+      if (s.id === "warmup"){ if (id === "warmup") return "Warm-up"; continue; }
+      n++;
+      if (s.id === id) return "Q" + n;
+    }
+    return "";
+  }
 
   function renderReport(groupIdx){
     const stage = CFG.resultStages[groupIdx];
     const rows = stage.ids.map(id => {
       const q = qOf(id); if (!q) return "";
       const p = partsOf(q)[0], dist = distribution(p), total = totalFor(p.id);
-      if (!total) return `<div class="rrow"><div class="rq">${esc(q.prompt)}</div><div class="ra ra-none">No votes yet</div></div>`;
+      if (!total) return `<div class="rrow"><div class="rq"><span class="rqn">${qNum(id)}</span>${esc(q.prompt)}</div><div class="ra ra-none">No votes yet</div></div>`;
       const best = Math.max(...dist.map(d => d.n));
       const tied = dist.filter(d => d.n === best && d.n > 0);
       const label = tied.map(d => esc(d.label)).join(" / ");
-      return `<div class="rrow"><div class="rq">${esc(q.prompt)}</div>
+      return `<div class="rrow"><div class="rq"><span class="rqn">${qNum(id)}</span>${esc(q.prompt)}</div>
         <div class="ra"><b>${tied[0].pct}%</b> ${label}</div></div>`;
     }).join("");
     return `
@@ -707,7 +721,7 @@
       const p = partsOf(q)[0], c = countsFor(p.id);
       let hT = 0, nT = 0;
       Object.keys(c).forEach(k => { hT += c[k].holder; nT += c[k].nonholder; });
-      if (hT + nT === 0) return `<div class="splitrow"><div class="rq">${esc(q.prompt)}</div><div class="sg none">No votes yet</div></div>`;
+      if (hT + nT === 0) return `<div class="splitrow"><div class="rq"><span class="rqn">${qNum(id)}</span>${esc(q.prompt)}</div><div class="sg none">No votes yet</div></div>`;
       const stat = p.options.map((label,i) => {
         const row = c[i] || { holder:0, nonholder:0 };
         return { label, hn: row.holder, nn: row.nonholder,
@@ -716,7 +730,7 @@
       const hTop = stat.reduce((a,b) => b.hn > a.hn ? b : a, stat[0]);
       const nTop = stat.reduce((a,b) => b.nn > a.nn ? b : a, stat[0]);
       return `<div class="splitrow">
-        <div class="rq">${esc(q.prompt)}</div>
+        <div class="rq"><span class="rqn">${qNum(id)}</span>${esc(q.prompt)}</div>
         <div class="sg h"><span class="sgp">${hTop.h}%</span> ${esc(hTop.label)}</div>
         <div class="sg n"><span class="sgp">${nTop.n}%</span> ${esc(nTop.label)}</div>
       </div>`;
