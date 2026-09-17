@@ -55,11 +55,11 @@ window.ZENCA_CONFIG = {
      the talk. The warm-up is demographics — a categorization, not one of the
      21 — though its age split still appears in the Education snapshot. */
   resultStages: [
-    { name: "Education",     ids: ["warmup", "networth", "inflation", "fee", "feeonly"] },
-    { name: "Understanding", ids: ["manages", "source", "savings", "mood", "debt"] },
-    { name: "Judgment",      ids: ["risk", "optimise", "allocation", "singlestock", "why"] },
-    { name: "Decisions",     ids: ["runway", "insurance", "twofa", "pwmgr", "access"] },
-    { name: "Agency",        ids: ["freedom", "enough"] }
+    { name: "Education",     ids: ["warmup", "source", "inflation", "fee", "feeonly"] },
+    { name: "Understanding", ids: ["manages", "networth", "savings", "mood", "debt"] },
+    { name: "Judgment",      ids: ["risk", "optimise", "runway", "singlestock", "why"] },
+    { name: "Decisions",     ids: ["insurance", "allocation", "twofa", "pwmgr"] },
+    { name: "Agency",        ids: ["access", "freedom", "enough"] }
   ],
 
   /* --- Questions you can drop live if running late ------------------------
@@ -697,7 +697,7 @@ window.ZENCA_CONFIG = {
 
     { type: "quote",
       lines: ["When information becomes infinite,", "*_curation_* becomes the product."],
-      sub: "Welcome to Zenca — much of this is on the Substack already, with a great deal more to come." },
+      sub: "Welcome to Zenca — much of this is already on the Substack. Tonight’s answers, anonymised, will join it once I’ve looked closely." },
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
