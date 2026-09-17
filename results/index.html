@@ -116,7 +116,7 @@
 
 <div id="out"></div>
 
-<script src="../assets/zenca-config.js?v=29"></script>
+<script src="../assets/zenca-config.js?v=30"></script>
 <script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -161,9 +161,15 @@
     const parts = [];
 
     if (man && man.questions) {
-      man.questions.forEach(q => q.parts.forEach(p =>
-        parts.push({ qid: q.id, question: q.prompt, partId: p.id,
-                     partPrompt: p.prompt, options: p.options })));
+      // Number the counted questions Q1..Q21 in recorded order. The demographics
+      // warm-up ("who's in the room") is a categoriser, not one of the 21.
+      let qn = 0;
+      man.questions.forEach(q => {
+        const label = q.id === "warmup" ? "Warm-up" : "Q" + (++qn);
+        q.parts.forEach(p =>
+          parts.push({ qid: q.id, qlabel: label, question: q.prompt, partId: p.id,
+                       partPrompt: p.prompt, options: p.options }));
+      });
     } else {
       // No snapshot stored: fall back to whatever ids appear in the data.
       const ids = [];
@@ -171,7 +177,7 @@
         const bits = k.split("|");
         if (bits[0] === sid && bits[1] !== "__scan" && ids.indexOf(bits[1]) < 0) ids.push(bits[1]);
       });
-      ids.forEach(id => parts.push({ qid:id, question:id, partId:id,
+      ids.forEach(id => parts.push({ qid:id, qlabel:"", question:id, partId:id,
                                      partPrompt:"", options:null }));
     }
 
@@ -241,7 +247,7 @@
         </tr>`).join("");
       return `<section>
         <h2>${esc(d.question)}${d.partPrompt && d.partPrompt !== d.question ? " · " + esc(d.partPrompt) : ""}</h2>
-        <div class="qid">${esc(d.partId)} · ${d.total} answers</div>
+        <div class="qid">${d.qlabel ? esc(d.qlabel) + " · " : ""}${esc(d.partId)} · ${d.total} answers</div>
         <table>
           <thead><tr><th>Answer</th><th></th><th class="num">Share</th><th class="num">Count</th>
             <th class="num">Holders</th><th class="num">Holds none</th></tr></thead>

@@ -87,7 +87,7 @@ window.ZENCA_CONFIG = {
       cards: [
         { label: "Build", text: "Products and prototypes, often with AI — including this quiz." },
         { label: "Write", text: "Money, Bitcoin policy, tech, and the systems we live by." },
-        { label: "Live", text: "Open calendar, fitness, and travel — road trips, and over a fifth of my time outside Bangalore." }
+        { label: "Live", text: "Open calendar, fitness, and travel — over a fifth of my time outside Bangalore." }
       ],
       footer: "How I earned that freedom is a money story — and it’s where we start." },
 
@@ -97,7 +97,7 @@ window.ZENCA_CONFIG = {
       sub: "The discomfort of not knowing where I was heading got too high to keep living with." },
 
     { type: "quote",
-      lines: ["So I took ownership of my financial education — and acted on what I learned.",
+      lines: ["So I took *ownership* of my financial education — and acted on what I learned.",
               "That *one* decision changed everything."],
       sub: "It carried me to financial independence \u2014 so when life happened, I was ready." },
 
@@ -209,12 +209,12 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "Money",
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
-      options: ["Groceries got more expensive", "Your rupee/dollar is worth less", "The economy just grew"],
+      options: ["The economy just grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
         default: "The instinct is to look at the shop, not the currency. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
-          { opt: 0, min: 35, text: "The instinct is to look at the price tag, not the money. But the shop didn’t change — the measuring stick did." },
-          { opt: 1, min: 35, text: "This room sees it: the object isn’t getting dearer so much as the money is getting weaker." }
+          { opt: 1, min: 35, text: "The instinct is to look at the price tag, not the money. But the shop didn’t change — the measuring stick did." },
+          { opt: 2, min: 35, text: "This room sees it: the object isn’t getting dearer so much as the money is getting weaker." }
         ] } },
 
     { type: "statement",
@@ -238,7 +238,7 @@ window.ZENCA_CONFIG = {
         { label: "Personal",     mid: "Your basket",              right: "What you actually feel" },
         { label: "Money supply", mid: "System-wide bidding power", right: "Where dilution begins" }
       ],
-      footer: "Prices are downstream. Money is upstream." },
+      footer: "Prices are downstream. Money is upstream — the dollar supply grew about 7% a year over 65 years; the rupee’s, about 15%." },
 
     { type: "compare",
       kicker: "The asymmetry",
