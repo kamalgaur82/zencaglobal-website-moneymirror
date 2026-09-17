@@ -87,17 +87,17 @@ window.ZENCA_CONFIG = {
       cards: [
         { label: "Build", text: "Products and prototypes, often with AI — including this quiz." },
         { label: "Write", text: "Money, Bitcoin policy, tech, and the systems we live by." },
-        { label: "Live", text: "Open calendar, fitness, and travel — road trips included. 3+ months outside Bangalore this past year." }
+        { label: "Live", text: "Open calendar, fitness, and travel — road trips, and over a fifth of my time outside Bangalore." }
       ],
       footer: "How I earned that freedom is a money story — and it’s where we start." },
 
     { type: "quote",
-      lines: ["Fun fact: I got serious about money after 13 years of working.",
+      lines: ["Fun fact: I got serious about money after *13 years* of working.",
               "I just didn’t have a plan — and no idea whether things would turn out fine."],
       sub: "The discomfort of not knowing where I was heading got too high to keep living with." },
 
     { type: "quote",
-      lines: ["So I took ownership of my own financial education.",
+      lines: ["So I took ownership of my financial education — and acted on what I learned.",
               "That *one* decision changed everything."],
       sub: "It carried me to financial independence \u2014 so when life happened, I was ready." },
 
@@ -107,7 +107,7 @@ window.ZENCA_CONFIG = {
       sub: "I use facts, logic, math and AI to make sense of the world, and I teach people to think for themselves.",
       cards: [
         { label: "Observer", text: "Watch what people actually do" },
-        { label: "Learner",  text: "Still figuring it out, in public" },
+        { label: "Learner",  text: "About money — and the people who use it" },
         { label: "Educator", text: "Hand the thinking back to you" }
       ],
       footer: "Helping people understand money" },
@@ -148,41 +148,6 @@ window.ZENCA_CONFIG = {
       commentary: { default: "That’s the room. Hold that picture — it changes how you read everything that follows." } },
 
     { type: "question",
-      id: "networth",
-      depth: "full",
-      kicker: "Where we start",
-      prompt: "Do you know your net worth to within 10%?",
-      options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
-      commentary: {
-        default: "Every decision after this one depends on this number — and it’s the one most people have never actually pinned down.",
-        rules: [
-          { opt: 2, min: 30, text: "Nearly a third of this room can’t measure the thing they’re trying to grow. That isn’t carelessness — nobody was ever taught to keep score." },
-          { opt: 0, min: 50, text: "Unusually high. This is a self-selected room: people who track a volatile asset tend to track everything else too." }
-        ] },
-      teach: {
-        kicker: "What good looks like",
-        headline: "One number, one page, once a quarter.",
-        points: [
-          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, Bitcoin/crypto, retirement (EPF, 401(k), pension)." },
-          { label: "Minus everything you owe", text: "Loans, cards, anything with interest running on it." },
-          { label: "Quarterly, not daily", text: "Daily tracking measures mood. Quarterly measures direction." }
-        ],
-        footer: "You cannot compound what you cannot see." } },
-
-    { type: "question",
-      id: "manages",
-      depth: "merged",
-      kicker: "Where we start",
-      prompt: "Who actually manages your money?",
-      options: ["I do", "My spouse or partner", "My parents", "An advisor", "Honestly, no one"],
-      commentary: {
-        default: "Two skills we tend to confuse: managing your money, and being able to state what you actually have.",
-        rules: [
-          { opt: 0, min: 55, text: "A room of self-managers — next to a room that mostly can’t state its net worth. Managing and monitoring are not the same job." },
-          { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
-        ] } },
-
-    { type: "question",
       id: "source",
       depth: "full",
       kicker: "Where it comes from",
@@ -203,6 +168,41 @@ window.ZENCA_CONFIG = {
           { label: "The fix", text: "Better inputs, from sources with no commission on your choices." }
         ],
         footer: "This session is the input. What you do with it is the output." } },
+
+    { type: "question",
+      id: "manages",
+      depth: "merged",
+      kicker: "Who runs it",
+      prompt: "Who actually manages your money?",
+      options: ["I do", "My spouse or partner", "My parents", "An advisor", "Honestly, no one"],
+      commentary: {
+        default: "Two skills we tend to confuse: managing your money, and being able to state what you actually have.",
+        rules: [
+          { opt: 0, min: 55, text: "A room of self-managers. Doing it yourself is one skill; knowing exactly what you own is another." },
+          { opt: 4, min: 15, text: "‘No one’ is the honest answer more often than we admit. Money left unmanaged still makes decisions — the default ones." }
+        ] } },
+
+    { type: "question",
+      id: "networth",
+      depth: "full",
+      kicker: "Where you stand",
+      prompt: "Do you know your net worth to within 10%?",
+      options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
+      commentary: {
+        default: "Every decision after this one depends on this number — and it’s the one most people have never actually pinned down.",
+        rules: [
+          { opt: 2, min: 30, text: "Nearly a third of this room can’t measure the thing they’re trying to grow. That isn’t carelessness — nobody was ever taught to keep score." },
+          { opt: 0, min: 50, text: "Unusually high. This is a self-selected room: people who track a volatile asset tend to track everything else too." }
+        ] },
+      teach: {
+        kicker: "What good looks like",
+        headline: "One number, one page, once a quarter.",
+        points: [
+          { label: "Everything you own", text: "Bank, deposits, equity, funds, gold, property, Bitcoin/crypto, retirement (EPF, 401(k), pension)." },
+          { label: "Minus everything you owe", text: "Loans, cards, anything with interest running on it." },
+          { label: "Quarterly, not daily", text: "Daily tracking measures mood. Quarterly measures direction." }
+        ],
+        footer: "You cannot compound what you cannot see." } },
 
     { type: "question",
       id: "inflation",
