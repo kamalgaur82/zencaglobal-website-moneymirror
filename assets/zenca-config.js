@@ -86,8 +86,8 @@ window.ZENCA_CONFIG = {
       sub: "21 years in analytics and strategy — across financial services and tech.",
       cards: [
         { label: "Build", text: "Products and prototypes, often with AI — including this quiz." },
-        { label: "Write", text: "Money, Bitcoin policy, tech, and everyday life." },
-        { label: "Live", text: "Open calendar, health first, and travel — 3+ months a year outside Bangalore." }
+        { label: "Write", text: "Money, Bitcoin policy, tech, and observations." },
+        { label: "Live", text: "Open calendar, fitness, and travel — road trips included. 3+ months outside Bangalore this past year." }
       ],
       footer: "How I earned that freedom is a money story — and it’s where we start." },
 
