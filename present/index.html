@@ -58,6 +58,7 @@
 
   /* --- shared type ----------------------------------------------------- */
   .kicker{font-size:19px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:34px}
+  .lead{font-size:23px;letter-spacing:.03em;color:var(--gold-deep);margin-bottom:30px;max-width:1100px}
   h1{font-family:var(--serif);font-weight:500;font-size:94px;line-height:1.04;letter-spacing:-.015em}
   h2{font-family:var(--serif);font-weight:500;font-size:62px;line-height:1.16;letter-spacing:-.01em;max-width:1240px}
   .sub{margin-top:32px;font-size:27px;line-height:1.5;color:var(--mute);max-width:900px}
@@ -293,7 +294,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../assets/zenca-config.js?v=26"></script>
+<script src="../assets/zenca-config.js?v=27"></script>
 <script src="../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -514,6 +515,7 @@
 
   R.cards = s => `
     <div class="body">
+      ${s.lead ? `<div class="lead">${esc(s.lead)}</div>` : ""}
       <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="sub">${esc(s.sub)}</div>` : ""}
       <div class="cards">${s.cards.map(c => `
