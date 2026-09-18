@@ -242,7 +242,7 @@ window.ZENCA_CONFIG = {
 
     { type: "compare",
       kicker: "The asymmetry",
-      headline: ["Making more things makes everyone richer.", "Making more money just splits the same things differently."],
+      headline: ["Making more *things* makes everyone richer.", "Making more *money* just splits the same things differently."],
       left:  { label: "More output", text: "More real stuff to go around" },
       right: { label: "More money",  text: "More claims on the same stuff" },
       footer: "It’s the gap between real and nominal GDP — the things versus the money." },
@@ -336,7 +336,7 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "Price shouts, value whispers",
-      headline: ["Bitcoin’s price is one number.", "Its value is four slower ones."],
+      headline: ["Bitcoin’s price is *one* number.", "Its value is *four* slower ones."],
       cards: [
         { label: "Scarcity",  text: "Capped at 21 million, forever" },
         { label: "Access",    text: "Anyone, anywhere, no permission" },
@@ -582,7 +582,7 @@ window.ZENCA_CONFIG = {
       commentary: {
         default: "Password-only is the weakest — no second factor at all. But SMS is the deceptive one: it feels like protection, yet a SIM swap sails right past it.",
         rules: [
-          { opt: 1, min: 30, text: "SMS-only is the answer worth changing tonight. A SIM swap doesn’t need your password, and it doesn’t need your permission." },
+          { opt: 1, min: 30, text: "App-based 2FA > SMS > password. Both weaker ones deserve an upgrade — but SMS is the sneaky one: a SIM swap doesn’t need your password, and it doesn’t need your permission." },
           { opt: 3, min: 20, text: "‘Not sure’ is worth checking before you leave this hall. It takes ninety seconds per account." }
         ] } },
 
