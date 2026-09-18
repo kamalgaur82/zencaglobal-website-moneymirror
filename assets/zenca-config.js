@@ -702,6 +702,14 @@ window.ZENCA_CONFIG = {
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
       note: "Every subscription is a vote for thinking more clearly about money.",
-      contact: "Think I can help you understand money better? The contact form at zenca.global is open." }
+      contact: "Think I can help you understand money better? The contact form at zenca.global is open." },
+
+    { type: "thanks",
+      headline: ["Thank you, Bitspace."],
+      sub: "For the room, the welcome, and making a night like this possible.",
+      qrs: [
+        { label: "Bitspace on Luma", caption: "luma.com/bitspace", url: "https://luma.com/bitspace" },
+        { label: "Bitspace on X",    caption: "@bitshala",         url: "https://x.com/bitshala" }
+      ] }
   ]
 };
