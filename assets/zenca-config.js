@@ -85,9 +85,9 @@ window.ZENCA_CONFIG = {
       lead: "21 years in analytics and strategy — across financial services and tech.",
       headline: ["These days, my time is my own."],
       cards: [
-        { label: "Build", text: "Products and prototypes, often with AI — including this quiz." },
         { label: "Write", text: "Money, Bitcoin policy, tech, and the systems we live by." },
-        { label: "Live", text: "Open calendar, fitness, and travel — over a fifth of my time outside Bangalore." }
+        { label: "Build", text: "Products and prototypes, often with AI — including this quiz." },
+        { label: "Life",  text: "Open calendar, fitness, and travel — over a fifth of my time outside Bangalore." }
       ],
       footer: "How I earned that freedom is a money story — and it’s where we start." },
 
@@ -122,7 +122,7 @@ window.ZENCA_CONFIG = {
         { label: "Decisions",     text: "Aligned with your goals" },
         { label: "Agency",        text: "Confidence and control" }
       ],
-      footer: "Bitcoin knowledge is not the destination. Financial agency is." },
+      footer: "Knowledge is not the destination. Financial agency is." },
 
     { type: "statement",
       kicker: "What this is",
@@ -161,7 +161,7 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "The real gap",
-        headline: ["Most money mistakes are not discipline problems. They are *information* problems."],
+        headline: ["Most money mistakes aren’t really discipline problems. They are *information* problems."],
         points: [
           { label: "Inherited habits", text: "We copy how the people around us handled money — good and bad." },
           { label: "Incentivised noise", text: "Much of what reaches you is sold to you, not taught to you." },
@@ -209,7 +209,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       kicker: "Money",
       prompt: "Your grocery bill is bigger than last year. What actually changed?",
-      options: ["The economy just grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
+      options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
         default: "The instinct is to look at the shop, not the currency. The deeper cause sits upstream — more rupees or dollars chasing the same goods.",
         rules: [
@@ -219,7 +219,7 @@ window.ZENCA_CONFIG = {
 
     { type: "statement",
       kicker: "Money",
-      headline: ["Inflation is not just prices going up.", "It is your unit of account buying less."],
+      headline: ["Inflation is not just prices going up.", "It is also your unit of account buying less."],
       figure: { left: "₹10,000 / $100", mid: "buys less", right: "stuff" },
       footer: "Change the lens from the object to the measuring stick." },
 
@@ -234,11 +234,11 @@ window.ZENCA_CONFIG = {
       kicker: "Three layers",
       headline: ["Inflation is experienced, measured, and created at different layers."],
       rows: [
-        { label: "CPI",          mid: "A weighted basket",        right: "How prices show up" },
+        { label: "CPI (Consumer Price Index)", mid: "A weighted basket", right: "How prices show up" },
         { label: "Personal",     mid: "Your basket",              right: "What you actually feel" },
         { label: "Money supply", mid: "System-wide bidding power", right: "Where dilution begins" }
       ],
-      footer: "Prices are downstream. Money is upstream — the dollar supply grew about 7% a year over 65 years; the rupee’s, about 15%." },
+      footer: "Prices are downstream. Money supply is upstream.\nAnnualized money-supply growth over 65 years (since 1961): US dollar ~7%, Indian rupee ~15%." },
 
     { type: "compare",
       kicker: "The asymmetry",
@@ -298,8 +298,8 @@ window.ZENCA_CONFIG = {
         kicker: "Why your savings rate beats the return",
         headline: ["Early on, the *share* of income you save", "matters more than the *return* you earn."],
         points: [
-          { label: "Start earlier, always", text: "Earlier beats later beats never. Time in the market does far more than timing it — it’s the one edge you can’t buy back." },
-          { label: "Save a bigger share", text: "A higher savings rate beats a lower one beats none. It’s a percentage, not an amount — so a modest income can still win." },
+          { label: "Start earlier, always", text: "Earlier > later > never.\nTime in the market does far more than timing it — it’s the one edge you can’t buy back." },
+          { label: "Save a bigger share", text: "Higher savings rate > lower > none.\nIt’s a percentage, not an amount — so a modest income can still win." },
           { label: "The example", text: "On the same income: save 20% earning 6% a year, and you overtake someone saving 5% earning 12% a year — and stay ahead for years." }
         ],
         footer: "You can’t pick next year’s return. You can pick when you start and the share you save — and those do the work." } },
@@ -320,13 +320,13 @@ window.ZENCA_CONFIG = {
 
     { type: "compare",
       kicker: "The leverage trap",
-      headline: ["Same engine. Opposite directions."],
+      headline: ["Compounding is the same engine, but can work in opposite directions."],
       left:  { label: "Debt / Leverage", text: "Pulls the future toward you" },
-      right: { label: "Compounding", text: "Lets you travel toward it" },
+      right: { label: "Investing", text: "Lets you travel toward it" },
       footer: "One of these has a liquidation price." },
 
     { type: "quote",
-      lines: ["Time is not the enemy of wealth — it is the *mechanism*.",
+      lines: ["Time is not the enemy of wealth — it is the *_mechanism_*.",
               "Most mistakes come not from greed, but from the urge to *compress time*."],
       sub: "Speed quietly turns reasonable goals into unreasonable risk." },
 
@@ -355,15 +355,15 @@ window.ZENCA_CONFIG = {
         default: "Prices move moods, moods move actions, and actions are what actually decide your returns.",
         rules: [
           { opt: 0, min: 30, text: "Daily is worth noticing \u2014 not because feeling it is wrong, but because that is the channel through which a chart reaches your portfolio." },
-          { opt: 3, min: 25, text: "\u201cI don\u2019t look\u201d is a strategy, not an admission. It is the cheapest emotional risk control available." }
+          { opt: 3, min: 25, text: "\u201cI don\u2019t look\u201d isn\u2019t dodging it \u2014 it\u2019s a deliberate way to keep a chart from reaching your decisions." }
         ] } },
 
     { type: "compare",
       kicker: "Psychological inversion",
       headline: ["Same direction. Opposite instinct."],
-      left:  { label: "A store, −30%", text: "Sale. Buy." },
-      right: { label: "A market, −30%", text: "Danger. Sell." },
-      footer: "The discount you welcome and the discount you flee are the same arithmetic." },
+      left:  { label: "A market, −30%", text: "Danger. Sell." },
+      right: { label: "A store, −30%", text: "Sale. Buy." },
+      footer: "The discount you flee and the discount you welcome are the same arithmetic." },
 
     { type: "question",
       id: "risk",
@@ -382,10 +382,10 @@ window.ZENCA_CONFIG = {
         headline: "Risk is the permanent impairment of capital. Everything else is weather.",
         points: [
           { label: "Volatility", text: "The price moved. Painful, temporary, and only made real if you sell into it." },
-          { label: "Impairment", text: "The money is not coming back. A failed company, a liquidation, a scam." },
-          { label: "Why it matters", text: "Avoiding volatility usually means avoiding returns. Avoiding impairment is what keeps you in the game." }
+          { label: "Permanent Impairment", text: "The money is not coming back. A failed company, a liquidation, a scam." },
+          { label: "Why it matters", text: "Avoiding volatility usually means avoiding returns.\nAvoiding permanent impairment of capital is what keeps you in the game." }
         ],
-        footer: "You can survive a great deal of volatility. You cannot survive impairment." } },
+        footer: "You can survive a great deal of volatility. Surviving permanent capital impairment is much harder." } },
 
     { type: "statement",
       kicker: "Uncertainty",
@@ -422,12 +422,12 @@ window.ZENCA_CONFIG = {
       kicker: "Staying in the game",
       prompt: "If your income stopped today, how long could everything you own cover your current lifestyle?",
       note: "Count everything — savings, investments, the lot. At today’s prices.",
-      options: ["Under 6 months", "6–12 months", "1–3 years", "3–5 years", "More than 5 years"],
+      options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
         default: "Runway is time. The more of it you have, the fewer decisions get made for you — by a market, a boss, or a bad year.",
         rules: [
-          { opt: 0, min: 30, text: "Under six months for a large part of the room. One shock and the choices stop being yours." },
-          { opt: 4, min: 20, text: "More than five years without income is a genuine choice most people don’t realise they already hold — this is what financial independence starts to look like." }
+          { opt: 0, min: 30, text: "Under two years for a large part of the room — enough to breathe, not yet enough to be free. One long shock still gets a say in your choices." },
+          { opt: 4, min: 10, text: "‘Rest of my life’ is financial independence, said plainly — work already optional. However many hands that is, it’s the quiet target under everything tonight." }
         ] },
       teach: {
         kicker: "What runway really buys",
@@ -543,7 +543,7 @@ window.ZENCA_CONFIG = {
 
     { type: "compare",
       kicker: "Beliefs",
-      headline: ["The math doesn’t change. Until our understanding threatens our ego."],
+      headline: ["The math doesn’t change.", "Until our understanding threatens our ego."],
       left:  { label: "Identity", text: "Defend the old model" },
       right: { label: "Evidence", text: "Update to a better model" },
       flow: true,
@@ -565,11 +565,11 @@ window.ZENCA_CONFIG = {
       kicker: "Self-sovereignty",
       headline: ["Before you learn Bitcoin, learn yourself."],
       items: [
-        "What do you fear losing?",
-        "How much volatility can you actually tolerate?",
-        "What’s your time horizon?",
-        "What would make you sell?",
-        "Can you hold your own keys — and who’d recover them if you couldn’t?"
+        { label: "Fear",      text: "What do you fear losing?" },
+        { label: "Tolerance", text: "How much volatility can you actually tolerate?" },
+        { label: "Horizon",   text: "What’s your time horizon?" },
+        { label: "Trigger",   text: "What would make you sell?" },
+        { label: "Keys",      text: "Can you hold your own keys — and who’d recover them if you couldn’t?" }
       ] },
 
     { type: "question",
@@ -603,7 +603,7 @@ window.ZENCA_CONFIG = {
       depth: "full",
       kicker: "The last question",
       prompt: "If something happened to you tomorrow, could anyone reach your money?",
-      note: "All of it — accounts, investments, deposits, keys.",
+      note: "All of it — accounts, investments, deposits, and keys, a bank locker’s or a self-custody wallet’s.",
       options: ["Yes, it’s documented", "Partly", "No one could", "I’ve never thought about it"],
       commentary: {
         default: "This is the question with the widest gap between how simple it is and how few of us have done it.",
@@ -613,11 +613,11 @@ window.ZENCA_CONFIG = {
         ] },
       teach: {
         kicker: "What to actually do",
-        headline: ["A nominee can claim your bank accounts.", "No one can claim your keys."],
+        headline: ["A nominee can claim your bank accounts.", "No one can claim your private keys."],
         points: [
           { label: "Nomination is not inheritance", text: "A nominee receives custody, not ownership. A will decides ownership." },
           { label: "List the accounts, not the passwords", text: "Someone should know what exists and where, even if they can’t open it yet." },
-          { label: "Self-custody has no helpline", text: "For keys, a recovery plan is the entire estate plan. Decide who, and how, while you can." }
+          { label: "Self-custody has no helpline", text: "For private keys, a recovery plan is the entire estate plan. Decide who, and how, while you can." }
         ],
         footer: "Sovereignty that ends with you is only half of it." } },
 
@@ -629,7 +629,7 @@ window.ZENCA_CONFIG = {
       note: "The first thing that comes to mind.",
       options: ["Rest, travel, and enjoy life", "Give my time to family and people I love", "Build or create something that matters", "Change nothing about my life, including work", "I’ve never let myself think about it"],
       commentary: {
-        default: "Everything else \u2014 saving, investing, independence \u2014 is in service of this one question.\nIndependence isn\u2019t the finish line; it\u2019s what finally lets you ask it.",
+        default: "Everything else \u2014 saving, investing, financial independence \u2014 is in service of this one question.\nFinancial independence isn\u2019t the finish line; it\u2019s the starting point for what you\u2019d actually like to do with your life.",
         rules: [
           { opt: 4, min: 30, text: "Never having thought about it is the most common answer and the most revealing. We optimise hard toward a finish line we have never described." }
         ] } },
@@ -643,7 +643,7 @@ window.ZENCA_CONFIG = {
       commentary: {
         default: "A number you can’t name, you can never reach.\nA number with no ceiling means you never stop — the investing is just working forever, because ‘enough’ keeps moving.",
         rules: [
-          { opt: 2, min: 30, text: "Worth sitting with. If no amount would make you stop, the plan is to work forever \u2014 which is fine, as long as it is a choice and not a default." }
+          { opt: 2, min: 30, text: "Worth sitting with. If no amount would make you stop, you are effectively saying you want to work till you run out of energy or time." }
         ] } },
 
     { type: "steps",
@@ -665,13 +665,15 @@ window.ZENCA_CONFIG = {
     { type: "list",
       kicker: "A practical test",
       headline: ["Five questions before your next money decision."],
+      acronym: true,
       items: [
-        "Am I reacting to price, or to a change in value?",
-        "Am I optimising for return, or for survival?",
-        "Am I trying to compress time?",
-        "Is this information new, or merely new to me?",
-        "Does this increase my agency, or my dependence?"
-      ] },
+        { label: "Value",       text: "Am I reacting to price, or to a change in value?" },
+        { label: "Information", text: "Is this information new, or merely new to me?" },
+        { label: "Survival",    text: "Am I optimising for return, or for survival?" },
+        { label: "Time",        text: "Am I trying to compress time?" },
+        { label: "Agency",      text: "Does this increase my agency, or my dependence?" }
+      ],
+      footer: "One word to remember them by: VISTA." },
 
     { type: "report", group: 0 },
     { type: "report", group: 1 },
@@ -697,7 +699,7 @@ window.ZENCA_CONFIG = {
 
     { type: "quote",
       lines: ["When information becomes infinite,", "*_curation_* becomes the product."],
-      sub: "Welcome to Zenca — much of this is already on the Substack. Tonight’s answers, anonymised, will join it once I’ve looked closely." },
+      sub: "Welcome to Zenca — where weekly articles go live on Substack every Monday at 11:30 AM IST.\nMoney Mirror answers, anonymised, might be used for an article at a future point in time." },
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
