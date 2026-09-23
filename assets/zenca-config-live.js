@@ -152,7 +152,7 @@ window.ZENCA_CONFIG = {
       options: ["Yes, most days", "A few times", "No", "I don’t look"],
       commentary: {
         default: "A 30% drop is a sale in your favourite store and a crisis in the market — same math, opposite instinct.",
-        split: "Whichever way it splits, the read is the same: how you feel when the price moves tracks your conviction and your position size — not the price itself." } },
+        split: "In most rooms, holders take a price swing calmer than non-holders — usually conviction and time in the asset, not the price." } },
 
     { type: "question",
       id: "freedom",
