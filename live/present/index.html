@@ -320,7 +320,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=4"></script>
+<script src="../../assets/zenca-config-live.js?v=5"></script>
 <script src="../../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -854,7 +854,7 @@
     if (s.type === "thanks" && s.qrs) s.qrs.forEach((q,i) => qrInto(document.getElementById("qr-thanks-"+i), q.url, "", 264));
     if (showJoin) qrInto(document.getElementById("qr-rejoin"), AUD.full, AUD.image, 180);
 
-    if (s.type === "question" && f.beat === 0) startVoteTimer(s.voteSeconds || 12);
+    if (s.type === "question" && f.beat === 0) startVoteTimer(s.voteSeconds || 15);
 
     requestAnimationFrame(() => {
       stage.querySelectorAll("[data-w]").forEach(el => { el.style.width = el.getAttribute("data-w") + "%"; });
