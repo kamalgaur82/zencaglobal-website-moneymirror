@@ -137,7 +137,7 @@ window.ZENCA_CONFIG = {
       voteSeconds: 25,
       kicker: "Staying in the game",
       prompt: "If your income stopped today, how long could everything you own cover your current lifestyle?",
-      note: "Quick math: monthly spend × 12 = yearly cost; net worth ÷ that = your runway in years. Count everything, at today’s prices.",
+      note: "monthly spend × 12 = yearly cost\nnet worth ÷ yearly cost = your runway in years",
       options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
         default: "Runway is time, and time turns money into choices. That last bucket has a name — financial independence." } },

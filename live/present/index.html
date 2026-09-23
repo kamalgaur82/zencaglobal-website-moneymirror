@@ -320,7 +320,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=5"></script>
+<script src="../../assets/zenca-config-live.js?v=6"></script>
 <script src="../../assets/zenca-sync.js?v=6"></script>
 <script>
 (function(){
@@ -678,7 +678,7 @@
     return `
       <div class="body">
         <div class="qprompt">${esc(q.prompt)}</div>
-        ${q.note ? `<div class="qnote">${esc(q.note)}</div>` : ""}
+        ${q.note ? `<div class="qnote">${q.note.split("\n").map(esc).join("<br>")}</div>` : ""}
         <div class="opts">${opts}</div>
         <div class="votetimer" id="vt"><div class="votetimer-fill" id="vtfill"></div><div class="votetimer-lab" id="vtlab"></div></div>
       </div>
