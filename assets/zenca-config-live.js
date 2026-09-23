@@ -48,6 +48,17 @@ window.ZENCA_CONFIG = {
       presenter: "Kamal Gaur",
       role: "Zenca · financial education for financial agency" },
 
+    { type: "cards",
+      kicker: "Welcome — a little about tonight",
+      lead: "I’m Kamal — 21 years in finance, and I stepped away last year to do exactly this.",
+      headline: ["This isn’t a talk. It’s a *mirror*."],
+      cards: [
+        { label: "What we’ll do", text: "For the next 20 minutes, this room answers from your phones — live on the screen." },
+        { label: "Anonymous",     text: "No names, no logins, nothing tracked." },
+        { label: "So be honest",  text: "It only works if you are — nobody will ever know it was you." }
+      ],
+      footer: "You’ll see where you stand — and where everyone around you stands." },
+
     { type: "join" },
 
     { type: "question",
