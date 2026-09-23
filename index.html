@@ -46,12 +46,16 @@
   .card .txt{font-family:var(--serif);font-size:22px;line-height:1.3;color:var(--paper)}
   .card .go{margin-top:auto;padding-top:22px;font-size:18px;color:var(--gold-deep)}
   .foot{margin-top:auto;padding-top:56px;font-size:15px;color:var(--gold-deep);letter-spacing:.02em}
+  .subhead{font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin:44px 0 16px}
+  .subhead .note{text-transform:none;letter-spacing:.01em;font-weight:400;opacity:.85}
+  .subdeck{display:grid;grid-template-columns:repeat(3,1fr);column-gap:22px;row-gap:14px;align-items:stretch}
   @media (max-width:720px){
     .wrap{padding:52px 20px 72px}
     .brandlogo{height:60px;margin-bottom:22px}
     h1{font-size:48px}
     .lede{font-size:22px}
     .deck{grid-template-columns:1fr;row-gap:14px}
+    .subdeck{grid-template-columns:1fr}
     .grouplab.gA,.grouplab.gB{grid-column:auto}
     .grouplab,.deck a.card{grid-row:auto}
     .grouplab{margin-top:10px}
@@ -98,6 +102,26 @@
         <div class="go">Open livestream →</div>
       </a>
     </div>
+
+    <p class="subhead">Live · 20-minute format <span class="note">— in development, for large audiences</span></p>
+    <div class="subdeck">
+      <a class="card" href="./live/present/">
+        <div class="lab">Present · Live</div>
+        <div class="txt">Tight 8-question run — countdown, hold-and-reveal, the room-split.</div>
+        <div class="go">Open presenter →</div>
+      </a>
+      <a class="card" href="./live/vote/">
+        <div class="lab">Audience · Live</div>
+        <div class="txt">The voting page — also where the join QR points.</div>
+        <div class="go">Open vote page →</div>
+      </a>
+      <a class="card" href="./live/results/">
+        <div class="lab">Results · Live</div>
+        <div class="txt">Review a Live session's results.</div>
+        <div class="go">Open results →</div>
+      </a>
+    </div>
+
     <div class="foot">mirror.zenca.global</div>
   </div>
   <!-- GoatCounter analytics (privacy-friendly visit counts) -->
