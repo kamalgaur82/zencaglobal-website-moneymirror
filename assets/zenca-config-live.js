@@ -96,7 +96,7 @@ window.ZENCA_CONFIG = {
       prompt: "Do you know your net worth to within 10%?",
       options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
       commentary: {
-        default: "Look around — most of this room can’t name the number they’re trying to grow. You can’t compound what you can’t measure: one page, once a quarter." } },
+        default: "You can’t compound what you can’t measure — and it’s the one number every later decision leans on. The fix is boring and it works: one page a quarter, everything you own minus everything you owe." } },
 
     { type: "question",
       id: "fee",
@@ -152,7 +152,7 @@ window.ZENCA_CONFIG = {
       options: ["Yes, most days", "A few times", "No", "I don’t look"],
       commentary: {
         default: "A 30% drop is a sale in your favourite store and a crisis in the market — same math, opposite instinct.",
-        split: "The Bitcoiners have been trained numb; everyone else feels every candle." } },
+        split: "Whichever way it splits, the read is the same: how you feel when the price moves tracks your conviction and your position size — not the price itself." } },
 
     { type: "question",
       id: "freedom",
