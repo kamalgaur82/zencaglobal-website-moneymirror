@@ -46,7 +46,7 @@ window.ZENCA_CONFIG = {
       kicker: "A live, anonymous mirror on how this room thinks about money",
       title: ["Money Mirror"],
       presenter: "Kamal Gaur",
-      role: "Zenca · financial education for financial agency" },
+      role: "Founder, Zenca" },
 
     { type: "cards",
       kicker: "Welcome — a little about tonight",
