@@ -86,7 +86,7 @@
 </footer>
 
 <script src="../../assets/zenca-config-live.js?v=8"></script>
-<script src="../../assets/zenca-sync.js?v=6"></script>
+<script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -113,6 +113,13 @@
   /* The QR carries the session in the fragment — never sent to any server,
      and it ties this phone to the room the code was made for. */
   const ROOM = (location.hash || "").replace(/^#/, "").trim();
+  /* Stable per-phone id for the HTTP "phones in" heartbeat (uncapped by Realtime). */
+  const PUID = (function(){
+    try { let u = localStorage.getItem("zenca:puid");
+      if (!u) { u = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : "u" + Math.random().toString(36).slice(2); localStorage.setItem("zenca:puid", u); }
+      return u;
+    } catch (e) { return "u" + Math.random().toString(36).slice(2); }
+  })();
   let state = { phase:"idle", qid:null, sid: ROOM || null },
       picks = {}, busy = false, err = "", counters = {};
   // Declared before the subscriptions below: an already-stored state fires the
@@ -136,6 +143,11 @@
      until a question is open). It clears on its own when the phone leaves. */
   function joinPresence(room){
     if (sync.trackPresence && room) sync.trackPresence(room);
+  }
+  /* HTTP heartbeat so the presenter's "phones in" stays accurate past the Realtime cap. */
+  function pingHere(){
+    const s = (state && state.sid) || ROOM;
+    if (s && sync.ping) sync.ping(s, PUID);
   }
 
   function diag(note, bad){
@@ -256,11 +268,13 @@
   function recover(){
     if (sync.refreshState) sync.refreshState();
     if (ROOM) joinPresence(ROOM);   // re-announce this phone so the "phones in" count self-heals
+    pingHere();
   }
   document.addEventListener("visibilitychange", () => { if (!document.hidden) recover(); });
   window.addEventListener("focus", recover);
   window.addEventListener("online", recover);
   setInterval(() => { if (!document.hidden) recover(); }, 15000);
+  if (sync.ready && sync.ready.then) sync.ready.then(pingHere); else pingHere();
 
   if (ROOM && sync.room) sync.room(ROOM);
   window.addEventListener("hashchange", () => location.reload());

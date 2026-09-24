@@ -321,7 +321,7 @@
 </div>
 
 <script src="../../assets/zenca-config-live.js?v=8"></script>
-<script src="../../assets/zenca-sync.js?v=6"></script>
+<script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
@@ -417,7 +417,7 @@
      so it appears from the slide after "join" onward, never before it. */
   const joinFrameIdx = frames.findIndex(f => f.slide.type === "join");
 
-  let idx = 0, blank = false, counters = {}, locked = {}, waiting = 0;
+  let idx = 0, blank = false, counters = {}, locked = {}, waiting = 0, httpPhones = 0;
   const nav = { last: 0 };
 
   /* ---------- question manifest ----------
@@ -928,10 +928,21 @@
      is open) and drops on its own when a phone leaves. */
   function refreshScans(){
     const node = document.querySelector("#scans .n");
-    if (node) node.textContent = waiting;
+    if (node) node.textContent = Math.max(waiting || 0, httpPhones || 0);
   }
   function watchWaiting(){
     if (sync.watchPresence) sync.watchPresence(sid, n => { waiting = n; refreshScans(); });
+  }
+  /* HTTP "phones in" — polls the per-phone heartbeat table, uncapped by the
+     Realtime connection limit. Falls back to presence until the SQL is applied,
+     so it never regresses (shows the larger of the two). */
+  let phonePollT = null;
+  function watchPhonesHttp(){
+    if (!sync.presentCount) return;
+    if (phonePollT) clearInterval(phonePollT);
+    const tick = () => sync.presentCount(sid).then(n => { httpPhones = n || 0; refreshScans(); });
+    tick();
+    phonePollT = setInterval(tick, 5000);
   }
 
   /* ---------- broadcast ---------- */
@@ -1019,7 +1030,7 @@
       sid = newid;
       AUD = audLink();
       try { localStorage.setItem("zenca:sid", sid); } catch(e){}
-      manifestNote = ""; locked = {}; idx = 0; ensureManifest(); watchWaiting(); paint();
+      manifestNote = ""; locked = {}; idx = 0; httpPhones = 0; ensureManifest(); watchWaiting(); watchPhonesHttp(); paint();
     });
   };
   document.getElementById("p-reset").onclick = () => {
@@ -1049,7 +1060,7 @@
   qrLib.onerror = () => {};
   document.head.appendChild(qrLib);
 
-  function startDeck(){ ensureManifest(); watchWaiting(); fit(); paint(); }
+  function startDeck(){ ensureManifest(); watchWaiting(); watchPhonesHttp(); fit(); paint(); }
 
   function gateOn(on){
     document.getElementById("gate").classList.toggle("on", on);
