@@ -151,7 +151,7 @@ window.ZENCA_CONFIG = {
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "No", "I don’t look"],
       commentary: {
-        default: "A 30% drop is a sale in your favourite store and a crisis in the market — same math, opposite instinct.",
+        default: "A price move only costs you when it reaches your decisions — mood tips action, and action sets your return. A genuine ‘No’ is the quiet goal; ‘I don’t look’ is just the cheaper route to the same calm.",
         split: "In most rooms, holders take a price swing calmer than non-holders — usually conviction and time in the asset, not the price." } },
 
     { type: "question",
