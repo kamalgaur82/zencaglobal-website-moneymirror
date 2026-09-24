@@ -36,7 +36,7 @@ window.ZENCA_CONFIG = {
   resultStages: [],
 
   /* Drop these two for the ~15-min cut (press P to see them on the panel). */
-  sacrificial: ["inflation", "runway"],
+  sacrificial: ["inflation", "firenumber", "runway"],
 
   /* Per-question vote window (seconds) for the on-screen countdown. Default 12. */
 
@@ -141,6 +141,16 @@ window.ZENCA_CONFIG = {
       options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
         default: "Runway is time, and time turns money into choices. That last bucket has a name — financial independence." } },
+
+    { type: "question",
+      id: "firenumber",
+      depth: "merged",
+      voteSeconds: 18,
+      kicker: "Your number",
+      prompt: "Your retirement number rides on five things. Which would you struggle most to put a real figure on?",
+      options: ["How long you’ll live", "Your returns after you stop", "Your monthly spending", "How fast your costs rise", "Your age today"],
+      commentary: {
+        default: "Only two of these five — your age and your spending — are things you can really pin down. The other three are estimates you can’t verify, which makes a retirement number a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
 
     { type: "question",
       id: "mood",
