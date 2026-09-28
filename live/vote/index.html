@@ -173,6 +173,19 @@
   function render(){
     const q = state.qid ? qById(state.qid) : null;
 
+    // Self-heal: the presenter is showing a question this phone's config doesn't
+    // know — meaning the config was loaded before the question was added. Reload
+    // once (guarded so it can't loop) to pick up the current config and options.
+    if (state.qid && !q) {
+      let last = 0;
+      try { last = +sessionStorage.getItem("zenca:reloaded") || 0; } catch (e) {}
+      if (Date.now() - last > 20000) {
+        try { sessionStorage.setItem("zenca:reloaded", String(Date.now())); } catch (e) {}
+        location.reload();
+        return;
+      }
+    }
+
     if (!q || state.phase === "idle") return rest(
       "Eyes up front.",
       "The next question will appear here when it opens.");
