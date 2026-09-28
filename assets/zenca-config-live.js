@@ -94,7 +94,7 @@ window.ZENCA_CONFIG = {
       voteSeconds: 20,
       kicker: "Where you stand",
       prompt: "Do you know your net worth to within 10%?",
-      options: ["Yes, to the rupee or dollar", "Roughly", "No idea"],
+      options: ["Yes, to the rupee, dollar, or sat", "Roughly", "No idea"],
       commentary: {
         default: "You can’t compound what you can’t measure. The fix is boring and it works: one page a quarter, everything you own minus everything you owe." } },
 
@@ -148,7 +148,7 @@ window.ZENCA_CONFIG = {
       voteSeconds: 18,
       kicker: "Your number",
       prompt: "Your retirement number rides on five things. Which would you struggle most to put a real figure on?",
-      options: ["How long you’ll live", "Your returns after you stop", "Your monthly spending", "How fast your costs rise", "Your age today"],
+      options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       commentary: {
         default: "Only two of these five — your age and your spending — are things you can really pin down. The other three are estimates you can’t verify, which makes a retirement number a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
 
