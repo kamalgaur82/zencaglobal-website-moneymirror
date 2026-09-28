@@ -353,7 +353,9 @@
   function audienceBase(){
     const p = location.pathname;
     if (/\/present\/?$/.test(p) || /\/present\/index\.html$/.test(p)) {
-      return location.origin + "/vote";
+      // Map this presenter's path to its sibling vote path, keeping any prefix
+      // so the fork stays isolated: /live/present/ → /live/vote/ (NOT /vote).
+      return location.origin + p.replace(/present\/?(index\.html)?$/, "vote/");
     }
     return location.origin + p.replace(/[^/]*$/, "") + "audience.html";
   }
