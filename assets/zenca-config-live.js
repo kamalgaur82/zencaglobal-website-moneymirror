@@ -149,6 +149,7 @@ window.ZENCA_CONFIG = {
       kicker: "Your number",
       prompt: "Your retirement number rides on five things. Which would you *struggle most* to put a real figure on?",
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
+      icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
         default: "Only two of these five — your age and your spending — are things you can really pin down. The other three are estimates you can’t verify, which makes a retirement number a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
 
@@ -159,7 +160,7 @@ window.ZENCA_CONFIG = {
       kicker: "Price and mood",
       prompt: "In the last month, has a price move changed your *mood for the worse*?",
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
-      options: ["Yes, most days", "A few times", "No", "I don’t look"],
+      options: ["Yes, most days", "A few times", "I don’t look", "No"],
       commentary: {
         default: "A price move only costs you when it reaches your decisions — mood tips action, and action sets your return. A genuine ‘No’ is the quiet goal; ‘I don’t look’ is just the cheaper route to the same calm.",
         split: "In most rooms, holders take a price swing calmer than non-holders — usually conviction and time in the asset, not the price." } },

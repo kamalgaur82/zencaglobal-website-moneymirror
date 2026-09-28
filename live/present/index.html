@@ -163,6 +163,8 @@
   .opt{border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:26px 30px;
        font-size:29px;color:var(--paper);flex:1;min-width:230px}
   .opt .ok{display:block;font-size:20px;color:var(--gold-deep);margin-bottom:10px}
+  .opt .opticon{width:46px;height:46px;color:var(--gold);margin-bottom:18px}
+  .opt .opticon svg{width:100%;height:100%;display:block}
 
   .counter{position:absolute;right:72px;top:30px;text-align:right;line-height:1}
   .counter .n{font-family:var(--serif);font-size:64px;color:var(--gold);line-height:1}
@@ -327,7 +329,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=12"></script>
+<script src="../../assets/zenca-config-live.js?v=13"></script>
 <script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
@@ -675,12 +677,22 @@
       </div>
     </div>`;
 
+  /* Small inline icons for question options (used by the FIRE "your number" slide).
+     Gold icons inherit currentColor; growth/inflation carry their own green/red. */
+  const ICONS = {
+    hourglass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 21h12M7.5 3c0 4.5 4.5 5 4.5 9s-4.5 4.5-4.5 9M16.5 3c0 4.5-4.5 5-4.5 9s4.5 4.5 4.5 9"/></svg>',
+    upGreen:   '<svg viewBox="0 0 24 24" fill="none" stroke="#3fbf8f" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+    cash:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9.2h.01M18 14.8h.01"/></svg>',
+    upRed:     '<svg viewBox="0 0 24 24" fill="none" stroke="#df6a4a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+    face:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01" stroke-width="2.4"/><path d="M8.5 14.6c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/></svg>'
+  };
+
   /* ---------- question beats ---------- */
   function renderVote(q){
     const parts = partsOf(q);
     const opts = parts.length > 1
       ? parts.map(p => `<div class="opt"><span class="ok">${esc(p.prompt)}</span>${p.options.map(esc).join(" · ")}</div>`).join("")
-      : q.options.map((o,i) => `<div class="opt"><span class="ok">${String.fromCharCode(65+i)}</span>${esc(o)}</div>`).join("");
+      : q.options.map((o,i) => `<div class="opt">${q.icons ? `<div class="opticon">${ICONS[q.icons[i]] || ""}</div>` : ""}<span class="ok">${String.fromCharCode(65+i)}</span>${esc(o)}</div>`).join("");
     return `
       <div class="body">
         <div class="qprompt">${mk(q.prompt)}</div>
