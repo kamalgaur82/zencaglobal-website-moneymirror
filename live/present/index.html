@@ -309,6 +309,7 @@
     <dt>Votes</dt><dd id="p-votes">—</dd>
   </dl>
   <div class="btns">
+    <button id="p-reload">↻ Reload — get latest deck</button>
     <button id="p-resync">Resend state</button>
     <button id="p-new">Start new session</button>
     <button id="p-reset">Clear this session</button>
@@ -1025,6 +1026,14 @@
     setTimeout(() => p.classList.remove("on"), 1200);
   }
   document.getElementById("p-resync").onclick = () => { publish(); updatePanel(); };
+  /* Force-fetch the latest deck: a cache-busting URL reloads the page from the
+     server (unlike a plain reload, which may serve a stale cached copy), so a
+     newly-deployed config is picked up. Returns to the first slide — then Start
+     new session to snapshot the current questions. Recorded votes are untouched. */
+  document.getElementById("p-reload").onclick = () => {
+    if (!confirm("Reload the presenter to fetch the latest deck? You’ll return to the first slide (then Start new session). Recorded votes are safe.")) return;
+    location.replace(location.pathname + "?r=" + Date.now());
+  };
   document.getElementById("p-new").onclick = () => {
     nextSessionId().then(newid => {
       sid = newid;
