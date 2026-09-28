@@ -82,7 +82,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 15,
       kicker: "The one that changes everything",
-      prompt: "Ever bought one stock hoping it would change your life?",
+      prompt: "Ever bought *one stock* hoping it would change your life?",
       note: "No judgment — it’s anonymous.",
       options: ["Yes, more than once", "Once", "No", "That’s basically my strategy"],
       commentary: {
@@ -93,7 +93,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 20,
       kicker: "Where you stand",
-      prompt: "Do you know your net worth to within 10%?",
+      prompt: "Do you know your *net worth* to within 10%?",
       options: ["Yes, to the rupee, dollar, or sat", "Roughly", "No idea"],
       commentary: {
         default: "You can’t compound what you can’t measure. The fix is boring and it works: one page a quarter, everything you own minus everything you owe." } },
@@ -103,7 +103,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 25,
       kicker: "The quiet leak — lock in a guess first",
-      prompt: "A 1% annual fee. Over 30 years, how much of your final wealth does it eat?",
+      prompt: "A *1% annual fee*. Over 30 years, how much of your final wealth does it eat?",
       note: "Lock a number in your head before you vote.",
       options: ["About 0.1%", "About 1%", "About 9%", "About 17%", "About 26%"],
       answer: 4,
@@ -115,7 +115,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 18,
       kicker: "Money",
-      prompt: "Your grocery bill is bigger than last year. What actually changed?",
+      prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
         default: "The shop didn’t change — the measuring stick did. India’s money supply grew ~15% a year for six decades; the dollar’s, ~7%. Prices are just the downstream signal." } },
@@ -125,7 +125,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 20,
       kicker: "Your position",
-      prompt: "What share of your net worth is in bitcoin?",
+      prompt: "What share of your net worth is in *bitcoin*?",
       note: "‘None’ is a real answer in this room.",
       options: ["None", "Under 10%", "10–50%", "50–90%", "Nearly all of it"],
       commentary: {
@@ -136,7 +136,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 30,
       kicker: "Staying in the game",
-      prompt: "If your income stopped today, how long could everything you own cover your current lifestyle?",
+      prompt: "If your income stopped today, *how long* could everything you own cover your current lifestyle?",
       note: "monthly spend × 12 = yearly cost\nnet worth ÷ yearly cost = your runway in years",
       options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
@@ -147,7 +147,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 18,
       kicker: "Your number",
-      prompt: "Your retirement number rides on five things. Which would you struggle most to put a real figure on?",
+      prompt: "Your retirement number rides on five things. Which would you *struggle most* to put a real figure on?",
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       commentary: {
         default: "Only two of these five — your age and your spending — are things you can really pin down. The other three are estimates you can’t verify, which makes a retirement number a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
@@ -157,7 +157,7 @@ window.ZENCA_CONFIG = {
       depth: "split",
       voteSeconds: 18,
       kicker: "Price and mood",
-      prompt: "In the last month, has a price move changed your mood for the worse?",
+      prompt: "In the last month, has a price move changed your *mood for the worse*?",
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "No", "I don’t look"],
       commentary: {
@@ -169,7 +169,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 18,
       kicker: "If money stopped being the reason",
-      prompt: "If you never had to work for money again, what would you do?",
+      prompt: "If you never had to *work for money* again, what would you do?",
       note: "The first thing that comes to mind.",
       options: ["Rest, travel, and enjoy life", "Give my time to family and people I love", "Build or create something that matters", "Change nothing about my life, including work", "I’ve never let myself think about it"],
       commentary: {

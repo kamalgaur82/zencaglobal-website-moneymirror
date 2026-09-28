@@ -43,14 +43,17 @@
   .foot{position:absolute;bottom:52px;left:88px;right:88px;display:flex;justify-content:space-between;
         align-items:baseline;font-size:17px;color:var(--mute)}
   .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);opacity:.55;transition:width .35s ease}
-  .rejoin{position:absolute;right:40px;bottom:24px;display:flex;align-items:flex-end;gap:16px;
-          justify-content:flex-end;font-size:18px;line-height:1.3;color:var(--gold-deep);letter-spacing:.03em}
-  .rejoin-txt{text-align:right;white-space:nowrap}
+  .rejoin{position:absolute;right:44px;top:130px;display:flex;flex-direction:column;align-items:center;gap:10px;
+          font-size:16px;line-height:1.25;color:var(--gold-deep);letter-spacing:.03em;text-align:center;width:104px}
+  .rejoin-txt{text-align:center;white-space:normal}
   .rejoin-txt b{color:var(--gold);font-weight:500}
   .rejoin-qr{width:104px;height:104px;background:var(--paper);padding:8px;flex:none}
   .rejoin-qr img,.rejoin-qr canvas,.rejoin-qr table{width:100%!important;height:100%!important;display:block;border:0}
   .slideno{position:absolute;left:72px;bottom:24px;font-size:16px;letter-spacing:.1em;
            color:var(--gold-deep);opacity:.75}
+  .paceclock{position:absolute;right:72px;bottom:22px;font-family:var(--sans);font-size:22px;
+             letter-spacing:.14em;color:var(--gold-deep);opacity:.85}
+  .paceclock.hidden{display:none}
   .hl{color:var(--gold)}
 
   .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;
@@ -145,6 +148,9 @@
   .joincode{font-family:var(--serif);font-size:27px;color:var(--gold);letter-spacing:.01em;text-align:center;
             max-width:376px;overflow-wrap:break-word;word-break:normal}
   .joinnote{font-size:26px;color:var(--mute);line-height:1.55;max-width:640px}
+  .joinlive{margin-top:36px;display:flex;align-items:baseline;gap:18px}
+  .joinlive-n{font-family:var(--serif);font-size:112px;line-height:.9;color:var(--gold)}
+  .joinlive-l{font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
   .pill{display:inline-block;margin-top:34px;border:1px solid var(--gold);color:var(--gold);
         padding:14px 26px;font-size:22px;letter-spacing:.12em;text-transform:uppercase}
   .warnline{margin-top:26px;max-width:640px;font-size:21px;line-height:1.5;color:var(--gold-deep);
@@ -164,7 +170,7 @@
   .counter.closed .n{color:var(--mute)}
 
   /* --- results -------------------------------------------------------------- */
-  .bars{margin-top:34px}
+  .bars{margin-top:34px;padding-right:150px}
   .bar{display:flex;align-items:center;gap:26px;margin-bottom:16px}
   .barlabel{width:42%;font-size:27px;line-height:1.24;color:var(--paper)}
   .barlabel .tag{font-size:17px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-left:12px}
@@ -321,7 +327,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=11"></script>
+<script src="../../assets/zenca-config-live.js?v=12"></script>
 <script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
@@ -627,6 +633,7 @@
           <h2>Scan, and answer honestly.</h2>
           <div class="joinnote">Two taps, then submit — the more honest the room,
             the sharper the mirror.</div>
+          <div class="joinlive"><span class="joinlive-n" id="scans-big">0</span><span class="joinlive-l">phones in</span></div>
           <div class="pill">Anonymous</div>
           ${AUD.loopback ? `<div class="warnline">Testing note: you opened this at localhost, so
             phones can’t reach it. Reopen the presenter at your laptop’s network address
@@ -637,8 +644,7 @@
           <div class="joincode">${AUD.displayHtml}</div>
         </div>
       </div>
-    </div>
-    <div class="counter" id="scans"><div class="n">0</div><div class="l">phones in</div></div>`;
+    </div>`;
 
   R.closing = s => `
     <div class="body closing">
@@ -677,7 +683,7 @@
       : q.options.map((o,i) => `<div class="opt"><span class="ok">${String.fromCharCode(65+i)}</span>${esc(o)}</div>`).join("");
     return `
       <div class="body">
-        <div class="qprompt">${esc(q.prompt)}</div>
+        <div class="qprompt">${mk(q.prompt)}</div>
         ${q.note ? `<div class="qnote">${q.note.split("\n").map(esc).join("<br>")}</div>` : ""}
         <div class="opts">${opts}</div>
         <div class="votetimer" id="vt"><div class="votetimer-fill" id="vtfill"></div><div class="votetimer-lab" id="vtlab"></div></div>
@@ -707,7 +713,7 @@
       : barsHTML({ ...parts[0], answer:q.answer }, showAnswer);
     return `
       <div class="body">
-        <h2>${esc(q.prompt)}</h2>
+        <h2>${mk(q.prompt)}</h2>
         <div class="bars">${body}</div>
         <div class="commentary">${commentaryFor(q).split("\n").map(mk).join("<br>")}</div>
       </div>
@@ -816,7 +822,7 @@
     return `
       <div class="body">
         <div class="kicker">The same answers — split by who holds bitcoin</div>
-        <h2>${esc(q.prompt)}</h2>
+        <h2>${mk(q.prompt)}</h2>
         <div class="qslist">${rows}</div>
         <div class="legend">
           <span><span class="swatch" style="background:var(--gold)"></span>Holds bitcoin</span>
@@ -843,10 +849,11 @@
       ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${hasCounter ? "" : esc(railLabel(s))}</span></div>` : ""}
       ${inner}
       ${showJoin ? `<div class="rejoin">
-        <div class="rejoin-txt">Joining late,<br>or dropped out?<br><b>Scan to jump back in.</b></div>
         <div class="rejoin-qr" id="qr-rejoin"></div>
+        <div class="rejoin-txt">Scan to<br>join late</div>
       </div>` : ""}
       <div class="slideno">Slide #${idx + 1}</div>
+      <div class="paceclock${clockVisible ? "" : " hidden"}" id="paceclock">${paceText()}</div>
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
 
     if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 332);
@@ -868,7 +875,8 @@
   }
 
   /* ---------- vote countdown (Live format) ---------- */
-  let voteTimerT = null, voteTimerIdx = -1;
+  const READ_HOLD = 15;   // seconds the bar holds full so the room can read the question
+  let voteTimerT = null, voteHoldT = null, voteTimerIdx = -1;
   function startVoteTimer(secs){
     const fill = document.getElementById("vtfill");
     const lab  = document.getElementById("vtlab");
@@ -876,20 +884,32 @@
     if (!fill || !wrap) return;
     if (voteTimerIdx === idx) return;   // already running for this frame — don't restart on repaint
     voteTimerIdx = idx;
-    clearTimeout(voteTimerT);
+    clearTimeout(voteTimerT); clearTimeout(voteHoldT);
     wrap.classList.remove("closed");
     if (lab) lab.textContent = "";
     fill.style.transition = "none";
     fill.style.width = "100%";
-    requestAnimationFrame(() => {
-      fill.style.transition = "width " + secs + "s linear";
-      fill.style.width = "0%";
-    });
-    voteTimerT = setTimeout(() => {
-      wrap.classList.add("closed");
-      if (lab) lab.textContent = "Votes locking…";
-    }, secs * 1000);
+    // Hold the bar full while the question is read aloud, then run it down over `secs`.
+    voteHoldT = setTimeout(() => {
+      requestAnimationFrame(() => {
+        fill.style.transition = "width " + secs + "s linear";
+        fill.style.width = "0%";
+      });
+      voteTimerT = setTimeout(() => {
+        wrap.classList.add("closed");
+        if (lab) lab.textContent = "Votes locking…";
+      }, secs * 1000);
+    }, READ_HOLD * 1000);
   }
+
+  /* ---------- pace clock (presenter): elapsed since the talk started ---------- */
+  let clockStart = 0, clockVisible = true;
+  function paceText(){
+    if (!clockStart) return "0:00";
+    const s = Math.floor((Date.now() - clockStart) / 1000);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+  setInterval(() => { const el = document.getElementById("paceclock"); if (el) el.textContent = paceText(); }, 1000);
 
   /* Shrink a slide's content just enough to clear the progress rule.
      Runs after paint, so it measures what actually rendered. */
@@ -927,7 +947,7 @@
      works during the idle wait (the server rejects vote bumps until a question
      is open) and drops on its own when a phone leaves. */
   function refreshScans(){
-    const node = document.querySelector("#scans .n");
+    const node = document.getElementById("scans-big");
     if (node) node.textContent = Math.max(waiting || 0, httpPhones || 0);
   }
   function watchWaiting(){
@@ -967,12 +987,13 @@
     const now = Date.now();
     if (now - nav.last < 380) return;      // nervous-thumb guard
     nav.last = now;
+    if (delta > 0 && clockStart === 0) clockStart = Date.now();
     const cur = frames[idx];
     if (delta > 0 && cur.slide.type === "question" && cur.beat === 0) locked[cur.slide.id] = true;
     const next = idx + delta;
     if (next < 0 || next >= frames.length) return;
     idx = next;
-    voteTimerIdx = -1;
+    voteTimerIdx = -1; clearTimeout(voteHoldT); clearTimeout(voteTimerT);
     paint();
   }
 
@@ -986,6 +1007,7 @@
     else if (k.toLowerCase() === "r") { publish(); flashPanel(); }
     else if (k.toLowerCase() === "p") { document.getElementById("panel").classList.toggle("on"); updatePanel(); }
     else if (k.toLowerCase() === "d") { toggleDaylight(); }
+    else if (k.toLowerCase() === "t") { clockVisible = !clockVisible; const el = document.getElementById("paceclock"); if (el) el.classList.toggle("hidden", !clockVisible); }
   });
 
   /* Daylight mode: light background for bright rooms. Persisted, so it survives
