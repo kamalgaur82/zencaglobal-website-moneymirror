@@ -195,11 +195,45 @@
   .bar.answer .bartrack{outline:1px solid var(--gold);outline-offset:3px}
   .commentary{margin-top:auto;padding-top:30px;border-left:4px solid var(--gold);padding-left:30px;
               font-family:var(--serif);font-size:32px;line-height:1.32;max-width:1180px}
+  /* Per-question results infographic, centred in the mid-band under the bars. */
+  .infographic{margin:26px auto 0;width:100%;max-width:1040px;display:flex;justify-content:center}
+  .infographic svg{height:160px;width:auto;max-width:100%;display:block}
+  .infographic.tall svg{height:210px}
+  .hasinfo .infographic{margin-top:auto}
+  .hasinfo .bar{margin-bottom:11px}
+  /* Even vertical rhythm: question, bars, mid element and insight share the
+     free space equally instead of the mid element hugging the bars. */
+  .hasinfo .bars{margin-top:auto}
+  /* FIRE results as boxes (same icons/labels as the vote slide) + vote % + cluster. */
+  .firegrid{display:flex;gap:18px;margin:auto auto 0;width:100%}
+  .fbox{flex:1;border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:22px 16px 18px;text-align:center;position:relative}
+  .fbox.est{border-style:dashed;border-color:rgba(142,135,123,.55)}
+  .fbox .fic{width:40px;height:40px;margin:0 auto 12px;color:var(--gold)}
+  .fbox.est .fic{color:var(--mute)}
+  .fbox .fic svg{width:100%;height:100%;display:block}
+  .fbox .flab{font-size:19px;color:var(--paper);line-height:1.22;min-height:46px}
+  .fbox.est .flab{color:var(--mute)}
+  .fbox .fpct{font-family:var(--serif);font-size:38px;color:var(--gold);margin-top:8px;line-height:1}
+  .fbox.est .fpct{color:var(--mute)}
+  .fbox .ftag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;color:var(--gold-deep)}
+  .fbox.est .ftag{color:var(--mute)}
+  /* Money-supply / share panel — typographic (numbers can't be drawn to scale). */
+  .mspanel{display:flex;gap:26px;margin:auto auto 0;width:100%;max-width:1220px}
+  .mscard{flex:1;display:flex;align-items:center;border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:24px 28px}
+  .msleft{flex:0 0 46%;text-align:center;border-right:1px solid rgba(198,161,91,.26);padding:0 24px}
+  .mshdr{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep)}
+  .msbig{font-family:var(--serif);font-size:50px;color:var(--gold);line-height:1;margin-top:8px;white-space:nowrap}
+  .msright{flex:1;text-align:left;padding-left:30px}
+  .mssub{font-size:15px;color:var(--mute);letter-spacing:.03em}
+  .msrow{font-family:var(--serif);font-size:23px;color:var(--paper);margin-top:2px}
+  .mscap{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-top:16px}
+  .msshare{font-size:16px;color:var(--mute);margin-top:4px}
+  .msshare b{color:var(--gold);font-weight:500;font-family:var(--serif);font-size:23px}
+  .msrec{font-size:13px;color:var(--mute);opacity:.7;margin-top:4px}
+  .haspanel .commentary::before{display:none}
   /* Centered, ruleless insight in the lower third of the results frame. */
   .qframe .commentary{margin:auto auto 0;border-left:0;padding-left:0;padding-top:0;
-              text-align:center;max-width:1080px;position:relative}
-  .qframe .commentary::before{content:"";position:absolute;top:-26px;left:50%;transform:translateX(-50%);
-              width:64px;height:3px;background:var(--gold);opacity:.8}
+              text-align:center;max-width:1340px;position:relative}
   .partsplit{display:flex;gap:52px}
   .partsplit > div{flex:1}
   .parttitle{font-size:21px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
@@ -345,7 +379,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=13"></script>
+<script src="../../assets/zenca-config-live.js?v=14"></script>
 <script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
@@ -705,6 +739,79 @@
     face:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01" stroke-width="2.4"/><path d="M8.5 14.6c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/></svg>'
   };
 
+  /* Per-question results visuals. fee -> mid-band SVG; inflation -> money-supply
+     panel; firenumber -> box grid replacing the bars (built from live votes). */
+  const INFOGRAPHICS = {
+    fee: `<svg viewBox="0 0 1000 240" xmlns="http://www.w3.org/2000/svg">
+  <text x="40" y="30" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="17" fill="var(--gold-deep)" letter-spacing="2.5">₹1,00,000 · 10%/YR · 30 YEARS</text>
+  <line x1="336" y1="205" x2="856" y2="205" stroke="rgba(198,161,91,.4)"/>
+  <rect x="360" y="55" width="160" height="150" fill="var(--gold)"/>
+  <text x="440" y="42" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" fill="var(--paper)" text-anchor="middle">₹17.4 L</text>
+  <text x="440" y="235" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="18" fill="var(--mute)" text-anchor="middle">Without the fee</text>
+  <rect x="600" y="94" width="160" height="111" fill="var(--gold)" opacity=".78"/>
+  <rect x="600" y="55" width="160" height="39" fill="none" stroke="#df6a4a" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text x="680" y="81" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" fill="var(--paper)" text-anchor="middle">₹12.9 L</text>
+  <text x="680" y="235" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="18" fill="var(--mute)" text-anchor="middle">With a 1% fee</text>
+  <path d="M774 55 h10 M774 94 h10 M779 55 V94" stroke="#df6a4a" stroke-width="1.3" fill="none" opacity=".85"/>
+  <text x="792" y="73" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="24" fill="#df6a4a">−26%</text>
+  <text x="792" y="97" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="15" fill="var(--mute)">lost to fees</text>
+</svg>`
+  };
+  const INFL_PANEL = `<div class="mspanel"><div class="mscard">
+      <div class="msleft"><div class="mshdr">USD · M2</div><div class="msbig">77×</div></div>
+      <div class="msright">
+        <div class="mssub">1960 → 2026 · ~7% a year</div>
+        <div class="msrow">$0.3T → $23.2T</div>
+        <div class="mscap">$100K’s share of all money</div>
+        <div class="msshare"><b>1 in 3M → 1 in 232M</b></div>
+        <div class="msrec">0.000033% → 0.00000043%</div>
+      </div>
+    </div><div class="mscard">
+      <div class="msleft"><div class="mshdr">INR · BROAD MONEY</div><div class="msbig">~10,600×</div></div>
+      <div class="msright">
+        <div class="mssub">1960 → 2026 · ~15% a year</div>
+        <div class="msrow">₹0.03T → ₹319T</div>
+        <div class="mscap">₹1 crore’s share of all money</div>
+        <div class="msshare"><b>1 in 3,000 → 1 in 32M</b></div>
+        <div class="msrec">0.033% → 0.0000031%</div>
+      </div>
+    </div></div>`;
+  const GRIDICONS = {
+    hourglass: `<path d="M6 3h12M6 21h12M7.5 3c0 4.5 4.5 5 4.5 9s-4.5 4.5-4.5 9M16.5 3c0 4.5-4.5 5-4.5 9s4.5 4.5 4.5 9"/>`,
+    up: `<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>`,
+    cash: `<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/>`,
+    face: `<circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01" stroke-width="2.4"/><path d="M8.5 14.6c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/>`
+  };
+  /* FIRE "your number" results: the five vote boxes (icon + label + vote %),
+     the two knowable inputs gold, the three estimates faded. Order = config. */
+  function fireGridHTML(q){
+    const dist = distribution(partsOf(q)[0]);
+    const pctOf = {}; dist.forEach(d => { pctOf[d.i] = d.pct; });
+    const known = { 2:true, 4:true };
+    const gi = k => (k === "upGreen" || k === "upRed") ? "up" : k;
+    const cells = (q.options || []).map((o,i) => {
+      const isK = !!known[i];
+      const ic = GRIDICONS[gi((q.icons || [])[i])] || "";
+      return `<div class="fbox${isK ? "" : " est"}">
+        <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></div>
+        <div class="flab">${esc(o)}</div>
+        <div class="fpct">${pctOf[i] || 0}%</div>
+        <div class="ftag">${isK ? "You can know" : "\u2248 Estimate"}</div>
+      </div>`;
+    }).join("");
+    return `<div class="firegrid">${cells}</div>`;
+  }
+  /* Break commentary into one line per sentence (but not on abbreviations like
+     "vs." or decimals, which are not followed by a capital letter). */
+  function commHTML(text){
+    const t = String(text);
+    // A manual \n in the config wins; otherwise break one line per sentence
+    // (but not on "vs." or decimals, which aren't followed by a capital).
+    const lines = t.includes("\n") ? t.split("\n")
+                                   : t.replace(/([.?!])\s+(?=[A-Z])/g, "$1\n").split("\n");
+    return lines.map(mk).join("<br>");
+  }
+
   /* ---------- question beats ---------- */
   function renderVote(q){
     const parts = partsOf(q);
@@ -738,16 +845,33 @@
   function renderResults(q){
     const parts = partsOf(q);
     const showAnswer = q.answer !== undefined;
+    const comm = `<div class="commentary">${commHTML(commentaryFor(q))}</div>`;
+    const counter = `<div class="counter closed"><div class="n">${totalFor(parts[0].id)}</div><div class="l">Votes<br>counted</div></div>`;
+    // FIRE "your number": the five vote boxes (icon + label + vote %) replace the bars.
+    if (q.id === "firenumber") {
+      return `
+      <div class="body qframe">
+        <h2>${mk(q.prompt)}</h2>
+        ${fireGridHTML(q)}
+        ${comm}
+      </div>
+      ${counter}`;
+    }
     const body = parts.length > 1
       ? `<div class="partsplit">${parts.map(p => `<div><div class="parttitle">${esc(p.prompt)}</div>${barsHTML(p,false)}</div>`).join("")}</div>`
       : barsHTML({ ...parts[0], answer:q.answer }, showAnswer);
+    const svg = (typeof INFOGRAPHICS !== "undefined" && INFOGRAPHICS[q.id]) || "";
+    const panel = (q.id === "inflation" && typeof INFL_PANEL !== "undefined") ? INFL_PANEL : "";
+    const mid = svg ? `<div class="infographic tall">${svg}</div>` : panel;
+    const cls = "body qframe" + (svg ? " hasinfo" : "") + (panel ? " hasinfo haspanel" : "");
     return `
-      <div class="body qframe">
+      <div class="${cls}">
         <h2>${mk(q.prompt)}</h2>
         <div class="bars">${body}</div>
-        <div class="commentary">${commentaryFor(q).split("\n").map(mk).join("<br>")}</div>
+        ${mid}
+        ${comm}
       </div>
-      <div class="counter closed"><div class="n">${totalFor(parts[0].id)}</div><div class="l">Votes<br>counted</div></div>`;
+      ${counter}`;
   }
 
   function renderTeach(q){

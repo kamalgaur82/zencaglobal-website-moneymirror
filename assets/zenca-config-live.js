@@ -108,7 +108,7 @@ window.ZENCA_CONFIG = {
       options: ["About 0.1%", "About 1%", "About 9%", "About 17%", "About 26%"],
       answer: 4,
       commentary: {
-        default: "It’s about 26%. Not charged once — charged on the compounding, every year. In India that’s regular vs. direct funds, and the switch is free." } },
+        default: "It’s about 26%. Not charged once — charged on the compounding, every year.\nIn India that’s regular vs. direct funds, and the switch is free." } },
 
     { type: "question",
       id: "inflation",
@@ -118,7 +118,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
-        default: "The shop didn’t change — the measuring stick did. India’s money supply grew ~15% a year for six decades; the dollar’s, ~7%. Prices are just the downstream signal." } },
+        default: "The shop didn’t change — the measuring stick did. Prices are just the downstream signal." } },
 
     { type: "question",
       id: "allocation",
@@ -151,7 +151,7 @@ window.ZENCA_CONFIG = {
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
-        default: "Only two of these five — your age and your spending — are things you can really pin down. The other three are estimates you can’t verify, which makes a retirement number a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
+        default: "A retirement number is a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
 
     { type: "question",
       id: "mood",
