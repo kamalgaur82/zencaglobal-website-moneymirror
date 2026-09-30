@@ -38,6 +38,7 @@
 
   .kicker{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
   h1{font-family:var(--serif);font-weight:500;font-size:29px;line-height:1.22;letter-spacing:-.01em}
+  .hl{color:var(--gold)}
   .note{margin-top:12px;font-size:15px;line-height:1.5;color:var(--mute)}
 
   .part{margin-top:26px}
@@ -98,6 +99,9 @@
   const sync = window.ZencaSync(CFG.sync);
   const view = document.getElementById("view");
   const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  /* Same lightweight markdown as the presenter: *text* -> gold highlight,
+     _text_ -> italic. Escapes first, so it is a safe superset of esc(). */
+  const mk = s => esc(s).replace(/\*(.+?)\*/g, '<span class="hl">$1</span>').replace(/_(.+?)_/g, '<em>$1</em>');
   const partsOf = q => q.parts || [{ id:q.id, prompt:q.prompt, options:q.options }];
   const qById = id => CFG.deck.find(s => s.type === "question" && s.id === id);
 
@@ -219,11 +223,11 @@
     const parts = partsOf(q), multi = parts.length > 1;
     view.innerHTML = `
       <div class="kicker">${esc(q.kicker || "Question")}</div>
-      <h1>${esc(q.prompt)}</h1>
+      <h1>${mk(q.prompt)}</h1>
       ${q.note ? `<div class="note">${esc(q.note)}</div>` : ""}
       ${parts.map((p,pi) => `
         <div class="part">
-          ${multi ? `<div class="partq">${esc(p.prompt)}</div>` : ""}
+          ${multi ? `<div class="partq">${mk(p.prompt)}</div>` : ""}
           ${p.options.map((o,oi) => `
             <button class="opt" data-p="${pi}" data-o="${oi}">${esc(o)}</button>`).join("")}
         </div>`).join("")}
