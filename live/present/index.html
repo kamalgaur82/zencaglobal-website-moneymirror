@@ -66,6 +66,7 @@
      touch larger than results. */
   .qframe .qprompt{font-size:60px;line-height:1.12}
   .qframe h2{font-size:54px}
+  .qframe .qnote{text-align:center}
   .qframe .opts{justify-content:center}
   .brandmark{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
              font-size:16px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600}
@@ -96,7 +97,7 @@
   .card{flex:1;border:1px solid rgba(198,161,91,.34);border-top:3px solid var(--gold);
         background:var(--ink-2);padding:38px 32px 42px;min-height:196px;display:flex;flex-direction:column}
   .card .lab{font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
-  .card .txt{font-family:var(--serif);font-size:34px;line-height:1.3;color:var(--paper)}
+  .card .txt{font-family:var(--serif);font-size:31px;line-height:1.4;color:var(--paper)}
 
   /* --- steps ------------------------------------------------------------ */
   .steps{display:flex;align-items:stretch;gap:0;margin-top:60px}
@@ -177,8 +178,8 @@
   .opt .opticon{width:46px;height:46px;color:var(--gold);margin-bottom:18px}
   .opt .opticon svg{width:100%;height:100%;display:block}
 
-  .counter{position:absolute;left:72px;top:44px;text-align:left;line-height:1;max-width:150px}
-  .counter .n{font-family:var(--serif);font-size:50px;color:var(--gold);line-height:1}
+  .counter{position:absolute;left:72px;top:40px;text-align:left;line-height:1;max-width:160px}
+  .counter .n{font-family:var(--serif);font-size:66px;color:var(--gold);line-height:1}
   .counter .l{font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-top:8px;line-height:1.3}
   .counter.closed .n{color:var(--mute)}
 
@@ -362,6 +363,18 @@
   .tdim{font-family:var(--serif);font-size:42px;color:var(--paper);margin-top:8px;line-height:1.05}
   .tsubs{font-size:23px;color:var(--mute);margin-top:26px;line-height:1.55}
   .trifoot{font-family:var(--serif);font-size:31px;color:var(--gold);text-align:center;margin-top:4px}
+
+  /* --- intro: centred gold tagline (Me + Zenca) ------------------------- */
+  .slidetag{margin-top:auto;text-align:center;font-size:23px;letter-spacing:.17em;
+       text-transform:uppercase;color:var(--gold);padding-top:40px}
+
+  /* --- join: three columns — title | phones-in | QR --------------------- */
+  .join3{display:flex;align-items:center;gap:40px;margin-top:10px}
+  .j3-left{flex:1;min-width:0}
+  .j3-mid{flex:1;text-align:center}
+  .j3-mid .j3-n{font-family:var(--serif);font-size:190px;line-height:.9;color:var(--gold)}
+  .j3-mid .j3-l{font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-top:12px}
+  .j3-right{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px}
 </style>
 </head>
 <body>
@@ -403,7 +416,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=15"></script>
+<script src="../../assets/zenca-config-live.js?v=16"></script>
 <script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
@@ -601,7 +614,7 @@
       <div class="title-rule"></div>
       ${s.presenter ? `<div class="byline">
         <div class="byname">${esc(s.presenter)}</div>
-        ${s.role ? `<div class="byrole">${esc(s.role)}</div>` : ""}
+        ${s.role ? `<div class="byrole">${s.role.split("\n").map(esc).join("<br>")}</div>` : ""}
       </div>` : ""}
     </div>`;
 
@@ -630,9 +643,10 @@
       <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="sub">${esc(s.sub)}</div>` : ""}
       <div class="cards">${s.cards.map(c => `
-        <div class="card"><div class="lab">${esc(c.label)}</div><div class="txt">${esc(c.text)}</div></div>`).join("")}
+        <div class="card"><div class="lab">${esc(c.label)}</div><div class="txt">${c.text.split(" · ").map(esc).join("<br>")}</div></div>`).join("")}
       </div>
-      <div class="footline">${esc(s.footer)}</div>
+      ${s.tagline ? `<div class="slidetag">${esc(s.tagline)}</div>` : ""}
+      ${s.footer ? `<div class="footline">${esc(s.footer)}</div>` : ""}
     </div>`;
 
   R.steps = s => `
@@ -709,7 +723,7 @@
           <div class="tcircle">${esc(b.letter)}</div>
           <div class="tverb">${esc(b.verb)}</div>
           <div class="tdim">${esc(b.dim)}</div>
-          <div class="tsubs">${esc(b.subs)}</div>
+          <div class="tsubs">${b.subs.split(" · ").map(esc).join("<br>")}</div>
         </div>`).join("")}
       </div>
       ${s.footer ? `<div class="trifoot">${esc(s.footer)}</div>` : ""}
@@ -735,18 +749,21 @@
 
   R.join = () => `
     <div class="body">
-      <div class="join">
-        <div class="joincol">
-          <h2>Scan, and answer honestly.</h2>
-          <div class="joinnote">Two taps, then submit — the more honest the room,
-            the sharper the mirror.</div>
-          <div class="joinlive"><span class="joinlive-n" id="scans-big">0</span><span class="joinlive-l">phones in</span></div>
+      <div class="join3">
+        <div class="j3-left">
+          <h2>Scan to join.</h2>
+          <div class="joinnote">Open your camera, point it at the code — the first
+            question appears on your phone.</div>
           <div class="pill">Anonymous</div>
           ${AUD.loopback ? `<div class="warnline">Testing note: you opened this at localhost, so
             phones can’t reach it. Reopen the presenter at your laptop’s network address
             (http://192.168.x.x:8080/presenter.html) and this QR will point there by itself.</div>` : ""}
         </div>
-        <div class="joinqr">
+        <div class="j3-mid">
+          <div class="j3-n" id="scans-big">0</div>
+          <div class="j3-l">phones in</div>
+        </div>
+        <div class="j3-right">
           <div class="qrbox" id="qr-join"></div>
           <div class="joincode">${AUD.displayHtml}</div>
         </div>

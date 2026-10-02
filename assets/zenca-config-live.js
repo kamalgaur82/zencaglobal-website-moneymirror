@@ -43,20 +43,20 @@ window.ZENCA_CONFIG = {
   deck: [
 
     { type: "title",
-      kicker: "A live, anonymous mirror",
+      kicker: "A live, anonymous mirror on how this room thinks",
       title: ["Money Mirror"],
       presenter: "Kamal Gaur",
-      role: "Founder, Zenca" },
+      role: "Founder\nZenca" },
 
     { type: "cards",
       kicker: "Who’s talking",
-      headline: ["Not a talk. A *mirror*."],
+      headline: ["A little about me, and *Zenca*."],
       cards: [
-        { label: "Me",    text: "21 years · Indian corporate · stepped away last year" },
-        { label: "Zenca", text: "Personal-finance education · long-term financial agency" },
-        { label: "Why",   text: "Understand money · think for yourself" }
+        { label: "Me",    text: "21 years · Strategy & Analytics · India Inc" },
+        { label: "Zenca", text: "Education · Personal finance lens" },
+        { label: "Why",   text: "Financial independence, for everyone" }
       ],
-      footer: "The change I want: financial independence, for everyone." },
+      tagline: "Financial education for long-term financial agency" },
 
     { type: "journey",
       kicker: "The Zenca Framework",
@@ -69,7 +69,7 @@ window.ZENCA_CONFIG = {
         { lab: "Decisions",     text: "Aligned with\nyour goals" },
         { lab: "Agency",        text: "Confidence\nand control" }
       ],
-      footer: "Knowledge is not the destination. Financial agency is." },
+      footer: "Knowledge is not the destination. Agency is." },
 
     { type: "triptych",
       kicker: "Before you decide",
@@ -86,9 +86,9 @@ window.ZENCA_CONFIG = {
       kicker: "How this works",
       headline: ["10 questions. Live. *Anonymous*."],
       cards: [
-        { label: "You vote",  text: "From your phone · one question at a time" },
-        { label: "We reveal", text: "Results on screen · how you and the room think" },
-        { label: "Anonymous", text: "No names · no emails · just vote counts" }
+        { label: "You vote",  text: "Your phone · one at a time" },
+        { label: "We reveal", text: "On screen · you + the room" },
+        { label: "Anonymous", text: "No names · no emails · just votes" }
       ],
       footer: "Be honest — the more honest the room, the sharper the mirror." },
 
