@@ -374,6 +374,21 @@
   .j3-mid .j3-n{font-family:var(--serif);font-size:190px;line-height:.9;color:var(--gold)}
   .j3-mid .j3-l{font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);margin-top:12px}
   .j3-right{flex:1;display:flex;flex-direction:column;align-items:center;gap:16px}
+
+  /* --- deck-wide centring: intro titles match the quiz top band --------- */
+  .introframe{padding-top:56px}
+  .introframe h2{text-align:center;margin-left:auto;margin-right:auto;max-width:1120px;font-size:60px;line-height:1.1}
+  .introframe .trisub,.introframe .eyebrow{text-align:center;margin-left:auto;margin-right:auto}
+  .introframe .card .lab,.introframe .card .txt{text-align:center}
+  .introframe .jstep{text-align:center}
+  .introframe .jfoot,.introframe .footline{text-align:center;margin-left:auto;margin-right:auto}
+  /* title slide centred */
+  .titleframe{text-align:center}
+  .titleframe .brandlogo{margin-left:auto;margin-right:auto}
+  .titleframe .title-rule{margin-left:auto;margin-right:auto}
+  /* vote option cards: centred text (results bars stay left-aligned) */
+  .qframe .opt{text-align:center}
+  .qframe .opt .opticon{margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body>
@@ -606,7 +621,7 @@
   const R = {};
 
   R.title = s => `
-    <div class="body">
+    <div class="body titleframe">
       <img class="brandlogo" src="../../assets/zenca-logo-t.png?v=1" alt="Zenca">
       <div class="title-mark">${esc(s.kicker)}</div>
       <h1>${s.title.map(esc).join("<br>")}</h1>
@@ -637,7 +652,7 @@
     </div>`;
 
   R.cards = s => `
-    <div class="body">
+    <div class="body introframe">
       ${s.lead ? `<div class="eyebrow">${esc(s.lead)}</div>` : ""}
       <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="sub">${esc(s.sub)}</div>` : ""}
@@ -700,7 +715,7 @@
     </div>`;
 
   R.journey = s => `
-    <div class="body">
+    <div class="body introframe">
       <h2>${s.headline.map(mk).join("<br>")}</h2>
       <div class="journey">${s.steps.map((st,i) => `
         <div class="jstep${i===s.now ? " now" : " dim"}">
@@ -714,7 +729,7 @@
     </div>`;
 
   R.triptych = s => `
-    <div class="body">
+    <div class="body introframe">
       <h2>${s.headline.map(mk).join("<br>")}</h2>
       ${s.sub ? `<div class="trisub">${esc(s.sub)}</div>` : ""}
       <div class="tri">${s.boxes.map(b => `
@@ -1066,15 +1081,16 @@
     else { inner = R[s.type] ? R[s.type](s) : `<div class="body"><h2>${esc(s.type)}</h2></div>`; }
 
     const hasCounter = (s.type === "question" && f.beat <= 1);
-    // On vote/results frames the rail is gone: the counter takes the top-left,
-    // the join line the top-right, and the brand mark drops to bottom-centre.
+    const isIntro = ["cards","journey","triptych"].includes(s.type);
+    // Vote/results AND intro frames: no top-left "Zenca" — the brand mark drops to
+    // bottom-centre instead, so the layout is consistent across the whole deck.
     const showRail = !["title","closing","thanks"].includes(s.type) && !hasCounter;
     const showJoin   = hasCounter && idx > joinFrameIdx;
     stage.innerHTML = `
-      ${showRail ? `<div class="rail"><span class="mark">Zenca</span><span>${esc(railLabel(s))}</span></div>` : ""}
+      ${showRail ? `<div class="rail"><span class="mark">${isIntro ? "" : "Zenca"}</span><span>${esc(railLabel(s))}</span></div>` : ""}
       ${inner}
       ${showJoin ? `<div class="rejoin">Joining late?<br><b>Scan a neighbour’s phone.</b></div>` : ""}
-      ${hasCounter ? `<div class="brandmark">Zenca</div>` : ""}
+      ${(hasCounter || isIntro) ? `<div class="brandmark">Zenca</div>` : ""}
       <div class="slideno">Slide #${idx + 1}</div>
       <div class="paceclock${clockVisible ? "" : " hidden"}" id="paceclock">${paceText()}</div>
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
