@@ -338,6 +338,30 @@
   @media (prefers-reduced-motion: reduce){
     .barfill,.sbar .fill,.progress{transition:none}
   }
+
+  /* --- intro: journey (the chain) --------------------------------------- */
+  .journey{display:flex;gap:40px;margin-top:70px}
+  .jstep{flex:1;position:relative}
+  .jstep .jn{font-size:20px;color:var(--gold-deep);margin-bottom:20px}
+  .jstep .jlab{font-size:21px;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+  .jstep .jdesc{font-family:var(--serif);font-size:35px;line-height:1.18;color:var(--paper)}
+  .jstep.dim{opacity:.42}
+  .jstep.now .jtag{display:inline-block;margin-top:20px;font-size:13px;letter-spacing:.22em;
+       text-transform:uppercase;color:var(--ink);background:var(--gold);padding:5px 12px;font-weight:600}
+  .jfoot{margin-top:auto;font-family:var(--serif);font-size:31px;color:var(--gold)}
+
+  /* --- intro: triptych (UUU / USE) -------------------------------------- */
+  .trisub{font-size:24px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-top:22px}
+  .tri{display:flex;gap:30px;margin-top:auto;margin-bottom:auto}
+  .tbox{flex:1;border:1px solid rgba(198,161,91,.42);background:var(--ink-2);border-radius:16px;
+        padding:40px 30px 36px;text-align:center}
+  .tbox.muted{opacity:.4;border-style:dashed}
+  .tcircle{width:94px;height:94px;border:2px solid var(--gold);border-radius:50%;display:flex;
+        align-items:center;justify-content:center;margin:0 auto 28px;font-family:var(--serif);font-size:46px;color:var(--gold)}
+  .tverb{font-size:19px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+  .tdim{font-family:var(--serif);font-size:42px;color:var(--paper);margin-top:8px;line-height:1.05}
+  .tsubs{font-size:23px;color:var(--mute);margin-top:26px;line-height:1.55}
+  .trifoot{font-family:var(--serif);font-size:31px;color:var(--gold);text-align:center;margin-top:4px}
 </style>
 </head>
 <body>
@@ -379,7 +403,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=14"></script>
+<script src="../../assets/zenca-config-live.js?v=15"></script>
 <script src="../../assets/zenca-sync-live.js?v=1"></script>
 <script>
 (function(){
@@ -660,6 +684,35 @@
           <div class="txt">${esc(n.text)}</div></div>`).join("")}
       </div>
       <div class="footline">${esc(s.footer)}</div>
+    </div>`;
+
+  R.journey = s => `
+    <div class="body">
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
+      <div class="journey">${s.steps.map((st,i) => `
+        <div class="jstep${i===s.now ? " now" : " dim"}">
+          <div class="jn">${pad(i+1)}</div>
+          <div class="jlab">${esc(st.lab)}</div>
+          <div class="jdesc">${st.text.split("\n").map(esc).join("<br>")}</div>
+          ${i===s.now ? `<span class="jtag">${esc(s.nowTag || "We are here today")}</span>` : ""}
+        </div>`).join("")}
+      </div>
+      ${s.footer ? `<div class="jfoot">${esc(s.footer)}</div>` : ""}
+    </div>`;
+
+  R.triptych = s => `
+    <div class="body">
+      <h2>${s.headline.map(mk).join("<br>")}</h2>
+      ${s.sub ? `<div class="trisub">${esc(s.sub)}</div>` : ""}
+      <div class="tri">${s.boxes.map(b => `
+        <div class="tbox${b.muted ? " muted" : ""}">
+          <div class="tcircle">${esc(b.letter)}</div>
+          <div class="tverb">${esc(b.verb)}</div>
+          <div class="tdim">${esc(b.dim)}</div>
+          <div class="tsubs">${esc(b.subs)}</div>
+        </div>`).join("")}
+      </div>
+      ${s.footer ? `<div class="trifoot">${esc(s.footer)}</div>` : ""}
     </div>`;
 
   R.list = s => `

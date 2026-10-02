@@ -43,21 +43,54 @@ window.ZENCA_CONFIG = {
   deck: [
 
     { type: "title",
-      kicker: "A live, anonymous mirror on how this room thinks about money",
+      kicker: "A live, anonymous mirror",
       title: ["Money Mirror"],
       presenter: "Kamal Gaur",
       role: "Founder, Zenca" },
 
     { type: "cards",
-      kicker: "Welcome — a little about tonight",
-      lead: "I’m Kamal — 21 years in finance, and I stepped away last year to do exactly this.",
-      headline: ["This isn’t a talk. It’s a *mirror*."],
+      kicker: "Who’s talking",
+      headline: ["Not a talk. A *mirror*."],
       cards: [
-        { label: "What we’ll do", text: "For the next 20 minutes, this room answers from your phones — live on the screen." },
-        { label: "Anonymous",     text: "No names, no logins, nothing tracked." },
-        { label: "So be honest",  text: "It only works if you are — nobody will ever know it was you." }
+        { label: "Me",    text: "21 years · Indian corporate · stepped away last year" },
+        { label: "Zenca", text: "Personal-finance education · long-term financial agency" },
+        { label: "Why",   text: "Understand money · think for yourself" }
       ],
-      footer: "You’ll see where you stand — and where everyone around you stands." },
+      footer: "The change I want: financial independence, for everyone." },
+
+    { type: "journey",
+      kicker: "The Zenca Framework",
+      headline: ["From education to agency"],
+      now: 1,
+      steps: [
+        { lab: "Education",     text: "Build the\nfoundation" },
+        { lab: "Understanding", text: "See the bigger\npicture" },
+        { lab: "Judgment",      text: "Weigh what\nmatters" },
+        { lab: "Decisions",     text: "Aligned with\nyour goals" },
+        { lab: "Agency",        text: "Confidence\nand control" }
+      ],
+      footer: "Knowledge is not the destination. Financial agency is." },
+
+    { type: "triptych",
+      kicker: "Before you decide",
+      headline: ["Stop guessing. Start understanding."],
+      sub: "Understand — across three dimensions",
+      boxes: [
+        { letter: "U", verb: "Understand", dim: "Money",     subs: "Value · Inflation · Compounding" },
+        { letter: "U", verb: "Understand", dim: "The World", subs: "Systems · Incentives · Markets" },
+        { letter: "U", verb: "Understand", dim: "Yourself",  subs: "Goals · Constraints · Temperament" }
+      ],
+      footer: "Today, we hold the mirror to all three." },
+
+    { type: "cards",
+      kicker: "How this works",
+      headline: ["10 questions. Live. *Anonymous*."],
+      cards: [
+        { label: "You vote",  text: "From your phone · one question at a time" },
+        { label: "We reveal", text: "Results on screen · how you and the room think" },
+        { label: "Anonymous", text: "No names · no emails · just vote counts" }
+      ],
+      footer: "Be honest — the more honest the room, the sharper the mirror." },
 
     { type: "join" },
 
