@@ -61,7 +61,7 @@
   .rest .small{font-size:15px;line-height:1.6;color:var(--mute)}
   .dot{width:9px;height:9px;background:var(--gold);border-radius:50%;margin:0 auto 26px;opacity:.5}
   .restqr{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:10px}
-  .restqr-box{width:150px;height:150px;background:var(--paper);padding:10px}
+  .restqr-box{width:150px;height:150px;background:#FFFFFF;padding:10px}
   .restqr-box img,.restqr-box canvas{width:100%;height:100%;display:block}
   .restqr-lab{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep)}
 
@@ -288,7 +288,7 @@
       <div class="small">${esc(small)}</div>${extra || ""}${qr}</div>`;
     if (sid && window.QRCode) {
       const node = document.getElementById("rest-qr");
-      if (node) { node.innerHTML = ""; try { new window.QRCode(node, { text: location.origin + location.pathname + "#" + sid, width: 220, height: 220, colorDark: "#0C0B09", colorLight: "#F2EFE9", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) {} }
+      if (node) { node.innerHTML = ""; try { new window.QRCode(node, { text: location.origin + location.pathname + "#" + sid, width: 220, height: 220, colorDark: "#0C0B09", colorLight: "#FFFFFF", correctLevel: window.QRCode.CorrectLevel.M }); } catch (e) {} }
     }
   }
 
