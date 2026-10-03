@@ -119,7 +119,7 @@ window.ZENCA_CONFIG = {
       note: "No judgment — it’s anonymous.",
       options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
-        default: "The odds a single stock changes your life sit *under 1%*\n— you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe hope is *the product being sold*." } },
+        default: "The odds a single stock changes your life sit *under 1%*\n— you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
 
     { type: "question",
       id: "networth",
