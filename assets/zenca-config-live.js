@@ -43,7 +43,7 @@ window.ZENCA_CONFIG = {
   deck: [
 
     { type: "title",
-      kicker: "A live, anonymous mirror on how this room thinks",
+      kicker: "A live, anonymous poll on how this room thinks",
       title: ["Money Mirror"],
       presenter: "Kamal Gaur",
       role: "Founder\nZenca" },
@@ -54,7 +54,7 @@ window.ZENCA_CONFIG = {
       cards: [
         { label: "Me",    text: "21 years · Strategy & Analytics · India Inc" },
         { label: "Zenca", text: "Education · Personal finance lens" },
-        { label: "Why",   text: "Financial independence, for everyone" }
+        { label: "Why",   text: "Financial independence — for everyone" }
       ],
       tagline: "Financial education for long-term financial agency" },
 
@@ -117,9 +117,9 @@ window.ZENCA_CONFIG = {
       kicker: "The one that changes everything",
       prompt: "Ever bought *one stock* hoping it would change your life?",
       note: "No judgment — it’s anonymous.",
-      options: ["Yes, more than once", "Once", "No", "That’s basically my strategy"],
+      options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
-        default: "The odds a single stock changes your life sit under 1% — you’d need the pick, the entry, the exit, and the size all right. The hope is the product being sold." } },
+        default: "The odds a single stock changes your life sit *under 1%*\n— you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe hope is *the product being sold*." } },
 
     { type: "question",
       id: "networth",
@@ -127,9 +127,10 @@ window.ZENCA_CONFIG = {
       voteSeconds: 20,
       kicker: "Where you stand",
       prompt: "Do you know your *net worth* to within 10%?",
+      note: "A number from the last 6 months counts.",
       options: ["Yes, to the rupee, dollar, or sat", "Roughly", "No idea"],
       commentary: {
-        default: "You can’t compound what you can’t measure. The fix is boring and it works: one page a quarter, everything you own minus everything you owe." } },
+        default: "You can’t *compound* what you can’t *measure*.\nThe fix is boring, and it works —\n*1* page, once a *quarter*, with everything you *own* minus everything you *owe*." } },
 
     { type: "question",
       id: "fee",
@@ -138,10 +139,10 @@ window.ZENCA_CONFIG = {
       kicker: "The quiet leak — lock in a guess first",
       prompt: "A *1% annual fee*. Over 30 years, how much of your final wealth does it eat?",
       note: "Lock a number in your head before you vote.",
-      options: ["About 0.1%", "About 1%", "About 9%", "About 17%", "About 26%"],
+      options: ["~0.03%", "~1%", "~9%", "~17%", "~26%"],
       answer: 4,
       commentary: {
-        default: "It’s about 26%. Not charged once — charged on the compounding, every year.\nIn India that’s regular vs. direct funds, and the switch is free." } },
+        default: "1% is charged on the compounding, every year — not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds — and the switch is free." } },
 
     { type: "question",
       id: "inflation",
@@ -162,7 +163,7 @@ window.ZENCA_CONFIG = {
       note: "‘None’ is a real answer in this room.",
       options: ["None", "Under 10%", "10–50%", "50–90%", "Nearly all of it"],
       commentary: {
-        default: "No correct number — only trade-offs. The risk at the all-in end isn’t being wrong — it’s an emergency forcing you to sell at whatever price that week happens to offer." } },
+        default: "There is no correct number — *only trade-offs*.\nThe *risk* at the all-in end isn’t being wrong —\n— it’s an emergency *forcing you to sell* at a price you don’t want to sell at." } },
 
     { type: "question",
       id: "runway",
@@ -170,10 +171,10 @@ window.ZENCA_CONFIG = {
       voteSeconds: 30,
       kicker: "Staying in the game",
       prompt: "If your income stopped today, *how long* could everything you own cover your current lifestyle?",
-      note: "monthly spend × 12 = yearly cost\nnet worth ÷ yearly cost = your runway in years",
+      note: "Monthly expenses × 12 = Annual cost of living\nNet worth ÷ Annual cost of living = Your runway in years",
       options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
-        default: "Runway is time, and time turns money into choices. That last bucket has a name — financial independence." } },
+        default: "Runway is *time*, and time turns money into *choices*. That last bucket has a name — *financial independence*." } },
 
     { type: "question",
       id: "firenumber",
@@ -184,7 +185,7 @@ window.ZENCA_CONFIG = {
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
-        default: "A retirement number is a risk to manage, not a sum to solve. It’s also why a figure you ‘heard’ is answering someone else’s question, not yours." } },
+        default: "Your retirement number isn’t one figure to calculate — it’s a handful of moving parts to manage. That’s why a number you ‘heard’ is answering someone else’s question, not yours." } },
 
     { type: "question",
       id: "mood",
@@ -195,8 +196,8 @@ window.ZENCA_CONFIG = {
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "I don’t look", "No"],
       commentary: {
-        default: "A price move only costs you when it reaches your decisions — mood tips action, and action sets your return. A genuine ‘No’ is the quiet goal; ‘I don’t look’ is just the cheaper route to the same calm.",
-        split: "In most rooms, holders take a price swing calmer than non-holders — usually conviction and time in the asset, not the price." } },
+        default: "A price move only costs you when it reaches your decisions —\n— mood tips action, and action sets your return.\nA genuine ‘No’ is the North Star —\n— and ‘I don’t look’ is an easier shortcut to the same calm.",
+        split: "In most rooms, Bitcoin holders are calmer than non-holders when it comes to price swings." } },
 
     { type: "question",
       id: "freedom",
@@ -207,11 +208,11 @@ window.ZENCA_CONFIG = {
       note: "The first thing that comes to mind.",
       options: ["Rest, travel, and enjoy life", "Give my time to family and people I love", "Build or create something that matters", "Change nothing about my life, including work", "I’ve never let myself think about it"],
       commentary: {
-        default: "Everything else — saving, investing, independence — is in service of this one question. Independence isn’t the finish line; it’s the starting line." } },
+        default: "*Everything else* — saving, investing, waiting — is in service of this *one question*.\n*Independence* isn’t the finish line; it’s the *starting line*." } },
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "Everything tonight, anonymised, plus a fee calculator and a FIRE calculator that shows your real number — free on zenca.global. One new piece a week.",
-      contact: "Want help thinking about your own money more clearly? The contact form at zenca.global is open." }
+      note: "Find Money Mirror results, apart from FIRE and Fee calculators, for free on Zenca.Global.\nNew articles go out every week.",
+      contact: "Reach me through the Contact form if you’d like me to help you think about money more clearly." }
   ]
 };
