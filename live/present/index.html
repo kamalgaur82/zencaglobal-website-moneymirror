@@ -194,6 +194,17 @@
   .bar.top .barfill{background:var(--gold)}
   .bar.top .barpct{color:var(--gold)}
   .bar.answer .bartrack{outline:1px solid var(--gold);outline-offset:3px}
+  /* Results as vertical columns to scale — same slots/width as the vote boxes. */
+  .vcols{display:flex;align-items:flex-end;gap:26px;margin:40px auto 0;max-width:1200px;width:100%}
+  .vtrack{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+  .vtrack .vpct{font-family:var(--serif);font-size:32px;color:var(--mute);margin-bottom:10px;white-space:nowrap}
+  .vtrack.win .vpct{color:var(--gold)}
+  .vtrack .vbar{width:100%;height:0;background:rgba(198,161,91,.42);transition:height .7s cubic-bezier(.2,.7,.2,1)}
+  .vtrack.win .vbar{background:var(--gold)}
+  .vpct .vtag{display:block;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:3px}
+  .vlabs{display:flex;gap:26px;margin:16px auto 0;max-width:1200px;width:100%}
+  .vlab{flex:1;min-width:0;text-align:center;font-size:24px;line-height:1.24;color:var(--paper)}
+  .hasinfo .vcols{margin-top:auto}
   .commentary{margin-top:auto;padding-top:30px;border-left:4px solid var(--gold);padding-left:30px;
               font-family:var(--serif);font-size:32px;line-height:1.32;max-width:1180px}
   /* Per-question results infographic, centred in the mid-band under the bars. */
@@ -827,18 +838,17 @@
      panel; firenumber -> box grid replacing the bars (built from live votes). */
   const INFOGRAPHICS = {
     fee: `<svg viewBox="0 0 1000 240" xmlns="http://www.w3.org/2000/svg">
-  <text x="40" y="30" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="17" fill="var(--gold-deep)" letter-spacing="2.5">₹1,00,000 · 10%/YR · 30 YEARS</text>
-  <line x1="336" y1="205" x2="856" y2="205" stroke="rgba(198,161,91,.4)"/>
-  <rect x="360" y="55" width="160" height="150" fill="var(--gold)"/>
-  <text x="440" y="42" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" fill="var(--paper)" text-anchor="middle">₹17.4 L</text>
-  <text x="440" y="235" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="18" fill="var(--mute)" text-anchor="middle">Without the fee</text>
-  <rect x="600" y="94" width="160" height="111" fill="var(--gold)" opacity=".78"/>
-  <rect x="600" y="55" width="160" height="39" fill="none" stroke="#df6a4a" stroke-width="1.2" stroke-dasharray="4 4"/>
-  <text x="680" y="81" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="30" fill="var(--paper)" text-anchor="middle">₹12.9 L</text>
-  <text x="680" y="235" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="18" fill="var(--mute)" text-anchor="middle">With a 1% fee</text>
-  <path d="M774 55 h10 M774 94 h10 M779 55 V94" stroke="#df6a4a" stroke-width="1.3" fill="none" opacity=".85"/>
-  <text x="792" y="73" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="24" fill="#df6a4a">−26%</text>
-  <text x="792" y="97" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="15" fill="var(--mute)">lost to fees</text>
+  <text x="40" y="28" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="17" fill="var(--gold-deep)" letter-spacing="2.5">₹1,00,000 · 10%/YR · 30 YEARS</text>
+  <!-- Row 1: without the fee — large label left, bar, value at bar end right -->
+  <text x="40" y="113" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="30" fill="var(--mute)">Without the fee</text>
+  <rect x="300" y="78" width="520" height="50" fill="var(--gold)"/>
+  <text x="835" y="116" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="38" fill="var(--paper)">₹17.4 L</text>
+  <!-- Row 2: with a 1% fee — shorter bar + dashed gap = what the fee eats -->
+  <text x="40" y="193" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="30" fill="var(--mute)">With a 1% fee</text>
+  <rect x="300" y="158" width="386" height="50" fill="var(--gold)" opacity=".78"/>
+  <rect x="686" y="158" width="134" height="50" fill="none" stroke="#df6a4a" stroke-width="1.3" stroke-dasharray="5 4"/>
+  <text x="753" y="190" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="22" fill="#df6a4a" text-anchor="middle">−26%</text>
+  <text x="835" y="196" font-family="Iowan Old Style, Palatino, Georgia, serif" font-size="38" fill="var(--paper)">₹12.9 L</text>
 </svg>`
   };
   const INFL_PANEL = `<div class="mspanel"><div class="mscard">
@@ -926,6 +936,24 @@
     }).join("");
   }
 
+  function colsHTML(part, showAnswer, maxBar){
+    const dist = distribution(part);
+    const max = Math.max(...dist.map(d => d.pct), 1);
+    const cols = dist.map(d => {
+      const isTop = d.pct === max && d.pct > 0;
+      const isAns = showAnswer && part.answer === d.i;
+      const gold = showAnswer ? isAns : isTop;   // answer slides highlight the correct column
+      const h = Math.round(d.pct / max * maxBar);
+      return `<div class="vtrack ${gold?"win":""}">
+        <div class="vpct">${d.pct}%${isAns?'<span class="vtag">correct</span>':""}</div>
+        <div class="vbar" data-h="${h}"></div>
+      </div>`;
+    }).join("");
+    const labs = dist.map(d => `<div class="vlab">${esc(d.label)}</div>`).join("");
+    return `<div class="vcols" style="height:${maxBar+56}px">${cols}</div>
+      <div class="vlabs">${labs}</div>`;
+  }
+
   function renderResults(q){
     const parts = partsOf(q);
     const showAnswer = q.answer !== undefined;
@@ -941,17 +969,20 @@
       </div>
       ${counter}`;
     }
-    const body = parts.length > 1
-      ? `<div class="partsplit">${parts.map(p => `<div><div class="parttitle">${esc(p.prompt)}</div>${barsHTML(p,false)}</div>`).join("")}</div>`
-      : barsHTML({ ...parts[0], answer:q.answer }, showAnswer);
     const svg = (typeof INFOGRAPHICS !== "undefined" && INFOGRAPHICS[q.id]) || "";
     const panel = (q.id === "inflation" && typeof INFL_PANEL !== "undefined") ? INFL_PANEL : "";
     const mid = svg ? `<div class="infographic tall">${svg}</div>` : panel;
     const cls = "body qframe" + (svg ? " hasinfo" : "") + (panel ? " hasinfo haspanel" : "");
+    // Multi-part (warmup) keeps the compact horizontal bars; single-part votes
+    // become vertical columns to scale, aligned to the vote-option slots.
+    // Shorter columns when an infographic/panel shares the slide.
+    const body = parts.length > 1
+      ? `<div class="bars"><div class="partsplit">${parts.map(p => `<div><div class="parttitle">${esc(p.prompt)}</div>${barsHTML(p,false)}</div>`).join("")}</div></div>`
+      : colsHTML({ ...parts[0], answer:q.answer }, showAnswer, (svg || panel) ? 130 : 240);
     return `
       <div class="${cls}">
         <h2>${mk(q.prompt)}</h2>
-        <div class="bars">${body}</div>
+        ${body}
         ${mid}
         ${comm}
       </div>
@@ -1103,6 +1134,7 @@
 
     requestAnimationFrame(() => {
       stage.querySelectorAll("[data-w]").forEach(el => { el.style.width = el.getAttribute("data-w") + "%"; });
+      stage.querySelectorAll("[data-h]").forEach(el => { el.style.height = el.getAttribute("data-h") + "px"; });
     });
 
     fitBody();
