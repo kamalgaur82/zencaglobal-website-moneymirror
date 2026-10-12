@@ -43,8 +43,8 @@
   .foot{position:absolute;bottom:52px;left:88px;right:88px;display:flex;justify-content:space-between;
         align-items:baseline;font-size:17px;color:var(--mute)}
   .progress{position:absolute;left:0;bottom:0;height:3px;background:var(--gold);opacity:.55;transition:width .35s ease}
-  .rejoin{position:absolute;right:72px;top:44px;font-size:16px;line-height:1.35;
-          color:var(--gold-deep);letter-spacing:.03em;text-align:right;max-width:172px}
+  .rejoin{position:absolute;right:72px;top:44px;font-size:20px;line-height:1.35;
+          color:var(--gold-deep);letter-spacing:.03em;text-align:right;max-width:210px}
   .rejoin b{color:var(--gold);font-weight:500}
   .slideno{position:absolute;left:72px;bottom:24px;font-size:16px;letter-spacing:.1em;
            color:var(--gold-deep);opacity:.75}
@@ -61,7 +61,7 @@
      join line (right ~12%). The question is width-capped to the centre so it
      rises into the top band without colliding with either side column. */
   .qframe{padding-top:56px}
-  .qframe .qprompt, .qframe h2{text-align:center;margin-left:auto;margin-right:auto;max-width:1120px}
+  .qframe .qprompt, .qframe h2{text-align:center;margin-left:auto;margin-right:auto;max-width:1040px}
   /* Question sized to stay within ~3 lines in the centre column; vote runs a
      touch larger than results. */
   .qframe .qprompt{font-size:60px;line-height:1.12}
@@ -157,7 +157,10 @@
   .joinqr{flex:none;display:flex;flex-direction:column;align-items:center;gap:16px}
   .qrbox{width:430px;height:430px;background:#FFFFFF;padding:24px;display:flex;
          align-items:center;justify-content:center;flex:none}
-  .qrbox img,.qrbox canvas{width:100%;height:100%;display:block}
+  /* Native size (no scaling → no grey anti-alias fringe), centred in the white
+     box so the box padding is a clean white quiet zone. */
+  .qrbox img,.qrbox canvas{display:block;border:0;image-rendering:pixelated}
+  .closeqr img,.closeqr canvas{display:block;border:0;image-rendering:pixelated}
   .qrfallback{font-family:var(--sans);font-size:26px;color:var(--ink);text-align:center;line-height:1.4}
   .joincode{font-family:var(--serif);font-size:30px;color:var(--gold);letter-spacing:.01em;text-align:center;
             max-width:430px;overflow-wrap:break-word;word-break:normal}
@@ -174,11 +177,14 @@
   .qprompt{font-family:var(--serif);font-size:74px;line-height:1.14;max-width:1330px;letter-spacing:-.01em}
   .qnote{margin-top:24px;font-size:30px;line-height:1.4;color:var(--mute)}
   .opts{display:flex;gap:20px;margin-top:auto;flex-wrap:wrap}
-  .opt{border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:34px 30px;
-       font-size:36px;line-height:1.22;color:var(--paper);flex:1;min-width:230px;min-height:150px;
-       display:flex;flex-direction:column;justify-content:center}
-  .opt .ok{display:block;font-size:22px;color:var(--gold-deep);margin-bottom:12px}
-  .opt .opticon{width:54px;height:54px;color:var(--gold);margin:18px auto 0}
+  .opt{border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:30px 30px;
+       font-size:36px;line-height:1.22;color:var(--paper);flex:1;min-width:230px;min-height:168px;
+       display:flex;flex-direction:column}
+  /* A/B/C at top, text centred in the middle (flex:1), icon at the bottom — all
+     three line up across boxes no matter how many lines the option text takes. */
+  .opt .ok{display:block;font-size:22px;color:var(--gold-deep);margin-bottom:12px;flex:none}
+  .opt .optxt{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;width:100%}
+  .opt .opticon{width:54px;height:54px;color:var(--gold);margin:0 auto;flex:none}
   .opt .opticon svg{width:100%;height:100%;display:block}
   /* multi-part vote (warm-up): one row of option boxes per sub-question */
   .partvotes{margin-top:auto;margin-bottom:auto;display:flex;flex-direction:column;gap:34px;width:100%}
@@ -188,8 +194,8 @@
   .pvrow .opt{text-align:center}
 
   .counter{position:absolute;left:72px;top:40px;text-align:left;line-height:1;max-width:160px}
-  .counter .n{font-family:var(--serif);font-size:66px;color:var(--gold);line-height:1}
-  .counter .l{font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-top:8px;line-height:1.3}
+  .counter .n{font-family:var(--serif);font-size:80px;color:var(--gold);line-height:1}
+  .counter .l{font-size:18px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-top:8px;line-height:1.3}
   .counter.closed .n{color:var(--mute)}
 
   /* --- results -------------------------------------------------------------- */
@@ -210,12 +216,13 @@
   .vtrack.win .vpct{color:var(--gold)}
   .vtrack .vbar{width:100%;height:0;background:rgba(198,161,91,.42);transition:height .7s cubic-bezier(.2,.7,.2,1)}
   .vtrack.win .vbar{background:var(--gold)}
-  .vpct .vtag{display:block;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:3px}
   .vlabs{display:flex;gap:26px;margin:16px auto 0;max-width:1200px;width:100%}
   .vlab{flex:1;min-width:0;text-align:center;font-size:27px;line-height:1.26;color:var(--paper)}
+  .vlab.win{color:var(--gold)}
+  .vlab .vlabtag{display:block;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:6px}
   .hasinfo .vcols{margin-top:auto}
   .commentary{margin-top:auto;padding-top:30px;border-left:4px solid var(--gold);padding-left:30px;
-              font-family:var(--serif);font-size:38px;line-height:1.34;max-width:1320px}
+              font-family:var(--serif);font-size:34px;line-height:1.32;max-width:1320px}
   /* Per-question results infographic, centred in the mid-band under the bars. */
   .infographic{margin:26px auto 0;width:100%;max-width:1200px;display:flex;justify-content:center}
   .infographic svg{height:160px;width:auto;max-width:100%;display:block}
@@ -227,20 +234,22 @@
   .hasinfo .bars{margin-top:auto}
   /* FIRE results as boxes (same icons/labels as the vote slide) + vote % + cluster. */
   .firegrid{display:flex;gap:18px;margin:auto auto 0;width:100%}
-  .fbox{flex:1;border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:24px 16px 20px;
+  /* Order top→bottom: % + bar, then option name, then icon, then know/estimate.
+     Fixed heights keep names, icons and tags aligned across the five boxes. */
+  .fbox{flex:1;border:1px solid rgba(198,161,91,.4);background:var(--ink-2);padding:20px 14px 16px;
         text-align:center;display:flex;flex-direction:column;align-items:center}
   .fbox.est{border-style:dashed;border-color:rgba(142,135,123,.55)}
-  .fbox .flab{font-size:22px;color:var(--paper);line-height:1.24;min-height:82px}
-  .fbox.est .flab{color:var(--mute)}
-  .fbox .fic{width:46px;height:46px;margin:6px auto 0;color:var(--gold)}
-  .fbox.est .fic{color:var(--mute)}
-  .fbox .fic svg{width:100%;height:100%;display:block}
-  .fbox .fcol{height:158px;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;margin-top:14px}
+  .fbox .fcol{height:116px;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;margin-bottom:6px}
   .fbox .fpct{font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:8px}
   .fbox.est .fpct{color:var(--mute)}
   .fbox .fbar{width:56%;height:0;background:var(--gold);transition:height .7s cubic-bezier(.2,.7,.2,1)}
   .fbox.est .fbar{background:rgba(142,135,123,.5)}
-  .fbox .ftag{font-size:17px;letter-spacing:.1em;text-transform:uppercase;margin-top:16px;color:var(--gold-deep)}
+  .fbox .flab{font-size:21px;color:var(--paper);line-height:1.2;height:64px;display:flex;align-items:center;justify-content:center}
+  .fbox.est .flab{color:var(--mute)}
+  .fbox .fic{width:44px;height:44px;margin:10px auto 0;color:var(--gold)}
+  .fbox.est .fic{color:var(--mute)}
+  .fbox .fic svg{width:100%;height:100%;display:block}
+  .fbox .ftag{font-size:16px;letter-spacing:.1em;text-transform:uppercase;margin-top:auto;padding-top:14px;color:var(--gold-deep)}
   .fbox.est .ftag{color:var(--mute)}
   /* Money-supply / share panel — typographic (numbers can't be drawn to scale). */
   .mspanel{display:flex;gap:26px;margin:auto auto 0;width:100%;max-width:1300px}
@@ -262,7 +271,7 @@
   .partsplit{display:flex;gap:52px}
   .partsplit > div{flex:1}
   .partcols{margin-top:auto;margin-bottom:0;align-items:flex-end}
-  .parttitle{font-size:21px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .parttitle{font-size:23px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;text-align:center}
   .partsplit .barlabel{width:48%;font-size:24px}
   .partsplit .barpct{width:84px;font-size:27px}
 
@@ -332,7 +341,7 @@
   .closehead{display:flex;gap:60px;align-items:flex-start;justify-content:space-between;margin-top:20px}
   .closehead h1{flex:1;min-width:0}
   .closeheadR{flex:none;display:flex;flex-direction:column;align-items:center;gap:14px}
-  .closeqr{width:250px;height:250px;background:#FFFFFF;padding:16px;flex:none}
+  .closeqr{width:290px;height:290px;background:#FFFFFF;padding:18px;flex:none}
   .closeurl{font-size:22px;color:var(--gold)}
   .closebody{margin-top:auto;max-width:1180px}
   .closebody .footline{margin-top:0;padding-top:0}
@@ -386,10 +395,12 @@
   .jstep .jn{font-size:20px;color:var(--gold-deep);margin-bottom:20px}
   .jstep .jlab{font-size:21px;letter-spacing:.17em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
   .jstep .jdesc{font-family:var(--serif);font-size:38px;line-height:1.2;color:var(--paper)}
-  .jstep.dim{opacity:.42}
+  /* All five steps fully visible so each can be described; the "We are here
+     today" tag alone marks the current one. */
+  .jstep.dim{opacity:1}
   .jstep.now .jtag{display:inline-block;margin-top:20px;font-size:13px;letter-spacing:.22em;
        text-transform:uppercase;color:var(--ink);background:var(--gold);padding:5px 12px;font-weight:600}
-  .jfoot{margin-top:auto;font-family:var(--serif);font-size:36px;color:var(--gold)}
+  .jfoot{margin-top:auto;font-family:var(--serif);font-size:34px;color:var(--gold)}
 
   /* --- intro: triptych (UUU / USE) -------------------------------------- */
   .trisub{font-size:24px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-top:22px}
@@ -402,10 +413,10 @@
   .tverb{font-size:19px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
   .tdim{font-family:var(--serif);font-size:46px;color:var(--paper);margin-top:8px;line-height:1.05}
   .tsubs{font-size:26px;color:var(--mute);margin-top:26px;line-height:1.55}
-  .trifoot{font-family:var(--serif);font-size:36px;color:var(--gold);text-align:center;margin-top:4px}
+  .trifoot{font-family:var(--serif);font-size:34px;color:var(--gold);text-align:center;margin-top:4px}
 
   /* --- intro: centred gold tagline (Me + Zenca) ------------------------- */
-  .slidetag{margin-top:auto;text-align:center;font-family:var(--serif);font-size:36px;color:var(--gold);padding-top:34px}
+  .slidetag{margin-top:auto;text-align:center;font-family:var(--serif);font-size:34px;color:var(--gold);padding-top:34px}
 
   /* --- join: three columns — title | phones-in | QR --------------------- */
   .join3{display:flex;align-items:center;gap:40px;margin-top:auto}
@@ -415,7 +426,12 @@
   .j3-mid .j3-n{font-family:var(--serif);font-size:220px;line-height:.9;color:var(--gold)}
   .j3-mid .j3-l{font-size:32px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-top:14px}
   .j3-right{flex:42;display:flex;flex-direction:column;align-items:center;gap:18px}
-  .joinpill-wrap{margin-top:auto;text-align:center}
+  /* Mirror the join3 columns (24/34/42, gap 40) so the pill centres under the
+     "Phones In" counter, not the whole page. */
+  .joinpill-wrap{margin-top:auto;display:flex;gap:40px}
+  .jpw-l{flex:24;min-width:0}
+  .jpw-m{flex:34;text-align:center}
+  .jpw-r{flex:42;min-width:0}
   .joinpill{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:18px 44px;
             font-size:30px;letter-spacing:.2em;text-transform:uppercase}
 
@@ -478,7 +494,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=18"></script>
+<script src="../../assets/zenca-config-live.js?v=19"></script>
 <script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script>
 (function(){
@@ -829,7 +845,7 @@
           <div class="joincode">${AUD.displayHtml}</div>
         </div>
       </div>
-      <div class="joinpill-wrap"><span class="joinpill">Anonymous</span></div>
+      <div class="joinpill-wrap"><div class="jpw-l"></div><div class="jpw-m"><span class="joinpill">Anonymous</span></div><div class="jpw-r"></div></div>
     </div>`;
 
   R.closing = s => `
@@ -934,11 +950,11 @@
       const isK = !!known[i];
       const ic = GRIDICONS[gi((q.icons || [])[i])] || "";
       const pct = pctOf[i] || 0;
-      const h = Math.round(pct / max * 110);
+      const h = Math.round(pct / max * 78);
       return `<div class="fbox${isK ? "" : " est"}">
+        <div class="fcol"><div class="fpct">${pct}%</div><div class="fbar" data-h="${h}"></div></div>
         <div class="flab">${esc(o)}</div>
         <div class="fic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></div>
-        <div class="fcol"><div class="fpct">${pct}%</div><div class="fbar" data-h="${h}"></div></div>
         <div class="ftag">${isK ? "You can know" : "\u2248 Estimate"}</div>
       </div>`;
     }).join("");
@@ -964,10 +980,11 @@
       ? `<div class="partvotes">${parts.map(p => `
           <div class="partvote">
             <div class="pvtitle">${esc(p.prompt)}</div>
-            <div class="pvrow">${p.options.map(o => `<div class="opt">${esc(o)}</div>`).join("")}</div>
+            <div class="pvrow">${p.options.map(o => `<div class="opt"><span class="optxt">${esc(o)}</span></div>`).join("")}</div>
           </div>`).join("")}</div>`
-      // Single-part: option boxes; any per-option icon sits BELOW the text.
-      : `<div class="opts">${q.options.map((o,i) => `<div class="opt"><span class="ok">${String.fromCharCode(65+i)}</span>${esc(o)}${q.icons ? `<div class="opticon">${ICONS[q.icons[i]] || ""}</div>` : ""}</div>`).join("")}</div>`;
+      // Single-part: A/B/C pinned top, text centred in the middle, any icon at the
+      // bottom — so those three line up across boxes regardless of text length.
+      : `<div class="opts">${q.options.map((o,i) => `<div class="opt"><span class="ok">${String.fromCharCode(65+i)}</span><span class="optxt">${esc(o)}</span>${q.icons ? `<div class="opticon">${ICONS[q.icons[i]] || ""}</div>` : ""}</div>`).join("")}</div>`;
     return `
       <div class="body qframe">
         <div class="qprompt">${mk(q.prompt)}</div>
@@ -1001,11 +1018,16 @@
       const gold = showAnswer ? isAns : isTop;   // answer slides highlight the correct column
       const h = Math.round(d.pct / max * maxBar);
       return `<div class="vtrack ${gold?"win":""}">
-        <div class="vpct">${d.pct}%${isAns?'<span class="vtag">correct</span>':""}</div>
+        <div class="vpct">${d.pct}%</div>
         <div class="vbar" data-h="${h}"></div>
       </div>`;
     }).join("");
-    const labs = dist.map(d => `<div class="vlab">${esc(d.label)}</div>`).join("");
+    // "correct" marker sits under the OPTION LABEL (not the %), so it can't push
+    // the % value out of line with the other columns.
+    const labs = dist.map(d => {
+      const isAns = showAnswer && part.answer === d.i;
+      return `<div class="vlab${isAns?" win":""}">${esc(d.label)}${isAns?'<span class="vlabtag">correct</span>':""}</div>`;
+    }).join("");
     return `<div class="vcols" style="height:${maxBar+56}px">${cols}</div>
       <div class="vlabs">${labs}</div>`;
   }
@@ -1183,8 +1205,8 @@
       <div class="paceclock${clockVisible ? "" : " hidden"}" id="paceclock">${paceText()}</div>
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
 
-    if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 400);
-    if (s.type === "closing") qrInto(document.getElementById("qr-close"), CFG.closing.fullUrl, CFG.closing.qrImage, 218);
+    if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 360);
+    if (s.type === "closing") qrInto(document.getElementById("qr-close"), CFG.closing.fullUrl, CFG.closing.qrImage, 236);
     if (s.type === "thanks" && s.qrs) s.qrs.forEach((q,i) => qrInto(document.getElementById("qr-thanks-"+i), q.url, "", 264));
 
     if (s.type === "question" && f.beat === 0) startVoteTimer(s.voteSeconds || 15);

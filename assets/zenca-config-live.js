@@ -212,7 +212,7 @@ window.ZENCA_CONFIG = {
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "Find Money Mirror results, apart from FIRE and Fee calculators, for free on Zenca.Global.\nNew articles go out every week.",
-      contact: "Reach me through the Contact form if you’d like me to help you think about money more clearly." }
+      note: "Tonight’s Money Mirror may feed a future article — plus FIRE and Fee calculators, free on Zenca.Global.\nNew articles go out weekly.",
+      contact: "Want help thinking more clearly about money? Reach me through the Contact form." }
   ]
 };
