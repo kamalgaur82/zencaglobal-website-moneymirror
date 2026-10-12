@@ -306,7 +306,9 @@
   document.addEventListener("visibilitychange", () => { if (!document.hidden) recover(); });
   window.addEventListener("focus", recover);
   window.addEventListener("online", recover);
-  setInterval(() => { if (!document.hidden) recover(); }, 15000);
+  // ~7s so phones without a live socket (past the Realtime connection cap) still
+  // pick up a newly-opened question quickly; the on-screen read-hold absorbs it.
+  setInterval(() => { if (!document.hidden) recover(); }, 7000);
   if (sync.ready && sync.ready.then) sync.ready.then(pingHere); else pingHere();
 
   if (ROOM && sync.room) sync.room(ROOM);
