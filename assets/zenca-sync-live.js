@@ -16,7 +16,7 @@
   const MAN_KEY   = "zenca:manifests";
   const COUNT_KEY = "zenca:counters";
 
-  function makeLocal() {
+  function makeLocal(opts) {
     const chan = ("BroadcastChannel" in window) ? new BroadcastChannel("zenca-v2") : null;
     const stateSubs = [], countSubs = [];
     let counters = read(COUNT_KEY) || {};
@@ -81,6 +81,7 @@
         return Promise.resolve();
       },
       subscribeCounters(cb) { countSubs.push(cb); cb(counters); },
+      refreshCounters() { countSubs.forEach(f => f(counters)); return Promise.resolve(); },
       getCounters() { return counters; },
       getManifest(sid) {
         const all = read(MAN_KEY) || {};
@@ -106,7 +107,13 @@
     };
   }
 
-  function makeSupabase(cfg) {
+  function makeSupabase(cfg, opts) {
+    opts = opts || {};
+    /* Only the presenter consumes the live counter feed. If 500 phones each
+       subscribed to it, every vote would fan out to all of them and swamp
+       Realtime (measured: the presenter's tally freezes under that load).
+       Phones fetch counters over HTTP on demand instead. */
+    const liveCounters = !!opts.liveCounters;
     const stateSubs = [], countSubs = [], authSubs = [];
     let counters = {}, state = null, client = null, live = false;
     let sid = null, session = null, roomChan = null;
@@ -117,7 +124,7 @@
       s.onload = () => {
         try {
           client = window.supabase.createClient(cfg.url, cfg.anonKey, {
-            realtime: { params: { eventsPerSecond: 20 } }
+            realtime: { params: { eventsPerSecond: 100 } }
           });
 
           client.auth.getSession().then(({ data }) => {
@@ -128,15 +135,18 @@
             session = s2; authSubs.forEach(f => f(!!session));
           });
 
-          client.from("zenca_counters").select("key,count").limit(20000).then(({ data }) => {
-            if (data) { data.forEach(r => { counters[r.key] = r.count; }); countSubs.forEach(f => f(counters)); }
-          });
-
-          client.channel("zenca-counters")
-            .on("postgres_changes", { event: "*", schema: "public", table: "zenca_counters" }, p => {
-              const r = p.new; if (!r) return;
-              counters[r.key] = r.count; countSubs.forEach(f => f(counters));
-            }).subscribe(s2 => { live = (s2 === "SUBSCRIBED"); });
+          if (liveCounters) {
+            client.from("zenca_counters").select("key,count").limit(20000).then(({ data }) => {
+              if (data) { data.forEach(r => { counters[r.key] = r.count; }); countSubs.forEach(f => f(counters)); }
+            });
+            client.channel("zenca-counters")
+              .on("postgres_changes", { event: "*", schema: "public", table: "zenca_counters" }, p => {
+                const r = p.new; if (!r) return;
+                counters[r.key] = r.count; countSubs.forEach(f => f(counters));
+              }).subscribe(s2 => { live = (s2 === "SUBSCRIBED"); });
+          } else {
+            live = true;   // audience is "connected" via the room channel + HTTP
+          }
 
           resolve();
         } catch (err) { reject(err); }
@@ -207,8 +217,12 @@
       signOut() { return client.auth.signOut(); },
       onAuth(cb) { authSubs.push(cb); if (session !== null) cb(!!session); },
       room,
-      trackPresence(newSid) { presTrack = true; const ch = ensurePresence(newSid); if (ch && ch.state === "joined") { ch.track({ role: "audience" }).catch(function () {}); } },
-      watchPresence(newSid, cb) { presCb = cb; ensurePresence(newSid); },
+      /* Realtime presence removed: phones announce via the HTTP heartbeat (ping)
+         and the presenter reads "phones in" via presentCount. A per-phone
+         presence channel would, at 500, fan every join/leave out to everyone —
+         the same storm as the live counter feed. */
+      trackPresence() {},
+      watchPresence() {},
       publishState(s) {
         state = s; stateSubs.forEach(f => f(state));
         if (client && s && s.sid) {
@@ -246,6 +260,16 @@
           .catch(() => 0);
       },
       subscribeCounters(cb) { countSubs.push(cb); cb(counters); },
+      /* Audience pages (no live feed) pull counters over HTTP on demand — e.g.
+         the vote page calls this when a question closes, to show each voter
+         their own option's share. */
+      refreshCounters(forSid) {
+        if (!client) return Promise.resolve();
+        const s = forSid || sid;
+        const q = s ? client.from("zenca_counters").select("key,count").like("key", s + "|%")
+                    : client.from("zenca_counters").select("key,count").limit(20000);
+        return q.then(({ data }) => { (data || []).forEach(r => { counters[r.key] = r.count; }); countSubs.forEach(f => f(counters)); }).catch(() => {});
+      },
       getCounters() { return counters; },
       getManifest(sid) {
         if (!client) return Promise.resolve(null);
@@ -278,7 +302,7 @@
     };
   }
 
-  window.ZencaSync = function (cfg) {
-    return (cfg.mode === "supabase" && cfg.supabase.url) ? makeSupabase(cfg.supabase) : makeLocal();
+  window.ZencaSync = function (cfg, opts) {
+    return (cfg.mode === "supabase" && cfg.supabase.url) ? makeSupabase(cfg.supabase, opts) : makeLocal(opts);
   };
 })();

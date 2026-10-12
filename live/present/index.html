@@ -479,11 +479,12 @@
 </div>
 
 <script src="../../assets/zenca-config-live.js?v=18"></script>
-<script src="../../assets/zenca-sync-live.js?v=1"></script>
+<script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script>
 (function(){
   const CFG = window.ZENCA_CONFIG;
-  const sync = window.ZencaSync(CFG.sync);
+  // Presenter is the ONLY live-counter subscriber (phones fetch counts over HTTP).
+  const sync = window.ZencaSync(CFG.sync, { liveCounters: true });
   const stage = document.getElementById("stage");
 
   /* ---------- helpers ---------- */

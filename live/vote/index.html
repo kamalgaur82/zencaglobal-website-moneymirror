@@ -91,7 +91,7 @@
 </footer>
 
 <script src="../../assets/zenca-config-live.js?v=18"></script>
-<script src="../../assets/zenca-sync-live.js?v=1"></script>
+<script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 (function(){
@@ -139,6 +139,9 @@
     if (!s) return;
     state = s; if (!state.sid && ROOM) state.sid = ROOM;
     picks = {}; err = ""; render(); diag("state received");
+    // Phones don't hold the live counter feed; when a question closes, pull the
+    // final counts once over HTTP so "X% chose the same" can render.
+    if (state.phase && state.phase !== "open" && sync.refreshCounters) sync.refreshCounters(state.sid);
   });
   sync.subscribeCounters(c => {
     counters = c || {};
