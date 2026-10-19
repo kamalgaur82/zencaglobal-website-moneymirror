@@ -45,6 +45,12 @@
   .opct{position:relative;z-index:1;font-family:var(--serif);font-size:16px;color:var(--mute);min-width:46px;text-align:right}
   .orow.win .oname{color:var(--paper)} .orow.win .opct{color:var(--gold)}
 
+  .csplit{margin-top:11px;border-top:1px solid rgba(198,161,91,.14);padding-top:9px}
+  .csplit-h{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+  .crow{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:3px 0;line-height:1.3}
+  .crow .cn{color:var(--paper)} .crow .cv{color:var(--mute);white-space:nowrap}
+  .crow .cv b{color:var(--gold);font-weight:500}
+
   footer{margin-top:26px;font-size:12px;color:var(--mute);text-align:center}
   .empty{border:1px solid var(--line);padding:30px 18px;text-align:center;color:var(--mute);grid-column:1/-1}
 
@@ -86,29 +92,41 @@
   CFG.deck.forEach(function(s){ if (s.id) deckById[s.id] = s; });
 
   function totalsFor(sid, partId, counters){
-    var by = {}, total = 0;
+    var by = {}, total = 0, hT = 0, nT = 0;
     Object.keys(counters).forEach(function(k){
       var p = k.split("|");
       if (p[0] !== sid || p[1] !== partId) return;
-      by[p[2]] = (by[p[2]] || 0) + counters[k];
-      total += counters[k];
+      var oi = p[2], seg = p[3], v = counters[k];
+      by[oi] = by[oi] || { total:0, holder:0, nonholder:0 };
+      by[oi].total += v; total += v;
+      if (seg === "holder"){ by[oi].holder += v; hT += v; }
+      else if (seg === "nonholder"){ by[oi].nonholder += v; nT += v; }
     });
-    return { by: by, total: total };
+    return { by: by, total: total, hT: hT, nT: nT };
   }
 
   // one compact card per part (so warm-up age / bitcoin become two cards)
-  function cardFor(questionPrompt, part, answerIdx, counters, sid){
+  function cardFor(questionPrompt, part, answerIdx, depth, counters, sid){
     var t = totalsFor(sid, part.id, counters);
     if (!t.total) return "";
-    var maxN = 0; part.options.forEach(function(_,i){ var n = t.by[i]||0; if (n>maxN) maxN=n; });
+    var maxN = 0; part.options.forEach(function(_,i){ var n = (t.by[i]||{}).total||0; if (n>maxN) maxN=n; });
     var rows = part.options.map(function(opt,i){
-      var n = t.by[i] || 0, p = pct(n, t.total);
+      var n = (t.by[i]||{}).total || 0, p = pct(n, t.total);
       var win = (n === maxN && n > 0), correct = (answerIdx !== undefined && answerIdx === i);
       return '<div class="orow' + (win?' win':'') + '"><div class="ofill" data-w="' + p + '"></div>' +
                '<div class="oname">' + esc(opt) + (correct?'<span class="tag">correct</span>':'') + '</div>' +
                '<div class="opct">' + p + '%</div></div>';
     }).join("");
-    return '<div class="card"><div class="cq">' + mk(questionPrompt) + '</div>' + rows + '</div>';
+    var splitHtml = "";
+    if (depth === "split" && (t.hT + t.nT) > 0){
+      var sr = part.options.map(function(opt,i){
+        var r = t.by[i] || { holder:0, nonholder:0 };
+        return '<div class="crow"><span class="cn">' + esc(opt) + '</span>' +
+               '<span class="cv">Holds BTC <b>' + pct(r.holder,t.hT) + '%</b> · None <b>' + pct(r.nonholder,t.nT) + '%</b></span></div>';
+      }).join("");
+      splitHtml = '<div class="csplit"><div class="csplit-h">Split by who holds bitcoin</div>' + sr + '</div>';
+    }
+    return '<div class="card"><div class="cq">' + mk(questionPrompt) + '</div>' + rows + splitHtml + '</div>';
   }
 
   function render(sess, counters){
@@ -126,7 +144,7 @@
       var multi = parts.length > 1;
       parts.forEach(function(p){
         // heading: the sub-question prompt for warm-up, else the question prompt
-        cards += cardFor(multi ? p.prompt : q.prompt, p, deckQ.answer, counters, sess.sid);
+        cards += cardFor(multi ? p.prompt : q.prompt, p, deckQ.answer, q.depth, counters, sess.sid);
       });
     });
     out.innerHTML = cards || '<div class="empty">Results from the most recent Money Mirror will appear here right after a session.</div>';
