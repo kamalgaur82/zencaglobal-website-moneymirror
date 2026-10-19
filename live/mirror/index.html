@@ -8,77 +8,70 @@
 <link rel="apple-touch-icon" href="../../assets/zenca-favicon.png?v=1">
 <style>
   :root{
-    --ink:#000000; --ink-2:#111111; --gold:#C6A15B; --gold-deep:#C6A15B;
+    --ink:#000000; --ink-2:#121110; --gold:#C6A15B; --gold-deep:#C6A15B;
     --paper:#F2EFE9; --mute:#8E877B; --line:rgba(198,161,91,.26);
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
     --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--ink);color:var(--paper);font-family:var(--sans);line-height:1.5;
-       padding:34px 20px 60px;max-width:680px;margin:0 auto}
-  .hl{color:var(--gold)}
-  em{font-style:italic;color:var(--paper)}
+  body{background:var(--ink);color:var(--paper);font-family:var(--sans);line-height:1.45;
+       padding:26px 18px 34px;max-width:1040px;margin:0 auto}
+  .hl{color:var(--gold)} em{font-style:italic}
 
-  header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}
-  .mark{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600}
-  h1{font-family:var(--serif);font-weight:500;font-size:34px;line-height:1.12;letter-spacing:-.01em;margin-top:12px}
-  .meta{font-size:14px;color:var(--mute);margin-top:12px}
+  header{text-align:center;margin-bottom:18px}
+  .mark{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  h1{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin-top:10px;
+     font-size:clamp(18px,5.9vw,33px);line-height:1.1;white-space:nowrap}
+  .meta{font-size:13px;color:var(--mute);margin-top:12px;line-height:1.7}
+  .meta .date{color:var(--gold-deep)}
 
-  section{margin:30px 0}
-  .q{font-family:var(--serif);font-size:23px;line-height:1.28;margin-bottom:4px}
-  .subq{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin:16px 0 10px}
-  .qvotes{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:14px}
-
-  .bar{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;margin:11px 0}
-  .bl{font-size:16px;color:var(--paper)}
-  .bl .tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-left:8px}
-  .bp{font-family:var(--serif);font-size:19px;color:var(--mute);text-align:right;min-width:52px}
-  .track{grid-column:1 / -1;height:12px;background:rgba(198,161,91,.12);border-radius:2px;overflow:hidden}
-  .fill{height:100%;width:0;background:rgba(198,161,91,.42);border-radius:2px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
-  .bar.win .fill{background:var(--gold)}
-  .bar.win .bp{color:var(--gold)}
-
-  .split{border-left:2px solid var(--line);padding-left:16px;margin:16px 0 4px}
-  .split .sh{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:10px}
-  .srow{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:5px 0;border-bottom:1px solid rgba(198,161,91,.1)}
-  .srow .so{color:var(--paper)}
-  .srow .sv{color:var(--mute);white-space:nowrap}
-  .srow .sv b{color:var(--gold);font-weight:500}
-
-  .insight{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--mute);margin-top:14px;
-           border-left:3px solid var(--gold);padding-left:14px}
-
-  .cta{border-top:1px solid var(--line);margin-top:40px;padding-top:30px;display:flex;flex-direction:column;gap:12px}
-  .cta .lead{font-family:var(--serif);font-size:22px;line-height:1.3;margin-bottom:6px}
-  a.btn{display:block;text-decoration:none;text-align:center;padding:16px 18px;font-size:16px;
-        border:1px solid var(--gold);color:var(--gold);letter-spacing:.02em}
+  /* CTAs up top, where people actually act */
+  .cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0 26px}
+  a.btn{flex:1 1 220px;max-width:320px;text-decoration:none;text-align:center;padding:13px 16px;
+        font-size:15px;border:1px solid var(--gold);color:var(--gold);letter-spacing:.01em}
   a.btn.primary{background:var(--gold);color:var(--ink);font-weight:600}
   a.btn:active{opacity:.85}
 
-  footer{margin-top:34px;font-size:12px;color:var(--mute);line-height:1.6;text-align:center}
-  .empty{border:1px solid var(--line);padding:34px 20px;text-align:center;color:var(--mute);margin-top:20px}
-  .loading{color:var(--mute);margin-top:24px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{border:1px solid var(--line);background:var(--ink-2);padding:14px 15px 13px;break-inside:avoid}
+  .cq{font-family:var(--serif);font-size:17px;line-height:1.24;margin-bottom:11px}
+  .orow{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;
+        padding:8px 11px;margin:5px 0;overflow:hidden;background:rgba(198,161,91,.07)}
+  .ofill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(198,161,91,.17);
+         transition:width .6s cubic-bezier(.2,.7,.2,1)}
+  .orow.win .ofill{background:rgba(198,161,91,.42)}
+  .oname{position:relative;z-index:1;font-size:14.5px;color:var(--paper)}
+  .oname .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-left:8px}
+  .opct{position:relative;z-index:1;font-family:var(--serif);font-size:16px;color:var(--mute);min-width:46px;text-align:right}
+  .orow.win .oname{color:var(--paper)} .orow.win .opct{color:var(--gold)}
+
+  footer{margin-top:26px;font-size:12px;color:var(--mute);text-align:center}
+  .empty{border:1px solid var(--line);padding:30px 18px;text-align:center;color:var(--mute);grid-column:1/-1}
+
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr}
+    a.btn{flex:1 1 100%;max-width:none}
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="mark">Zenca · Money Mirror</div>
-  <h1>How the room<br>actually thinks</h1>
+  <h1>How the room actually thinks</h1>
   <div class="meta" id="meta">Loading the latest results…</div>
 </header>
 
-<div id="out"><div class="loading">Loading…</div></div>
-
 <div class="cta" id="cta" style="display:none">
-  <div class="lead">Want to keep seeing money clearly?</div>
   <a class="btn primary" id="cta-sub" href="#">Subscribe — a new piece every week</a>
-  <a class="btn" id="cta-calc" href="#">Try the FIRE &amp; Price-of-Advice tools</a>
+  <a class="btn" id="cta-calc" href="#">FIRE &amp; Price-of-Advice tools</a>
   <a class="btn" id="cta-contact" href="#">Get in touch</a>
 </div>
 
+<div class="grid" id="out"><div class="empty">Loading…</div></div>
+
 <footer id="foot"></footer>
 
-<script src="../../assets/zenca-config-live.js?v=21"></script>
+<script src="../../assets/zenca-config-live.js?v=22"></script>
 <script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script>
 (function(){
@@ -86,98 +79,63 @@
   var sync = window.ZencaSync(CFG.sync);
   var out = document.getElementById("out");
   var esc = function(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); };
-  // *word* -> gold, _word_ -> emphasis
   var mk = function(s){ return esc(s).replace(/\*(.+?)\*/g,'<span class="hl">$1</span>').replace(/_(.+?)_/g,'<em>$1</em>'); };
   var pct = function(n,t){ return t ? Math.round(n*100/t) : 0; };
 
   var deckById = {};
   CFG.deck.forEach(function(s){ if (s.id) deckById[s.id] = s; });
 
-  // counts for one part within a session: optIndex -> {total,holder,nonholder,unknown}
-  function distFor(sid, partId, counters){
-    var by = {};
+  function totalsFor(sid, partId, counters){
+    var by = {}, total = 0;
     Object.keys(counters).forEach(function(k){
       var p = k.split("|");
       if (p[0] !== sid || p[1] !== partId) return;
-      var oi = p[2], seg = p[3];
-      by[oi] = by[oi] || {total:0, holder:0, nonholder:0, unknown:0};
-      by[oi].total += counters[k];
-      if (by[oi][seg] !== undefined) by[oi][seg] += counters[k];
+      by[p[2]] = (by[p[2]] || 0) + counters[k];
+      total += counters[k];
     });
-    return by;
+    return { by: by, total: total };
   }
 
-  function barsHTML(options, by, answerIdx){
-    var total = 0, maxN = 0;
-    options.forEach(function(_,i){ var n = by[i] ? by[i].total : 0; total += n; if (n > maxN) maxN = n; });
-    if (!total) return null;
-    var rows = options.map(function(opt,i){
-      var n = by[i] ? by[i].total : 0;
-      var p = pct(n, total);
-      var win = (n === maxN && n > 0);
-      var correct = (answerIdx !== undefined && answerIdx === i);
-      return '<div class="bar' + (win ? ' win' : '') + '">' +
-               '<div class="bl">' + esc(opt) + (correct ? '<span class="tag">correct</span>' : '') + '</div>' +
-               '<div class="bp">' + p + '%</div>' +
-               '<div class="track"><div class="fill" data-w="' + p + '"></div></div>' +
-             '</div>';
+  // one compact card per part (so warm-up age / bitcoin become two cards)
+  function cardFor(questionPrompt, part, answerIdx, counters, sid){
+    var t = totalsFor(sid, part.id, counters);
+    if (!t.total) return "";
+    var maxN = 0; part.options.forEach(function(_,i){ var n = t.by[i]||0; if (n>maxN) maxN=n; });
+    var rows = part.options.map(function(opt,i){
+      var n = t.by[i] || 0, p = pct(n, t.total);
+      var win = (n === maxN && n > 0), correct = (answerIdx !== undefined && answerIdx === i);
+      return '<div class="orow' + (win?' win':'') + '"><div class="ofill" data-w="' + p + '"></div>' +
+               '<div class="oname">' + esc(opt) + (correct?'<span class="tag">correct</span>':'') + '</div>' +
+               '<div class="opct">' + p + '%</div></div>';
     }).join("");
-    return { html: rows, total: total };
-  }
-
-  function splitHTML(options, by){
-    var hT = 0, nT = 0;
-    options.forEach(function(_,i){ if (by[i]){ hT += by[i].holder; nT += by[i].nonholder; } });
-    if (hT + nT === 0) return "";
-    var rows = options.map(function(opt,i){
-      var r = by[i] || {holder:0, nonholder:0};
-      return '<div class="srow"><div class="so">' + esc(opt) + '</div>' +
-             '<div class="sv">Holds BTC <b>' + pct(r.holder,hT) + '%</b> · None <b>' + pct(r.nonholder,nT) + '%</b></div></div>';
-    }).join("");
-    return '<div class="split"><div class="sh">Split by who holds bitcoin</div>' + rows + '</div>';
-  }
-
-  function renderQuestion(q, counters, sid){
-    var deckQ = deckById[q.id] || {};
-    var parts = q.parts || [];
-    var multi = parts.length > 1;
-    var inner = "", any = false;
-    parts.forEach(function(p){
-      var by = distFor(sid, p.id, counters);
-      var b = barsHTML(p.options, by, deckQ.answer);
-      if (!b) return;
-      any = true;
-      if (multi) inner += '<div class="subq">' + esc(p.prompt) + '</div>';
-      inner += '<div class="qvotes">' + b.total + ' votes</div>' + b.html;
-      if ((q.depth === "split") && !multi) inner += splitHTML(p.options, by);
-    });
-    if (!any) return "";
-    var insight = (deckQ.commentary && deckQ.commentary.default) || "";
-    return '<section><div class="q">' + mk(q.prompt) + '</div>' + inner +
-           (insight ? '<div class="insight">' + mk(insight.replace(/\n/g," ")) + '</div>' : '') +
-           '</section>';
+    return '<div class="card"><div class="cq">' + mk(questionPrompt) + '</div>' + rows + '</div>';
   }
 
   function render(sess, counters){
     var man = sess.manifest || {};
     var questions = man.questions || [];
-    var meta = document.getElementById("meta");
     var when = sess.created_at ? new Date(sess.created_at) : null;
-    meta.innerHTML = 'A live, anonymous poll' + (when ? ' · ' + when.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}) : '') +
-                     '<br>No names, no emails — just how a room answered.';
+    document.getElementById("meta").innerHTML =
+      'A live, anonymous poll<br>No names, no emails — just how a room answered.' +
+      (when ? '<br><span class="date">' + when.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}) + '</span>' : '');
 
-    var body = questions.map(function(q){ return renderQuestion(q, counters, sess.sid); }).join("");
-    if (!body){ out.innerHTML = '<div class="empty">Results from the most recent Money Mirror will appear here right after a session.</div>'; }
-    else { out.innerHTML = body; }
+    var cards = "";
+    questions.forEach(function(q){
+      var deckQ = deckById[q.id] || {};
+      var parts = q.parts || [];
+      var multi = parts.length > 1;
+      parts.forEach(function(p){
+        // heading: the sub-question prompt for warm-up, else the question prompt
+        cards += cardFor(multi ? p.prompt : q.prompt, p, deckQ.answer, counters, sess.sid);
+      });
+    });
+    out.innerHTML = cards || '<div class="empty">Results from the most recent Money Mirror will appear here right after a session.</div>';
 
-    // animate the bars
     requestAnimationFrame(function(){
-      document.querySelectorAll('.fill[data-w]').forEach(function(el){ el.style.width = el.getAttribute('data-w') + '%'; });
+      document.querySelectorAll('.ofill[data-w]').forEach(function(el){ el.style.width = el.getAttribute('data-w') + '%'; });
     });
 
-    // CTAs
-    var L = CFG.links || {};
-    var home = "https://zenca.global";
+    var L = CFG.links || {}, home = "https://zenca.global";
     document.getElementById("cta-sub").href = L.subscribe || home;
     document.getElementById("cta-calc").href = L.calculators || home;
     document.getElementById("cta-contact").href = L.contact || home;

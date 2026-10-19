@@ -33,9 +33,9 @@ window.ZENCA_CONFIG = {
   /* Buttons on the public results page (/live/mirror). Set these to the real
      Substack / dashboard / contact URLs — they default to the Zenca home. */
   links: {
-    subscribe:   "https://zenca.global",
-    calculators: "https://zenca.global",
-    contact:     "https://zenca.global"
+    subscribe:   "https://zencaglobal.substack.com",
+    calculators: "https://zenca.global/tools",
+    contact:     "https://zenca.global/#contact"
   },
 
   segments: { holder: "Holds bitcoin", nonholder: "Holds none", unknown: "Didn’t say" },
