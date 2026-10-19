@@ -50,7 +50,7 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "Who’s talking",
-      headline: ["A little about me, and *Zenca*."],
+      headline: ["A little about me, and *Zenca*"],
       cards: [
         { label: "Me",    text: "21 years · Strategy & Analytics · India Inc" },
         { label: "Zenca", text: "Education · Personal finance lens" },
@@ -142,7 +142,7 @@ window.ZENCA_CONFIG = {
       options: ["~0.03%", "~1%", "~9%", "~17%", "~26%"],
       answer: 4,
       commentary: {
-        default: "1% is charged on the compounding, every year — not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds — and the switch is free." } },
+        default: "1% is charged on the compounding, *every year* — not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds —\n— and the *switch is free*." } },
 
     { type: "question",
       id: "inflation",
@@ -152,7 +152,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
-        default: "The shop didn’t change — the measuring stick did. Prices are just the downstream signal." } },
+        default: "The shop didn’t change — the *measuring stick* did. Prices are just the *downstream* signal." } },
 
     { type: "question",
       id: "allocation",
@@ -185,7 +185,7 @@ window.ZENCA_CONFIG = {
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
-        default: "Your retirement number isn’t one figure to calculate — it’s a handful of moving parts to manage. That’s why a number you ‘heard’ is answering someone else’s question, not yours." } },
+        default: "Your retirement number isn’t one figure to calculate — it’s a *handful of moving parts* to manage. That’s why a number you ‘heard’ is answering someone else’s question, *not yours*." } },
 
     { type: "question",
       id: "mood",
@@ -196,8 +196,8 @@ window.ZENCA_CONFIG = {
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "I don’t look", "No"],
       commentary: {
-        default: "A price move only costs you when it reaches your decisions —\n— mood tips action, and action sets your return.\nA genuine ‘No’ is the North Star —\n— and ‘I don’t look’ is an easier shortcut to the same calm.",
-        split: "In most rooms, Bitcoin holders are calmer than non-holders when it comes to price swings." } },
+        default: "A price move only costs you when it reaches your decisions —\n— mood tips action, and *action sets your return*.\nA genuine ‘No’ is the *North Star* —\n— and ‘I don’t look’ is an easier shortcut to the same calm.",
+        split: "In most rooms, Bitcoin holders are *calmer* than non-holders when it comes to *price swings*." } },
 
     { type: "question",
       id: "freedom",
@@ -212,7 +212,7 @@ window.ZENCA_CONFIG = {
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "Tonight’s Money Mirror may feed a future article — plus FIRE and Fee calculators, free on Zenca.Global.\nNew articles go out weekly.",
+      note: "New articles go out weekly. Money Mirror polls may feed future articles. Subscribe for more.\nInteractive dashboards for FIRE and Price of Advice are live.",
       contact: "Want help thinking more clearly about money? Reach me through the Contact form." }
   ]
 };
