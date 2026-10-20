@@ -33,9 +33,10 @@
   a.btn:active{opacity:.85}
 
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .card{border:1px solid var(--line);background:var(--ink-2);padding:14px 15px 13px;break-inside:avoid}
+  .card{border:1px solid var(--line);background:var(--ink-2);padding:14px 15px 13px;break-inside:avoid;
+        display:flex;flex-direction:column}
   .cq{font-family:var(--serif);font-size:17px;line-height:1.24;margin-bottom:11px;min-height:2.48em}
-  .cbase{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:right;margin:10px 0 0}
+  .cbase{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);text-align:right;margin-top:auto;padding-top:12px}
   .orow{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;
         padding:8px 11px;margin:5px 0;overflow:hidden;background:rgba(198,161,91,.07)}
   .ofill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(198,161,91,.17);
@@ -132,10 +133,11 @@
            rows + splitHtml + '<div class="cbase">' + base + '</div></div>';
   }
 
-  function render(sess, counters){
+  function render(sess, counters, endIso){
     var man = sess.manifest || {};
     var questions = man.questions || [];
-    var when = sess.created_at ? new Date(sess.created_at) : null;
+    var start = sess.created_at ? new Date(sess.created_at) : null;
+    var end = endIso ? new Date(endIso) : null;
 
     // "Took part" = votes on the warm-up (first question), the moment the whole
     // room is present. Fall back to the busiest single question if warm-up is empty.
@@ -149,10 +151,19 @@
     var tookPart = questions.length ? peakAcross([questions[0]]) : 0;
     if (!tookPart) tookPart = peakAcross(questions);
 
+    var fmtTime = function(dt){ return dt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); };
+    var whenLine = "";
+    if (start){
+      whenLine = start.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+      var times = fmtTime(start);
+      if (end && end.getTime() > start.getTime()) times += " to " + fmtTime(end);
+      whenLine += " · " + times;
+    }
+
     document.getElementById("meta").innerHTML =
       'A live, anonymous poll<br>No names, no emails. Just how a room answered.' +
-      (tookPart ? '<br><span class="date">' + tookPart + (tookPart === 1 ? ' response' : ' responses') + '</span>' : '') +
-      (when ? '<br><span class="date">' + when.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}) + '</span>' : '');
+      (whenLine ? '<br><span class="date">' + whenLine + '</span>' : '') +
+      (tookPart ? '<br><span class="date">' + tookPart + (tookPart === 1 ? ' response' : ' responses') + '</span>' : '');
 
     var cards = "";
     questions.forEach(function(q){
@@ -178,13 +189,27 @@
     document.getElementById("foot").innerHTML = "Anonymous · aggregate counts only · zenca.global";
   }
 
+  // Session end time: the room state is re-saved on every slide advance, so its
+  // last updated_at is the closest proxy for when the session wrapped up.
+  function sessionEnd(sid){
+    var sb = (CFG.sync && CFG.sync.supabase) || {};
+    if (!sb.url || !sb.anonKey) return Promise.resolve(null);
+    var u = sb.url + "/rest/v1/zenca_rooms?select=updated_at&sid=eq." + encodeURIComponent(sid);
+    return fetch(u, { headers: { apikey: sb.anonKey, Authorization: "Bearer " + sb.anonKey } })
+      .then(function(r){ return r.json(); })
+      .then(function(rows){ return (rows && rows[0] && rows[0].updated_at) || null; })
+      .catch(function(){ return null; });
+  }
+
   function boot(){
     sync.listSessions().then(function(sessions){
       sessions = sessions || [];
       var override = new URLSearchParams(location.search).get("session");
       var target = override ? (sessions.filter(function(s){ return s.sid === override; })[0]) : sessions[0];
       if (!target){ out.innerHTML = '<div class="empty">No Money Mirror sessions recorded yet.</div>'; document.getElementById("cta").style.display = "flex"; return; }
-      sync.allCounters().then(function(counters){ render(target, counters || {}); });
+      Promise.all([ sync.allCounters(), sessionEnd(target.sid) ]).then(function(res){
+        render(target, res[0] || {}, res[1]);
+      });
     }).catch(function(){ out.innerHTML = '<div class="empty">Couldn’t reach the results right now. Please try again in a moment.</div>'; });
   }
 
