@@ -136,14 +136,18 @@
           });
 
           if (liveCounters) {
-            client.from("zenca_counters").select("key,count").limit(20000).then(({ data }) => {
+            // Full tally read. postgres_changes does NOT replay events missed
+            // while the socket was down, so we re-run this on every (re)subscribe
+            // to reconcile any votes cast during a presenter-side outage.
+            const pullCounters = () => client.from("zenca_counters").select("key,count").limit(20000).then(({ data }) => {
               if (data) { data.forEach(r => { counters[r.key] = r.count; }); countSubs.forEach(f => f(counters)); }
-            });
+            }).catch(() => {});
+            pullCounters();
             client.channel("zenca-counters")
               .on("postgres_changes", { event: "*", schema: "public", table: "zenca_counters" }, p => {
                 const r = p.new; if (!r) return;
                 counters[r.key] = r.count; countSubs.forEach(f => f(counters));
-              }).subscribe(s2 => { live = (s2 === "SUBSCRIBED"); });
+              }).subscribe(s2 => { live = (s2 === "SUBSCRIBED"); if (s2 === "SUBSCRIBED") pullCounters(); });
           } else {
             live = true;   // audience is "connected" via the room channel + HTTP
           }
