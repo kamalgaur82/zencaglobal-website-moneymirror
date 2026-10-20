@@ -127,7 +127,7 @@ window.ZENCA_CONFIG = {
       note: "No judgment. It’s anonymous.",
       options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
-        default: "The odds a single stock changes your life sit *under 1%*.\nYou’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
+        default: "The odds a single stock changes your life sit *under 1%* - you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
 
     { type: "question",
       id: "networth",
@@ -138,7 +138,7 @@ window.ZENCA_CONFIG = {
       note: "A number from the last 6 months counts.",
       options: ["Yes, to the rupee, dollar, or sat", "Roughly", "No idea"],
       commentary: {
-        default: "You can’t *compound* what you can’t *measure*.\nThe fix is boring, and it works:\n*1* page, once a *quarter*, with everything you *own* minus everything you *owe*." } },
+        default: "You can’t *compound* what you can’t *measure*.\nThe fix is boring, and it works:\n*One* page, once a *quarter*, with everything you *own* minus everything you *owe*." } },
 
     { type: "question",
       id: "fee",
@@ -171,7 +171,7 @@ window.ZENCA_CONFIG = {
       note: "‘None’ is a real answer in this room.",
       options: ["None", "Under 10%", "10–50%", "50–90%", "Nearly all of it"],
       commentary: {
-        default: "There is no correct number, *only trade-offs*.\nThe *risk* at the all-in end isn’t being wrong.\nIt’s an emergency *forcing you to sell* at a price you don’t want to sell at." } },
+        default: "There is no correct number, *only trade-offs*.\nThe *risk* at the all-in end isn’t being wrong - it’s an emergency *forcing you to sell* at a price you don’t want to sell at." } },
 
     { type: "question",
       id: "runway",
@@ -215,7 +215,7 @@ window.ZENCA_CONFIG = {
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "I don’t look", "No"],
       commentary: {
-        default: "A price move only costs you when it reaches your decisions.\nMood tips action, and *action sets your return*.\nA genuine ‘No’ is the *North Star*;\n‘I don’t look’ is just an easier shortcut to the same calm.",
+        default: "A price move only costs you when it reaches your decisions - mood tips action, and *action sets your return*.\nA genuine ‘No’ is the *North Star*; ‘I don’t look’ is just an easier shortcut to the same calm.",
         split: "In most rooms, Bitcoin holders are *calmer* than non-holders when it comes to *price swings*." } },
 
     { type: "question",

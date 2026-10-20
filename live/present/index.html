@@ -99,7 +99,7 @@
   .card{flex:1;border:1px solid rgba(198,161,91,.34);border-top:3px solid var(--gold);
         background:var(--ink-2);padding:46px 32px 50px;min-height:236px;display:flex;flex-direction:column;justify-content:center}
   .card .lab{font-size:23px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-  .card .txt{font-family:var(--serif);font-size:35px;line-height:1.42;color:var(--paper)}
+  .card .txt{font-family:var(--serif);font-size:35px;line-height:1.42;color:var(--paper);min-height:4.26em}
 
   /* --- steps ------------------------------------------------------------ */
   .steps{display:flex;align-items:stretch;gap:0;margin-top:60px}
@@ -495,7 +495,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=24"></script>
+<script src="../../assets/zenca-config-live.js?v=25"></script>
 <script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script>
 (function(){
@@ -893,10 +893,10 @@
   const INFOGRAPHICS = {
     fee: `<svg viewBox="0 0 1240 240" xmlns="http://www.w3.org/2000/svg">
   <!-- Assumptions, to the LEFT of the bars -->
-  <text x="20" y="102" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="23" fill="var(--gold-deep)">₹1,00,000</text>
-  <text x="20" y="131" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="20" fill="var(--gold-deep)" letter-spacing="1.5">10% PER YR</text>
-  <text x="20" y="159" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="20" fill="var(--gold-deep)" letter-spacing="1.5">30 YEARS</text>
-  <line x1="222" y1="72" x2="222" y2="176" stroke="rgba(198,161,91,.3)"/>
+  <text x="20" y="112" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="34" fill="var(--gold-deep)">₹1,00,000</text>
+  <text x="20" y="156" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="26" fill="var(--gold-deep)" letter-spacing="1">10% PER YEAR</text>
+  <text x="20" y="196" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="26" fill="var(--gold-deep)" letter-spacing="1">30 YEARS</text>
+  <line x1="222" y1="72" x2="222" y2="210" stroke="rgba(198,161,91,.3)"/>
   <!-- Row 1: without the fee -->
   <text x="262" y="66" font-family="ui-sans-serif, system-ui, Arial, sans-serif" font-size="19" fill="var(--mute)" letter-spacing="2">WITHOUT THE FEE</text>
   <rect x="262" y="78" width="600" height="48" fill="var(--gold)"/>
