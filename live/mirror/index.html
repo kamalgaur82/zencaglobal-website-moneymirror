@@ -68,7 +68,7 @@
 </header>
 
 <div class="cta" id="cta" style="display:none">
-  <a class="btn primary" id="cta-sub" href="#">Subscribe — a new piece every week</a>
+  <a class="btn primary" id="cta-sub" href="#">Subscribe on Substack</a>
   <a class="btn" id="cta-calc" href="#">FIRE &amp; Price-of-Advice tools</a>
   <a class="btn" id="cta-contact" href="#">Get in touch</a>
 </div>
@@ -77,7 +77,7 @@
 
 <footer id="foot"></footer>
 
-<script src="../../assets/zenca-config-live.js?v=22"></script>
+<script src="../../assets/zenca-config-live.js?v=23"></script>
 <script src="../../assets/zenca-sync-live.js?v=2"></script>
 <script>
 (function(){
@@ -134,7 +134,7 @@
     var questions = man.questions || [];
     var when = sess.created_at ? new Date(sess.created_at) : null;
     document.getElementById("meta").innerHTML =
-      'A live, anonymous poll<br>No names, no emails — just how a room answered.' +
+      'A live, anonymous poll<br>No names, no emails. Just how a room answered.' +
       (when ? '<br><span class="date">' + when.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}) + '</span>' : '');
 
     var cards = "";
@@ -168,7 +168,7 @@
       var target = override ? (sessions.filter(function(s){ return s.sid === override; })[0]) : sessions[0];
       if (!target){ out.innerHTML = '<div class="empty">No Money Mirror sessions recorded yet.</div>'; document.getElementById("cta").style.display = "flex"; return; }
       sync.allCounters().then(function(counters){ render(target, counters || {}); });
-    }).catch(function(){ out.innerHTML = '<div class="empty">Couldn’t reach the results right now — please try again in a moment.</div>'; });
+    }).catch(function(){ out.innerHTML = '<div class="empty">Couldn’t reach the results right now. Please try again in a moment.</div>'; });
   }
 
   if (sync.ready && sync.ready.then) sync.ready.then(boot); else boot();

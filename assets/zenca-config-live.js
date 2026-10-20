@@ -62,7 +62,7 @@ window.ZENCA_CONFIG = {
       cards: [
         { label: "Me",    text: "21 years · Strategy & Analytics · India Inc" },
         { label: "Zenca", text: "Education · Personal finance lens" },
-        { label: "Why",   text: "Financial independence — for everyone" }
+        { label: "Why",   text: "Financial independence, for everyone" }
       ],
       tagline: "Financial education for long-term financial agency" },
 
@@ -82,7 +82,7 @@ window.ZENCA_CONFIG = {
     { type: "triptych",
       kicker: "Before you decide",
       headline: ["Stop guessing. Start understanding."],
-      sub: "Understand — across three dimensions",
+      sub: "Understand, across three dimensions",
       boxes: [
         { letter: "U", verb: "Understand", dim: "Money",     subs: "Value · Inflation · Compounding" },
         { letter: "U", verb: "Understand", dim: "The World", subs: "Systems · Incentives · Markets" },
@@ -98,7 +98,7 @@ window.ZENCA_CONFIG = {
         { label: "We reveal", text: "On screen · you + the room" },
         { label: "Anonymous", text: "No names · no emails · just votes" }
       ],
-      footer: "Be honest — the more honest the room, the sharper the mirror." },
+      footer: "Be honest: the more honest the room, the sharper the mirror." },
 
     { type: "join" },
 
@@ -116,7 +116,7 @@ window.ZENCA_CONFIG = {
           options: ["Yes", "No"],
           segmentMap: ["holder", "nonholder"] }
       ],
-      commentary: { default: "There’s the room. Hold that picture — it changes how you read everything that follows." } },
+      commentary: { default: "There’s the room. Hold that picture. It changes how you read everything that follows." } },
 
     { type: "question",
       id: "singlestock",
@@ -124,10 +124,10 @@ window.ZENCA_CONFIG = {
       voteSeconds: 15,
       kicker: "The one that changes everything",
       prompt: "Ever bought *one stock* hoping it would change your life?",
-      note: "No judgment — it’s anonymous.",
+      note: "No judgment. It’s anonymous.",
       options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
-        default: "The odds a single stock changes your life sit *under 1%*\n— you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
+        default: "The odds a single stock changes your life sit *under 1%*.\nYou’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
 
     { type: "question",
       id: "networth",
@@ -138,19 +138,19 @@ window.ZENCA_CONFIG = {
       note: "A number from the last 6 months counts.",
       options: ["Yes, to the rupee, dollar, or sat", "Roughly", "No idea"],
       commentary: {
-        default: "You can’t *compound* what you can’t *measure*.\nThe fix is boring, and it works —\n*1* page, once a *quarter*, with everything you *own* minus everything you *owe*." } },
+        default: "You can’t *compound* what you can’t *measure*.\nThe fix is boring, and it works:\n*1* page, once a *quarter*, with everything you *own* minus everything you *owe*." } },
 
     { type: "question",
       id: "fee",
       depth: "merged",
       voteSeconds: 25,
-      kicker: "The quiet leak — lock in a guess first",
+      kicker: "The quiet leak · lock in a guess first",
       prompt: "A *1% annual fee*. Over 30 years, how much of your final wealth does it eat?",
       note: "Lock a number in your head before you vote.",
       options: ["~0.03%", "~1%", "~9%", "~17%", "~26%"],
       answer: 4,
       commentary: {
-        default: "1% is charged on the compounding, *every year* — not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds —\n— and the *switch is free*." } },
+        default: "1% is charged on the compounding, *every year*, not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds,\nand the *switch is free*." } },
 
     { type: "question",
       id: "inflation",
@@ -160,7 +160,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
-        default: "The shop didn’t change — the *measuring stick* did. Prices are just the *downstream* signal." } },
+        default: "The shop didn’t change. The *measuring stick* did. Prices are just the *downstream* signal." } },
 
     { type: "question",
       id: "allocation",
@@ -171,7 +171,7 @@ window.ZENCA_CONFIG = {
       note: "‘None’ is a real answer in this room.",
       options: ["None", "Under 10%", "10–50%", "50–90%", "Nearly all of it"],
       commentary: {
-        default: "There is no correct number — *only trade-offs*.\nThe *risk* at the all-in end isn’t being wrong —\n— it’s an emergency *forcing you to sell* at a price you don’t want to sell at." } },
+        default: "There is no correct number, *only trade-offs*.\nThe *risk* at the all-in end isn’t being wrong.\nIt’s an emergency *forcing you to sell* at a price you don’t want to sell at." } },
 
     { type: "question",
       id: "runway",
@@ -182,7 +182,7 @@ window.ZENCA_CONFIG = {
       note: "Monthly expenses × 12 = Annual cost of living\nNet worth ÷ Annual cost of living = Your runway in years",
       options: ["Under 2 years", "2–5 years", "5–10 years", "10–20 years", "Rest of my life"],
       commentary: {
-        default: "Runway is *time*, and time turns money into *choices*. That last bucket has a name — *financial independence*." } },
+        default: "Runway is *time*, and time turns money into *choices*. That last bucket has a name: *financial independence*." } },
 
     { type: "question",
       id: "firenumber",
@@ -193,7 +193,7 @@ window.ZENCA_CONFIG = {
       options: ["How long you’ll live", "Your returns after you stop working", "Your monthly spending", "How fast your costs rise", "Your age today"],
       icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
-        default: "Your retirement number isn’t one figure to calculate — it’s a *handful of moving parts* to manage. That’s why a number you ‘heard’ is answering someone else’s question, *not yours*." } },
+        default: "Your retirement number isn’t one figure to calculate; it’s a *handful of moving parts* to manage. That’s why a number you ‘heard’ is answering someone else’s question, *not yours*." } },
 
     { type: "question",
       id: "mood",
@@ -204,7 +204,7 @@ window.ZENCA_CONFIG = {
       note: "Last month only. ‘I don’t look’ is a legitimate answer.",
       options: ["Yes, most days", "A few times", "I don’t look", "No"],
       commentary: {
-        default: "A price move only costs you when it reaches your decisions —\n— mood tips action, and *action sets your return*.\nA genuine ‘No’ is the *North Star* —\n— and ‘I don’t look’ is an easier shortcut to the same calm.",
+        default: "A price move only costs you when it reaches your decisions.\nMood tips action, and *action sets your return*.\nA genuine ‘No’ is the *North Star*;\n‘I don’t look’ is just an easier shortcut to the same calm.",
         split: "In most rooms, Bitcoin holders are *calmer* than non-holders when it comes to *price swings*." } },
 
     { type: "question",
@@ -216,7 +216,7 @@ window.ZENCA_CONFIG = {
       note: "The first thing that comes to mind.",
       options: ["Rest, travel, and enjoy life", "Give my time to family and people I love", "Build or create something that matters", "Change nothing about my life, including work", "I’ve never let myself think about it"],
       commentary: {
-        default: "*Everything else* — saving, investing, waiting — is in service of this *one question*.\n*Independence* isn’t the finish line; it’s the *starting line*." } },
+        default: "*Everything else* (saving, investing, waiting) is in service of this *one question*.\n*Independence* isn’t the finish line; it’s the *starting line*." } },
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
