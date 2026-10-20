@@ -92,7 +92,7 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "How this works",
-      headline: ["10 questions. Live. *Anonymous*."],
+      headline: ["A quick warm-up, then 10 *questions*."],
       cards: [
         { label: "You vote",  text: "Your phone · one at a time" },
         { label: "We reveal", text: "On screen · you + the room" },
@@ -194,6 +194,17 @@ window.ZENCA_CONFIG = {
       icons: ["hourglass", "upGreen", "cash", "upRed", "face"],
       commentary: {
         default: "Your retirement number isn’t one figure to calculate; it’s a *handful of moving parts* to manage. That’s why a number you ‘heard’ is answering someone else’s question, *not yours*." } },
+
+    { type: "question",
+      id: "optimise",
+      depth: "merged",
+      voteSeconds: 20,
+      kicker: "Your real goal",
+      prompt: "What are you *actually optimising* for?",
+      note: "Only one. The one you’d defend if the others suffered.",
+      options: ["The highest return", "Hitting a number by a date", "The lowest volatility", "The highest chance of getting there"],
+      commentary: {
+        default: "Chasing the *highest return* or the *fastest time* buys the same thing: more risk of *permanent loss*.\nThe one worth optimising for is the *highest chance of success*." } },
 
     { type: "question",
       id: "mood",
