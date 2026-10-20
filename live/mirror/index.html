@@ -34,7 +34,8 @@
 
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .card{border:1px solid var(--line);background:var(--ink-2);padding:14px 15px 13px;break-inside:avoid}
-  .cq{font-family:var(--serif);font-size:17px;line-height:1.24;margin-bottom:11px}
+  .cq{font-family:var(--serif);font-size:17px;line-height:1.24;margin-bottom:6px}
+  .cbase{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0 0 11px}
   .orow{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;
         padding:8px 11px;margin:5px 0;overflow:hidden;background:rgba(198,161,91,.07)}
   .ofill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(198,161,91,.17);
@@ -126,15 +127,31 @@
       }).join("");
       splitHtml = '<div class="csplit"><div class="csplit-h">Split by who holds bitcoin</div>' + sr + '</div>';
     }
-    return '<div class="card"><div class="cq">' + mk(questionPrompt) + '</div>' + rows + splitHtml + '</div>';
+    var base = t.total ? (t.total + (t.total === 1 ? ' response' : ' responses')) : 'No responses yet';
+    return '<div class="card"><div class="cq">' + mk(questionPrompt) + '</div>' +
+           '<div class="cbase">' + base + '</div>' + rows + splitHtml + '</div>';
   }
 
   function render(sess, counters){
     var man = sess.manifest || {};
     var questions = man.questions || [];
     var when = sess.created_at ? new Date(sess.created_at) : null;
+
+    // "Took part" = votes on the warm-up (first question), the moment the whole
+    // room is present. Fall back to the busiest single question if warm-up is empty.
+    function peakAcross(qs){
+      var m = 0;
+      qs.forEach(function(q){ (q.parts || []).forEach(function(p){
+        var tt = totalsFor(sess.sid, p.id, counters).total; if (tt > m) m = tt;
+      }); });
+      return m;
+    }
+    var tookPart = questions.length ? peakAcross([questions[0]]) : 0;
+    if (!tookPart) tookPart = peakAcross(questions);
+
     document.getElementById("meta").innerHTML =
       'A live, anonymous poll<br>No names, no emails. Just how a room answered.' +
+      (tookPart ? '<br><span class="date">' + tookPart + (tookPart === 1 ? ' response' : ' responses') + '</span>' : '') +
       (when ? '<br><span class="date">' + when.toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}) + '</span>' : '');
 
     var cards = "";
