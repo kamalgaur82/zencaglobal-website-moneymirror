@@ -150,7 +150,7 @@ window.ZENCA_CONFIG = {
       options: ["~0.03%", "~1%", "~9%", "~17%", "~26%"],
       answer: 4,
       commentary: {
-        default: "1% is charged on the compounding, *every year*, not charged only once.\nIn India, that’s the difference between Regular and Direct mutual funds,\nand the *switch is free*." } },
+        default: "1% of your portfolio, *every year*, not 1% just once.\nIn India, that’s the difference between Regular and Direct mutual funds,\nand the *switch is free*." } },
 
     { type: "question",
       id: "inflation",
