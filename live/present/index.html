@@ -193,7 +193,7 @@
   .pvtitle{font-size:25px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
            margin-bottom:18px;text-align:center}
   .pvrow{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
-  .pvrow .opt{text-align:center}
+  .pvrow .opt{text-align:center;min-width:190px;min-height:140px;padding:24px 22px;font-size:32px}
 
   .counter{position:absolute;left:72px;top:40px;text-align:left;line-height:1;max-width:160px}
   .counter .n{font-family:var(--serif);font-size:80px;color:var(--gold);line-height:1}
@@ -276,6 +276,15 @@
   .parttitle{font-size:23px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;text-align:center}
   .partsplit .barlabel{width:48%;font-size:24px}
   .partsplit .barpct{width:84px;font-size:27px}
+  /* Warm-up results: location row on top, age + bitcoin below. */
+  .warmgrid{display:flex;flex-direction:column;gap:30px;margin:auto 0;width:100%}
+  .warmrow{display:flex;gap:70px;justify-content:center;width:100%}
+  .warmbot{align-items:flex-start}
+  .wgroup{display:flex;flex-direction:column;min-width:0}
+  .warmgrid .vcols{margin-top:14px}
+  .warmgrid .vlabs{margin-top:12px}
+  .warmgrid .vtrack .vpct{font-size:32px}
+  .warmgrid .vlab{font-size:24px}
 
   /* --- report --------------------------------------------------------------- */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 40px;margin-top:30px;align-items:start}
@@ -498,7 +507,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=27"></script>
+<script src="../../assets/zenca-config-live.js?v=28"></script>
 <script src="../../assets/zenca-sync-live.js?v=3"></script>
 <script>
 (function(){
@@ -1052,6 +1061,24 @@
       <div class="body qframe">
         <h2>${mk(q.prompt)}</h2>
         ${fireGridHTML(q)}
+        ${comm}
+      </div>
+      ${counter}`;
+    }
+    // Warm-up: two rows — location across the top, then age + bitcoin below,
+    // with low bars so both rows fit.
+    if (q.id === "warmup") {
+      const byId = {}; parts.forEach(p => { byId[p.id] = p; });
+      const bH = 110;
+      const grp = (p, grow) => p ? `<div class="wgroup" style="flex:${grow}">
+          <div class="parttitle">${esc(p.prompt)}</div>${colsHTML(p, false, bH)}</div>` : "";
+      return `
+      <div class="body qframe">
+        <h2>${mk(q.prompt)}</h2>
+        <div class="warmgrid">
+          <div class="warmrow">${grp(byId.place, 1)}</div>
+          <div class="warmrow warmbot">${grp(byId.age, byId.age ? byId.age.options.length : 5)}${grp(byId.hold, byId.hold ? byId.hold.options.length : 2)}</div>
+        </div>
         ${comm}
       </div>
       ${counter}`;

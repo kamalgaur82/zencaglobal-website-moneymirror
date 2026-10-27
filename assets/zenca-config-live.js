@@ -109,15 +109,17 @@ window.ZENCA_CONFIG = {
       voteSeconds: 20,
       kicker: "Before we start",
       prompt: "Who’s in the room?",
-      note: "Anonymous. Two taps, then submit.",
+      note: "Anonymous. Three taps, then submit.",
       parts: [
-        { id: "age",  prompt: "Your age",
+        { id: "age",   prompt: "Your age",
           options: ["18–24", "25–34", "35–44", "45+", "Prefer not to say"] },
-        { id: "hold", prompt: "Do you hold any bitcoin?",
+        { id: "place", prompt: "Where are you joining from?",
+          options: ["Jaipur", "Delhi", "Mumbai", "Bangalore", "Rest of India", "Outside India"] },
+        { id: "hold",  prompt: "Do you hold any bitcoin?",
           options: ["Yes", "No"],
           segmentMap: ["holder", "nonholder"] }
       ],
-      commentary: { default: "There’s the room. Hold that picture. It changes how you read everything that follows." } },
+      commentary: { default: "That’s the room - hold that picture as the answers come in." } },
 
     { type: "question",
       id: "singlestock",
