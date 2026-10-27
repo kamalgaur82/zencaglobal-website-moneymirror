@@ -279,7 +279,13 @@
   /* Warm-up results: location row on top, age + bitcoin below. */
   .warmgrid{display:flex;flex-direction:column;gap:30px;margin:auto 0;width:100%}
   .warmrow{display:flex;gap:70px;justify-content:center;width:100%}
-  .warmbot{align-items:flex-start}
+  .warmbot{align-items:flex-start;gap:160px}
+  /* Bottom row: give the age and bitcoin graphs their own content-width groups
+     with a wide gutter between them, and fix the bar/label columns, so it reads
+     as two separate graphs rather than one continuous strip of bars. */
+  .warmbot .wgroup{flex:0 0 auto !important}
+  .warmbot .vcols,.warmbot .vlabs{width:auto;max-width:none}
+  .warmbot .vtrack,.warmbot .vlab{flex:0 0 auto;width:118px}
   .wgroup{display:flex;flex-direction:column;min-width:0}
   .warmgrid .vcols{margin-top:14px}
   .warmgrid .vlabs{margin-top:12px}
@@ -508,7 +514,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=28"></script>
+<script src="../../assets/zenca-config-live.js?v=29"></script>
 <script src="../../assets/zenca-sync-live.js?v=3"></script>
 <script>
 (function(){
@@ -1262,19 +1268,29 @@
     updatePanel();
   }
 
-  /* ---------- closing: auto-advance to the live results page after 30s ---------- */
+  /* ---------- closing: push every phone to the live results page after 30s ----------
+     The presenter screen STAYS on this closing slide (that's where we end). After
+     30s we publish a "results" room state, which carries every connected phone to
+     the results page — the same as each person scanning the on-screen QR, done for
+     them. Persisted in room state, so phones that reconnect after the push land
+     there too. */
   let closeTick = null;
   function stopCloseCountdown(){ if (closeTick){ clearInterval(closeTick); closeTick = null; } }
   function startCloseCountdown(){
     stopCloseCountdown();
     const el = document.getElementById("close-countdown");
-    const dest = CFG.closing.fullUrl + (sid ? "?session=" + encodeURIComponent(sid) : "");
     let n = 30;
-    const show = () => { if (el) el.textContent = "Live results on screen in " + n + "s"; };
+    const show = () => { if (el) el.textContent = n > 0 ? "Live results on your phone in " + n + "s" : "Live results are on your phone now"; };
     show();
     closeTick = setInterval(() => {
       n -= 1;
-      if (n <= 0){ stopCloseCountdown(); location.href = dest; return; }
+      if (n <= 0){
+        stopCloseCountdown();
+        if (sync.publishState) sync.publishState({ phase:"results", qid:null, sid:sid,
+          url: CFG.closing.fullUrl, rev:Date.now() });
+        show();
+        return;
+      }
       show();
     }, 1000);
   }
@@ -1367,7 +1383,8 @@
     if (phonePollT) clearInterval(phonePollT);
     const tick = () => sync.presentCount(sid).then(n => { httpPhones = n || 0; refreshScans(); });
     tick();
-    phonePollT = setInterval(tick, 5000);
+    setTimeout(tick, 1500);   // early catch-up so the first scans show without waiting a full cycle
+    phonePollT = setInterval(tick, 3000);   // was 5000 — the scan count lagged noticeably behind the instant vote feed
   }
 
   /* ---------- broadcast ---------- */

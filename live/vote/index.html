@@ -90,7 +90,7 @@
   <div id="diag"></div>
 </footer>
 
-<script src="../../assets/zenca-config-live.js?v=28"></script>
+<script src="../../assets/zenca-config-live.js?v=29"></script>
 <script src="../../assets/zenca-sync-live.js?v=3"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -135,9 +135,19 @@
   // state callback synchronously, which calls diag() — diagNote must exist by then.
   let diagNote = "starting";
 
+  let lastStateKey = null;
   sync.subscribeState(s => {
     if (!s) return;
-    state = s; if (!state.sid && ROOM) state.sid = ROOM;
+    if (!s.sid && ROOM) s.sid = ROOM;
+    // A refresh (e.g. the 7s recover, or presence re-announce) that carries the
+    // SAME question and phase must NOT wipe an answer in progress: resetting
+    // picks + re-rendering here was dropping taps on the multi-part warm-up when
+    // it fired mid-selection. Keep the live view untouched unless the question
+    // or phase actually changes.
+    const key = (s.phase || "") + "|" + (s.qid || "");
+    if (key === lastStateKey) { state = s; return; }
+    lastStateKey = key;
+    state = s;
     picks = {}; err = ""; render(); diag("state received");
     // Phones don't hold the live counter feed; when a question closes, pull the
     // final counts once over HTTP so "X% chose the same" can render.
@@ -183,6 +193,19 @@
   }
 
   function render(){
+    // The presenter has pushed the room to the results page (closing slide, after
+    // 30s): carry this phone there too — the same as scanning the on-screen QR,
+    // done automatically. Guarded so it fires once; persisted in room state so a
+    // phone that reconnects after the push also lands on results.
+    if (state.phase === "results") {
+      const base = state.url || (CFG.closing && CFG.closing.fullUrl) || "";
+      if (base && !window.__zgResultsGo) {
+        window.__zgResultsGo = true;
+        const sep = base.indexOf("?") >= 0 ? "&" : "?";
+        location.href = base + sep + "session=" + encodeURIComponent(state.sid || ROOM || "");
+      }
+      return rest("Results are live.", "Opening them on your phone…");
+    }
     const q = state.qid ? qById(state.qid) : null;
 
     // Self-heal: the presenter is showing a question this phone's config doesn't

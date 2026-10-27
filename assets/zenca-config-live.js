@@ -99,7 +99,7 @@ window.ZENCA_CONFIG = {
         { label: "We reveal", text: "On screen · you + the room" },
         { label: "Anonymous", text: "No names · no emails · just votes" }
       ],
-      footer: "Be honest: the more honest the room, the sharper the mirror." },
+      footer: "The more honest the room, the sharper the mirror." },
 
     { type: "join" },
 
@@ -113,7 +113,7 @@ window.ZENCA_CONFIG = {
       parts: [
         { id: "age",   prompt: "Your age",
           options: ["18–24", "25–34", "35–44", "45+", "Prefer not to say"] },
-        { id: "place", prompt: "Where are you joining from?",
+        { id: "place", prompt: "Where have you traveled from?",
           options: ["Jaipur", "Delhi", "Mumbai", "Bangalore", "Rest of India", "Outside India"] },
         { id: "hold",  prompt: "Do you hold any bitcoin?",
           options: ["Yes", "No"],
@@ -130,7 +130,7 @@ window.ZENCA_CONFIG = {
       note: "No judgment. It’s anonymous.",
       options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
-        default: "The odds a single stock changes your life sit *under 1%* - you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
+        default: "The odds a single stock changes your life sit *under 1%*\n- you’d need the *pick*, the *entry*, the *exit*, and the *sizing* all right.\nThe actual thing being sold with this approach is *hope*." } },
 
     { type: "question",
       id: "networth",
@@ -163,7 +163,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
-        default: "The shop didn’t change. The *measuring stick* did. Prices are just the *downstream* signal." } },
+        default: "The shop didn’t change - the *measuring stick* did." } },
 
     { type: "question",
       id: "allocation",
@@ -234,7 +234,7 @@ window.ZENCA_CONFIG = {
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "New articles go out weekly. Money Mirror polls may feed future articles. Subscribe for more.\nInteractive dashboards for FIRE and Price of Advice are live.",
+      note: "New articles go out weekly. Money Mirror polls may feed future articles.\nInteractive dashboards for FIRE and Price of Advice are live. Subscribe for more.",
       contact: "Want help thinking more clearly about money? Reach me through the Contact form." }
   ]
 };
