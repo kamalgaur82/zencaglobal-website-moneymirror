@@ -355,6 +355,7 @@
   .closeqr{width:290px;height:290px;background:#FFFFFF;padding:18px;flex:none;
            display:flex;align-items:center;justify-content:center}
   .closeurl{font-size:22px;color:var(--gold)}
+  .closecount{font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:12px}
   .closebody{margin-top:auto;max-width:1180px}
   .closebody .footline{margin-top:0;padding-top:0}
   .closecontact{margin-top:24px;font-size:26px;line-height:1.42;color:var(--gold);max-width:1000px}
@@ -874,6 +875,7 @@
         <div class="closeheadR">
           <div class="closeqr" id="qr-close"></div>
           <div class="closeurl">${esc(CFG.closing.url)}</div>
+          <div class="closecount" id="close-countdown"></div>
         </div>
       </div>
       <div class="closebody">
@@ -1219,6 +1221,7 @@
   /* ---------- paint ---------- */
   function paint(){
     const f = frames[idx], s = f.slide;
+    stopCloseCountdown();
     let inner;
     if (s.type === "question") {
       inner = f.beat === 0 ? renderVote(s) : (f.beat === 1 ? renderResults(s) : (s.depth === "split" ? renderQSplit(s) : renderTeach(s)));
@@ -1242,7 +1245,7 @@
       <div class="progress" style="width:${(idx+1)/frames.length*100}%"></div>`;
 
     if (s.type === "join") qrInto(document.getElementById("qr-join"), AUD.full, AUD.image, 360);
-    if (s.type === "closing") qrInto(document.getElementById("qr-close"), CFG.closing.fullUrl, CFG.closing.qrImage, 236);
+    if (s.type === "closing") { qrInto(document.getElementById("qr-close"), CFG.closing.fullUrl, CFG.closing.qrImage, 236); startCloseCountdown(); }
     if (s.type === "thanks" && s.qrs) s.qrs.forEach((q,i) => qrInto(document.getElementById("qr-thanks-"+i), q.url, "", 264));
 
     if (s.type === "question" && f.beat === 0) startVoteTimer(s.voteSeconds || 15);
@@ -1257,6 +1260,23 @@
     refreshScans();
     publish();
     updatePanel();
+  }
+
+  /* ---------- closing: auto-advance to the live results page after 30s ---------- */
+  let closeTick = null;
+  function stopCloseCountdown(){ if (closeTick){ clearInterval(closeTick); closeTick = null; } }
+  function startCloseCountdown(){
+    stopCloseCountdown();
+    const el = document.getElementById("close-countdown");
+    const dest = CFG.closing.fullUrl + (sid ? "?session=" + encodeURIComponent(sid) : "");
+    let n = 30;
+    const show = () => { if (el) el.textContent = "Live results on screen in " + n + "s"; };
+    show();
+    closeTick = setInterval(() => {
+      n -= 1;
+      if (n <= 0){ stopCloseCountdown(); location.href = dest; return; }
+      show();
+    }, 1000);
   }
 
   /* ---------- vote countdown (Live format) ---------- */

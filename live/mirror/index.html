@@ -26,11 +26,13 @@
   .meta .date{color:var(--gold-deep)}
 
   /* CTAs up top, where people actually act */
-  .cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0 26px}
-  a.btn{flex:1 1 220px;max-width:320px;text-decoration:none;text-align:center;padding:13px 16px;
+  .cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0 10px}
+  .btn{flex:1 1 220px;max-width:320px;text-decoration:none;text-align:center;padding:13px 16px;
         font-size:15px;border:1px solid var(--gold);color:var(--gold);letter-spacing:.01em}
-  a.btn.primary{background:var(--gold);color:var(--ink);font-weight:600}
-  a.btn:active{opacity:.85}
+  .btn.primary{background:var(--gold);color:var(--ink);font-weight:600}
+  .btn:active{opacity:.85}
+  button.btn{background:transparent;cursor:pointer;font-family:inherit}
+  .bmhint{text-align:center;font-size:13px;color:var(--gold-deep);margin:0 0 20px;min-height:18px;line-height:1.5}
 
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .card{border:1px solid var(--line);background:var(--ink-2);padding:14px 15px 13px;break-inside:avoid;
@@ -73,7 +75,9 @@
   <a class="btn primary" id="cta-sub" href="#">Subscribe on Substack</a>
   <a class="btn" id="cta-calc" href="#">FIRE &amp; Price-of-Advice tools</a>
   <a class="btn" id="cta-contact" href="#">Get in touch</a>
+  <button class="btn" id="cta-bookmark" type="button">Bookmark this page</button>
 </div>
+<div class="bmhint" id="bmhint"></div>
 
 <div class="grid" id="out"><div class="empty">Loading…</div></div>
 
@@ -186,6 +190,25 @@
     document.getElementById("cta-calc").href = L.calculators || home;
     document.getElementById("cta-contact").href = L.contact || home;
     document.getElementById("cta").style.display = "flex";
+
+    // Lock the address bar to THIS session so a bookmark stays on this room's results.
+    try {
+      var u = new URL(location.href);
+      if (u.searchParams.get("session") !== sess.sid){ u.searchParams.set("session", sess.sid); history.replaceState(null, "", u.toString()); }
+    } catch (e) {}
+
+    // Bookmark button: browsers can't add a bookmark from JS, so show the shortcut.
+    var bm = document.getElementById("cta-bookmark"), hint = document.getElementById("bmhint");
+    if (bm && !bm.__wired){
+      bm.__wired = true;
+      bm.addEventListener("click", function(){
+        var ua = navigator.userAgent || "", msg;
+        if (/iPhone|iPad|iPod/.test(ua)) msg = "Tap the Share icon, then “Add Bookmark”.";
+        else if (/Android/.test(ua)) msg = "Tap the menu (⋮), then the bookmark icon (☆).";
+        else msg = "Press " + (/Macintosh|Mac OS X/.test(ua) ? "⌘ + D" : "Ctrl + D") + " to bookmark this page.";
+        if (hint) hint.textContent = msg;
+      });
+    }
     document.getElementById("foot").innerHTML = "Anonymous · aggregate counts only · zenca.global";
   }
 
