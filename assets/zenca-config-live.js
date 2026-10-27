@@ -163,7 +163,7 @@ window.ZENCA_CONFIG = {
       prompt: "Your grocery bill is bigger than last year. What *actually changed*?",
       options: ["The economy grew", "Groceries got more expensive", "Your rupee/dollar is worth less"],
       commentary: {
-        default: "The shop didn’t change - the *measuring stick* did." } },
+        default: "The shop didn’t change - the *measuring stick* did.\nPrices are just the *downstream* signal." } },
 
     { type: "question",
       id: "allocation",
