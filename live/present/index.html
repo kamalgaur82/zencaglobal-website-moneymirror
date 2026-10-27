@@ -164,7 +164,9 @@
   .qrfallback{font-family:var(--sans);font-size:26px;color:var(--ink);text-align:center;line-height:1.4}
   .joincode{font-family:var(--serif);font-size:30px;color:var(--gold);letter-spacing:.01em;text-align:center;
             max-width:430px;overflow-wrap:break-word;word-break:normal}
-  .joinnote{font-size:31px;color:var(--mute);line-height:1.5;max-width:520px}
+  .joinnote{font-size:31px;color:var(--mute);line-height:1.4;max-width:560px;list-style:none;padding:0;margin:34px 0 0}
+  .joinnote li{position:relative;padding-left:40px;margin-bottom:16px}
+  .joinnote li:before{content:"";position:absolute;left:8px;top:.62em;width:10px;height:10px;border-radius:50%;background:var(--gold)}
   .joinlive{margin-top:36px;display:flex;align-items:baseline;gap:18px}
   .joinlive-n{font-family:var(--serif);font-size:112px;line-height:.9;color:var(--gold)}
   .joinlive-l{font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
@@ -440,6 +442,7 @@
   .introframe{padding-top:56px}
   .introframe h2{text-align:center;margin-left:auto;margin-right:auto;max-width:1120px;font-size:60px;line-height:1.1}
   .introframe .trisub,.introframe .eyebrow{text-align:center;margin-left:auto;margin-right:auto}
+  .introframe .sub{text-align:center;margin-left:auto;margin-right:auto}
   .introframe .card .lab,.introframe .card .txt{text-align:center}
   .introframe .jstep{text-align:center}
   .introframe .jfoot,.introframe .footline{text-align:center;margin-left:auto;margin-right:auto}
@@ -495,7 +498,7 @@
     Skippable if short on time: <span id="p-sac"></span></div>
 </div>
 
-<script src="../../assets/zenca-config-live.js?v=26"></script>
+<script src="../../assets/zenca-config-live.js?v=27"></script>
 <script src="../../assets/zenca-sync-live.js?v=3"></script>
 <script>
 (function(){
@@ -725,7 +728,7 @@
       <div class="cards">${s.cards.map(c => `
         <div class="card"><div class="lab">${esc(c.label)}</div><div class="txt">${c.text.split(" · ").map(x => esc(x.charAt(0).toUpperCase() + x.slice(1))).join("<br>")}</div></div>`).join("")}
       </div>
-      ${s.tagline ? `<div class="slidetag">${esc(s.tagline)}</div>` : ""}
+      ${s.tagline ? `<div class="slidetag">${s.tagline.split("\n").map(esc).join("<br>")}</div>` : ""}
       ${s.footer ? `<div class="footline">${esc(s.footer)}</div>` : ""}
     </div>`;
 
@@ -831,8 +834,13 @@
     <div class="body joinframe">
       <div class="join3">
         <div class="j3-left">
-          <h2>Scan to join.</h2>
-          <div class="joinnote">Open your phone camera, point it at the code, and wait for the next slide.</div>
+          <h2>Scan to join</h2>
+          <ul class="joinnote">
+            <li>Open your phone camera, point it at the code</li>
+            <li>Wait for the next slide</li>
+            <li>Keep your phone unlocked</li>
+            <li>Take your time, but answer quickly</li>
+          </ul>
           ${AUD.loopback ? `<div class="warnline">Testing note: you opened this at localhost, so
             phones can’t reach it. Reopen the presenter at your laptop’s network address
             (http://192.168.x.x:8080/presenter.html) and this QR will point there by itself.</div>` : ""}

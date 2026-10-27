@@ -58,13 +58,13 @@ window.ZENCA_CONFIG = {
 
     { type: "cards",
       kicker: "Who’s talking",
-      headline: ["A little about me, and *Zenca*"],
+      headline: ["A little about me"],
       cards: [
-        { label: "Me",    text: "21 years · Strategy & Analytics · India Inc" },
-        { label: "Zenca", text: "Education · Personal finance lens" },
-        { label: "Why",   text: "Financial independence, for everyone" }
+        { label: "Me",     text: "21 years · Strategy & Analytics · India Inc" },
+        { label: "Zenca",  text: "Education · Personal finance lens" },
+        { label: "Policy", text: "Bitcoin Policy India" }
       ],
-      tagline: "Financial education for long-term financial agency" },
+      tagline: "Financial education for long-term financial agency -\nto build financial independence, for everyone." },
 
     { type: "journey",
       kicker: "The Zenca Framework",
@@ -93,6 +93,7 @@ window.ZENCA_CONFIG = {
     { type: "cards",
       kicker: "How this works",
       headline: ["A quick warm-up, then 10 *questions*."],
+      sub: "No right answers, just different ways people think. Answer for yourself.",
       cards: [
         { label: "You vote",  text: "Your phone · one at a time" },
         { label: "We reveal", text: "On screen · you + the room" },
