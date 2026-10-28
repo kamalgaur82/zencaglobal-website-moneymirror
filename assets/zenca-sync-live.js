@@ -257,7 +257,7 @@
       },
       presentCount(s) {
         if (!client || !s) return Promise.resolve(0);
-        const cutoff = new Date(Date.now() - 30000).toISOString();
+        const cutoff = new Date(Date.now() - 60000).toISOString();   // 60s grace: heartbeat is every 7s and pauses on screen-lock, so hold a phone through brief locks
         return client.from("zenca_present").select("uid", { count: "exact", head: true })
           .eq("sid", s).gt("seen_at", cutoff)
           .then(r => (r && typeof r.count === "number") ? r.count : 0)
