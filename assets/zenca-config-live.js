@@ -61,8 +61,8 @@ window.ZENCA_CONFIG = {
       headline: ["A little about me"],
       cards: [
         { label: "Me",     text: "21 years · Strategy & Analytics · India Inc" },
-        { label: "Zenca",  text: "Education · Personal finance lens" },
-        { label: "Policy", text: "Bitcoin Policy India" }
+        { label: "Policy", text: "Bitcoin Policy India" },
+        { label: "Zenca",  text: "Education · Personal finance lens" }
       ],
       tagline: "Financial education for long-term financial agency -\nto build financial independence, for everyone." },
 
@@ -126,7 +126,7 @@ window.ZENCA_CONFIG = {
       depth: "merged",
       voteSeconds: 15,
       kicker: "The one that changes everything",
-      prompt: "Ever bought *one stock* hoping it would change your life?",
+      prompt: "Ever bought *one stock* hoping it would create life-changing wealth?",
       note: "No judgment. It’s anonymous.",
       options: ["No", "Once", "Yes, more than once", "That’s basically my strategy"],
       commentary: {
@@ -234,7 +234,7 @@ window.ZENCA_CONFIG = {
 
     { type: "closing",
       headline: ["The goal is not to believe harder.", "It is to see clearer."],
-      note: "New articles go out weekly. Money Mirror polls may feed future articles.\nInteractive dashboards for FIRE and Price of Advice are live. Subscribe for more.",
+      note: "New articles go out weekly.\nMoney Mirror polls may feed future articles.\nInteractive dashboards for FIRE and Price of Advice are live.\nSubscribe for more.",
       contact: "Want help thinking more clearly about money? Reach me through the Contact form." }
   ]
 };
